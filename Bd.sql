@@ -10,6 +10,8 @@ CREATE TABLE Usuario (
   contrasena VARCHAR(100) NOT NULL,
   Rol BOOLEAN NOT NULL
 );
+-- Rol 1 = Administrador
+-- Rol 0 = Empleado
 
 CREATE TABLE Categoria_cuarto (
   id INT NOT NULL AUTO_INCREMENT,
@@ -38,7 +40,7 @@ CREATE TABLE Cliente (
 
 CREATE TABLE Reserva (
   id INT NOT NULL AUTO_INCREMENT,
-precio DECIMAL(10, 2) NOT NULL,
+  precio DECIMAL(10, 2) NOT NULL,
   fecha_compra DATETIME NOT NULL,
   hora_inicio TIME NOT NULL,
   hora_fin TIME NOT NULL,
