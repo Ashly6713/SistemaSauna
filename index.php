@@ -45,11 +45,6 @@
                                         <label class="form-check-label" for="remember-me">Recordar contraseña</label>
                                     </div>
                                 </div>
-                                <!-- <div class="col-6">
-                                    <div class="text-end">
-                                        <a href="#">Forgot Password?</a>
-                                    </div>
-                                </div>-->
                                 <div>
                                <!-- <button type="submit" class="form-control btn btn-primary mt-3">Enviar</button>-->
                                     <input type="submit" class="form-control">
