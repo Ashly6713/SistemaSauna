@@ -1,3 +1,9 @@
 <?php
 
-const BASE_URL = 'http://localhost/SistemaSauna';
+const base_url = "http://localhost/SistemaSauna0/";
+const host = "localhost";
+const user = "root";
+const pass = "";
+const db = "sistema_reservas";
+const charset = "charset=utf8";
+?>
