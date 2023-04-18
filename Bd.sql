@@ -4,7 +4,8 @@ USE sistema_reservas;
 
 CREATE TABLE Usuario (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  nombre VARCHAR(50) NOT NULL,
+  nom_usuario VARCHAR(50) NOT NULL,
+  nombres VARCHAR(50) NOT NULL,
   apellido VARCHAR(50) NOT NULL,
   correo VARCHAR(100) NOT NULL,
   contrasena VARCHAR(100) NOT NULL,
@@ -50,3 +51,10 @@ CREATE TABLE Reserva (
   FOREIGN KEY (cliente_id) REFERENCES Cliente(ci),
   FOREIGN KEY (cuarto_id) REFERENCES Cuarto(id)
 );
+
+--INSERTAR USUARIOS
+
+--INSERT INTO Usuario (nom_usuario,nombres, apellido, correo, contrasena, Rol)
+--VALUES ('Admin','Juan', 'Pérez', 'juan.perez@gmail.com', '123', 1);
+--INSERT INTO Usuario (nom_usuario,nombres, apellido, correo, contrasena, Rol)
+--VALUES ('Emp','Mario', 'Lopez', 'mario.lopez@gmail.com', '456', 0);

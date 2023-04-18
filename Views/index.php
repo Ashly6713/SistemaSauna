@@ -34,15 +34,14 @@
                                                 <label class="small mb-1" for="clave"><i class="fas fa-key"></i>  Contraseña</label>
                                                 
                                             </div>
-                                            <div >
-                                               <!-- <a  class="form-control btn btn-primary mt-3" href="index.html">Login</a>-->
+                                            <div class="alert alert-danger text-center d-none" id="alerta" role="alert">
+
+                                            </div>
+                                            <div claa="form-group d-flex align-items-center justify-content-between mt-4 " >
                                                 <button class="form-control btn btn-primary mt-3" type="submit" onclick="frmLogin(event);">Login</button>
                                             </div>
                                         </form>
                                     </div>
-                                    <!--<div class="card-footer text-center py-3">
-                                        <div class="small"><a href="register.html">Need an account? Sign up!</a></div>
-                                    </div> -->
                                  </div>
                                     <div class="col-md-6">
                                          <div >
@@ -74,7 +73,7 @@
         <script src="<?php echo base_url; ?>Assets/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="<?php echo base_url; ?>Assets/js/scripts.js"></script>
         <script>
-            const base_url = "<?php echo base_url;?> ";
+            const base_url = "<?php echo base_url; ?>";
         </script>
         <script src="<?php echo base_url; ?>Assets/js/funciones.js"></script>
     </body>
