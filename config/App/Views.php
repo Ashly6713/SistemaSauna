@@ -1,5 +1,5 @@
 <?php
-
+//Vistas
 class Views{
     public function getView($controlador, $vista)
     {

@@ -1,6 +1,6 @@
 <?php
 class Controller {
-    //codigo nuevo
+    //añadir codigo
     protected $views, $model;
     public function __construct()
     {
