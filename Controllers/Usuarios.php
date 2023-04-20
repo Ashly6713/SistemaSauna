@@ -17,12 +17,9 @@ public function validar()
       $clave = $_POST['clave'];
       $data = $this->model->getUsuario($usuario, $clave);
       if($data){
-           $_SESSION['id_usuario']  = $data['id'] ;
+           $_SESSION['id']  = $data['id'] ;
            $_SESSION['nom_usuario']  = $data['nom_usuario'] ;
            $_SESSION['nombres']  = $data['nombres'] ;
-           $_SESSION['apellidos']  = $data['apellido'] ;
-           $_SESSION['correo']  = $data['correo'] ;
-           $_SESSION['Rol']  = $data['Rol'] ;
            $msg = "ok";
       } else{
          $msg = "Usuario o contraseña incorrecta";

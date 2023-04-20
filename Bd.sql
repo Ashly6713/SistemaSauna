@@ -52,8 +52,8 @@ CREATE TABLE Reserva (
   FOREIGN KEY (cuarto_id) REFERENCES Cuarto(id)
 );
 
-
 --INSERTAR USUARIOS
+
 --INSERT INTO Usuario (nom_usuario,nombres, apellido, correo, contrasena, Rol)
 --VALUES ('Admin','Juan', 'Pérez', 'juan.perez@gmail.com', '123', 1);
 --INSERT INTO Usuario (nom_usuario,nombres, apellido, correo, contrasena, Rol)
