@@ -8,7 +8,7 @@
         <meta name="author" content="" />
         <title>Iniciar Sesión</title>
         <link href="<?php echo base_url; ?>Assets/css/styles.css" rel="stylesheet" />
-        <script src="<?php echo base_url; ?>Assets/js/all.min.js" crossorigin="anonymous"></script>
+        <script src="<?php echo base_url; ?>Assets/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="bg-primary bg-opacity-50">
         <div id="layoutAuthentication">
@@ -38,14 +38,14 @@
 
                                             </div>
                                             <div claa="form-group d-flex align-items-center justify-content-between mt-4 " >
-                                                <button class="form-control btn btn-primary mt-3" type="submit" onclick="frmLogin(event);">Login</button>
+                                                <button class="form-control btn btn-primary mt-3" type="submit" onclick="frmLogin(event);">Log In</button>
                                             </div>
                                         </form>
                                     </div>
                                  </div>
                                     <div class="col-md-6">
                                          <div >
-                                              <img src="./login_img.svg" alt="login" class="img-fluid p-5">
+                                              <img src="dinosaur-removebg.png" alt="login" class="img-fluid p-5">
                                          </div>
                                     </div>
                              </div>
@@ -59,17 +59,12 @@
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Copyright &copy; <a href="https://es-la.facebook.com/Saunaminerva/" target="_blank" rel="noopener nooferrer">Visite mi pagina de Faceboock </a><?php echo date("Y"); ?></div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
+            
                         </div>
                     </div>
                 </footer>
             </div>
         </div>
-        <script src="<?php echo base_url; ?>Assets/js/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
         <script src="<?php echo base_url; ?>Assets/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="<?php echo base_url; ?>Assets/js/scripts.js"></script>
         <script>
