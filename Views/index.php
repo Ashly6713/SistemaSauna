@@ -45,7 +45,7 @@
                                  </div>
                                     <div class="col-md-6">
                                          <div >
-                                              <img src="dinosaur-removebg.png" alt="login" class="img-fluid p-5">
+                                              <img src="Swampy.webp" alt="login" class="img-fluid p-5">
                                          </div>
                                     </div>
                              </div>
@@ -58,7 +58,7 @@
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; <a href="https://es-la.facebook.com/Saunaminerva/" target="_blank" rel="noopener nooferrer">Visite mi pagina de Faceboock </a><?php echo date("Y"); ?></div>
+                            <div class="text-muted"> <a href="https://es-la.facebook.com/Saunaminerva/" target="_blank" rel="noopener nooferrer"><i class="fa-brands fa-facebook" aria-hidden="true"></i>Página de Faceboock </a><?php echo date("Y"); ?></div>
             
                         </div>
                     </div>

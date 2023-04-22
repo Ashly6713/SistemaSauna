@@ -1,11 +1,12 @@
 </div>
+<img src="logo3.png" width="150" height="200"  align="right">
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Suana y Duchas Minerva 2023</div>
                             <div>
-                                <a href="https://es-la.facebook.com/Saunaminerva/"></i>Página de Faceboock<i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                <a href="https://es-la.facebook.com/Saunaminerva/">Página de Faceboock <i class="fa-brands fa-facebook" aria-hidden="true"></i></a>
                             </div>
                         </div>
                     </div>
