@@ -47,8 +47,10 @@ CREATE TABLE Reserva (
   hora_fin TIME NOT NULL,
   cliente_id INT NOT NULL,
   cuarto_id INT NOT NULL,
+  usuario_id INT NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (cliente_id) REFERENCES Cliente(ci),
+  FOREIGN KEY (usuario_id) REFERENCES Usuario(id),
   FOREIGN KEY (cuarto_id) REFERENCES Cuarto(id)
 );
 

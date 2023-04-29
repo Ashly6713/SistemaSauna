@@ -1,3 +1,40 @@
+let tblUsuarios;
+document.addEventListener("DOMContentLoaded", function(){
+    tblUsuarios = $('#tblUsuarios').DataTable( {
+    ajax: {
+        url: base_url + "Usuarios/listar",
+        dataSrc: ''
+    },
+    columns: [ {
+         'data' : 'id'
+      },
+      {
+        'data' : 'nom_usuario'
+      },
+    {
+        'data' : 'nombres'
+    },
+    {
+        'data' : 'apellido'
+    },
+    {
+        'data' : 'correo'
+    },
+    {
+        'data' : 'contrasena'
+    },
+    {
+        'data' : 'Rol'
+    },
+    {
+        'data' : 'Estado'
+    },
+    {
+        'data' : 'acciones'
+    }
+    ]
+   });
+})
 function frmLogin(e) {
     e.preventDefault();
     const usuario = document.getElementById("usuario");
@@ -30,3 +67,7 @@ function frmLogin(e) {
     }
 
 }
+function frmUsuario() {
+    $("#nuevo_usuario").modal("show");
+}
+

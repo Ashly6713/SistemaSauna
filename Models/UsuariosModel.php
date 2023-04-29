@@ -9,6 +9,12 @@ public function getUsuario(string $usuario, string $clave)
     $data = $this->select($sql);
     return $data;
 }
+public function getUsuarios()
+{
+    $sql = "SELECT * FROM usuario";
+    $data = $this->selectAll($sql);
+    return $data;
+}
 }
 
 ?>

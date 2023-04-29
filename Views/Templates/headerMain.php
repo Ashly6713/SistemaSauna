@@ -38,7 +38,7 @@
                                     <a class="nav-link" href="#"><h6>Visualizar estados de los cuartos</h6></a>
                                 </nav>
                             </div>
-                            <a class="nav-link" href="<?php echo base_url; ?>Usuarios">
+                            <a class="nav-link" href="charts.html">
                                 <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-user-plus"></i></h5></div>
                                  <h5> Clientes</h5> 
                             </a>
@@ -71,10 +71,11 @@
             </div>
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid mt-2">
-<!--                        <h1 class="mt-4">Panel principal</h1>
-                        
-                    
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Panel principal</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item active">---------------------------------------------</li>
+                        </ol>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
@@ -133,4 +134,4 @@
                                 </div>
                             </div>
                         </div>
-                        -->
+                       
