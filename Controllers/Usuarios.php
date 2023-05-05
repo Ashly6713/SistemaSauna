@@ -13,14 +13,14 @@ public function listar()
    $data = $this->model->getUsuarios();
    for($i=0;$i< count($data); $i++){
       if($data[$i]['Rol']==1) {
-         $data[$i]['Rol'] = '<span class="badge badge-primary">Administrador</span>';
+         $data[$i]['Rol'] = '<p>Administrador</p>';
       }else{
-         $data[$i]['Rol'] = '<span class="badge badge-primary">Empleado</span>';
+         $data[$i]['Rol'] = '<p>Empleado</p';
       }
       if($data[$i]['Estado']==1) {
-         $data[$i]['Estado'] = '<span class="badge badge-outline-success">Activo</span>';
+         $data[$i]['Estado'] = '<span class="badge badge-success">Activo</span>';
       }else{
-         $data[$i]['Estado'] = '<span class="badge badge-outline-danger">Inactivo</span>';
+         $data[$i]['Estado'] = '<span class="badge badge-danger">Inactivo</span>';
       }
             $data[$i]['acciones'] = '<div>
             <button class="btn btn-primary" type="button">Editar</button>
@@ -51,7 +51,36 @@ public function validar()
    echo json_encode($msg, JSON_UNESCAPED_UNICODE);
    die();
 }
+
+public function registrar()
+{  
+   $usuario = $_POST['usuario'];
+   $nombre = $_POST['nombre'];
+   $apellido = $_POST['apellido'];
+   $correo = $_POST['correo'];
+   $clave = $_POST['clave'];
+   $confirmar = $_POST['confirmar'];
+   $rol = $_POST['rol'];
+   $estado = $_POST['estado'];
+   if(empty($usuario)|| empty($nombre)|| empty($apellido)|| empty($correo)|| empty($clave)){
+      $msg = "Todos los campos son obligatorios";
+   }else if ($clave != $confirmar){
+      $msg = "Las contraseñas no coinciden";
+   }else{
+      $data = $this->model->registrarUsuario($usuario,  $nombre, $apellido, $correo, $clave, $rol, $estado );
+      if($data == "ok"){
+         $msg = "si";
+
+      }else{
+         $msg = "Error al registrar el usuario";
+      }
+   }
+   echo json_encode($msg, JSON_UNESCAPED_UNICODE);
+   die();
 }
+}
+
+
 
 ?>
 

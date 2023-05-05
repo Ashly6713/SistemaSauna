@@ -4,9 +4,48 @@
 </ol>
 
 <button class="btn btn-outline-primary btn-lg mb-2" type="button" onclick="frmUsuario();">Añadir nuevo Usuario</button>
+<style>
+    .badge-primary {
+   color: #ebeef0;
+   background-color: #B23CFD;
+}
 
+.badge-secondary{
+   color: #ebeef0;
+   background-color: #2abe74;
+}
+
+.badge-success {
+   color: #ebeef0;
+   background-color: #198754;
+}
+
+.badge-danger{
+   color: #ebeef0;
+   background-color: #dc3545;
+}
+
+.badge-warning {
+   color: #ebeef0;
+   background-color: #5f3cfd;
+}
+
+.badge-info {
+   color: #ebeef0;
+   background-color: #fd3c46;
+}
+.badge-light {
+   color: #ebeef0;
+   background-color: #3cfdbd;
+}
+.badge-dark {
+   color: #ebeef0;
+   background-color: #064118;
+}
+  
+    </style>
 <table class="table table-dark" id="tblUsuarios">
-    <thead class="thead-dark">
+    <thead class="thead-light bg-dark">
     <tr>
             <th>Id</th>
             <th>Nombre de Usuario</th>
@@ -55,8 +94,8 @@
                    <div class="row">
                     <div class="col-md-6">
                        <div class="form-group">
-                        <label for="contrasena">Contraseña</label>
-                        <input id="contrasena" class="form-control" type="password" name="contrasena" placeholder="Contrasena">
+                        <label for="clave">Contraseña</label>
+                        <input id="clave" class="form-control" type="password" name="clave" placeholder="Contrasena">
                        </div>
                     </div>
                     <div class="col-md-6">
@@ -70,21 +109,22 @@
                     <div class="form-group">
                         <label for="rol">Rol</label>
                         <select id="rol" class="form-control" name="rol">
-                            <option>Administrador</option>
-                            <option>Empleado</option>
+                            <option value="<?php echo 1;?>">Administrador</option>
+                            <option value="<?php echo 0;?>">Empleado</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="estado">Estado</label>
                         <select id="estado" class="form-control" name="estado">
-                            <option>Activo</option>
-                            <option>Inactivo</option>
+                            <option value="<?php echo 1;?>">Activo</option>
+                            <option value="<?php echo 0;?>">Inactivo</option>
                         </select>
                     </div>
-                   <button class="btn btn-primary" type="button">Registrar</button>
+                   <button class="btn btn-primary" type="button" onclick="registrarUser(event);">Registrar</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
 <?php  include "Views/Templates/footer.php"; ?>
+
