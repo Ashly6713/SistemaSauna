@@ -3,7 +3,7 @@
      <h1><li class="breadcrumb-item active">Usuarios</li></h1>
 </ol>
 
-<button class="btn btn-outline-primary btn-lg mb-2" type="button" onclick="frmUsuario();">Añadir nuevo Usuario</button>
+<button class="btn btn-outline-primary btn-lg mb-2" type="button" onclick="frmUsuario();"><i class="fas fa-plus"></i> Nuevo</button>
 <style>
     .badge-primary {
    color: #ebeef0;
@@ -44,15 +44,14 @@
 }
   
     </style>
-<table class="table table-dark" id="tblUsuarios">
-    <thead class="thead-light bg-dark">
+<table class="table table-primary " id="tblUsuarios">
+    <thead class="thead-dark">
     <tr>
             <th>Id</th>
             <th>Nombre de Usuario</th>
             <th>Nombres</th>
             <th>Apellidos</th>
             <th>Correo</th>
-            <th>Contraseña</th>
             <th>Rol</th>
             <th>Estado</th>
             <th></th>
@@ -67,8 +66,8 @@
 <div id="nuevo_usuario" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="my-modal-title">Nuevo Usuario</h5>
+            <div class="modal-header bg-primary opacity-50">
+                <h5 class="modal-title text-white" id="title">Nuevo Usuario</h5>
                 <button class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -77,6 +76,7 @@
                 <form method="post" id="frmUsuarios">
                     <div class="form-group">
                         <label for="usuario">Usuario</label>
+                        <input type="hidden" id="id" name = "id">
                         <input id="usuario" class="form-control" type="text" name="usuario" placeholder="Usuario">
                     </div>
                     <div class="form-group">
@@ -91,7 +91,7 @@
                         <label for="correo">Correo</label>
                         <input id="correo" class="form-control" type="email" name="correo" placeholder="Correo">
                     </div>
-                   <div class="row">
+                   <div class="row" id="claves">
                     <div class="col-md-6">
                        <div class="form-group">
                         <label for="clave">Contraseña</label>
@@ -120,7 +120,8 @@
                             <option value="<?php echo 0;?>">Inactivo</option>
                         </select>
                     </div>
-                   <button class="btn btn-primary" type="button" onclick="registrarUser(event);">Registrar</button>
+                   <button class="btn btn-primary" type="button" onclick="registrarUser(event);" id="btnAccion">Registrar</button>
+                   <button class="btn btn-danger"  data-dismiss="modal">Cancelar</button>
                 </form>
             </div>
         </div>

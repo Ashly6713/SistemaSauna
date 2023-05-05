@@ -2,6 +2,9 @@
 class Usuarios extends Controller{
    public function __construct(){
       session_start();
+      if(empty( $_SESSION['activo'])){
+          header("location:".base_url) ;
+      }
       parent:: __construct();
   } 
 public function index()
@@ -23,8 +26,10 @@ public function listar()
          $data[$i]['Estado'] = '<span class="badge badge-danger">Inactivo</span>';
       }
             $data[$i]['acciones'] = '<div>
-            <button class="btn btn-primary" type="button">Editar</button>
-            <button class="btn btn-danger" type="button">Eliminar</button>
+            <button class="btn btn-primary" type="button" onclick="btnEditarUser('.$data[$i]['id'].');"><i class="fas fa-edit"></i></button>
+            <button class="btn btn-danger" type="button" onclick="btnEliminarUser('.$data[$i]['id'].');"><i class="fas fa-trash-alt"></i></button>
+            <button class="btn btn-secondary" type="button" onclick="btnDeshabilitarUser('.$data[$i]['id'].');">Deshabilitar</button>
+            <button class="btn btn-success" type="button" onclick="btnReingresarUser('.$data[$i]['id'].');">Habilitar</button>
              </div>';
    }
    echo json_encode($data, JSON_UNESCAPED_UNICODE);
@@ -37,11 +42,13 @@ public function validar()
    } else{
       $usuario = $_POST['usuario'];
       $clave = $_POST['clave'];
-      $data = $this->model->getUsuario($usuario, $clave);
+      $hash = hash("SHA256", $clave);
+      $data = $this->model->getUsuario($usuario, $hash);
       if($data){
            $_SESSION['id']  = $data['id'] ;
            $_SESSION['nom_usuario']  = $data['nom_usuario'] ;
            $_SESSION['nombres']  = $data['nombres'] ;
+           $_SESSION['activo']  = true ;
            $msg = "ok";
       } else{
          $msg = "Usuario o contraseña incorrecta";
@@ -62,23 +69,87 @@ public function registrar()
    $confirmar = $_POST['confirmar'];
    $rol = $_POST['rol'];
    $estado = $_POST['estado'];
-   if(empty($usuario)|| empty($nombre)|| empty($apellido)|| empty($correo)|| empty($clave)){
+   $id = $_POST['id'];
+   $hash = hash("SHA256", $clave);
+   if(empty($usuario)|| empty($nombre)|| empty($apellido)|| empty($correo) ){
       $msg = "Todos los campos son obligatorios";
-   }else if ($clave != $confirmar){
-      $msg = "Las contraseñas no coinciden";
    }else{
-      $data = $this->model->registrarUsuario($usuario,  $nombre, $apellido, $correo, $clave, $rol, $estado );
-      if($data == "ok"){
-         $msg = "si";
-
+      if($id == "")
+      {  if($clave !=$confirmar){
+         $msg = "Las contraseñas no coinciden";
       }else{
-         $msg = "Error al registrar el usuario";
+         $data = $this->model->registrarUsuario($usuario,  $nombre, $apellido, $correo, $hash, $rol, $estado );
+         if($data == "ok"){
+            $msg = "si";
+   
+         }else if($data=="existe"){
+            $msg = "El usuario ya existe";
+         } else{
+            $msg = "Error al registrar usuario";
+         }
       }
+        
+      }else{
+         $data = $this->model->modificarUsuario($usuario,  $nombre, $apellido, $correo, $rol, $estado, $id );
+         if($data == "modificado"){
+            $msg = "modificado";
+   
+         } else{
+            $msg = "Error al modificar el usuario";
+         }
+      }
+      
    }
    echo json_encode($msg, JSON_UNESCAPED_UNICODE);
    die();
 }
+
+public function editar(int $id){
+   $data = $this->model->editarUser($id);
+   echo json_encode($data, JSON_UNESCAPED_UNICODE);
+   die();
 }
+public function eliminar(int $id){
+   $data = $this->model->eliminarUser($id);
+   if($data == 1){
+      $msg = "ok";
+
+   } else{
+      $msg = "Error al eliminar el usuario";
+   }
+   echo json_encode($msg, JSON_UNESCAPED_UNICODE);
+   die();
+}
+public function deshabilitar(int $id){
+   $data = $this->model->accionUser(0, $id);
+   if($data == 1){
+      $msg = "ok";
+
+   } else{
+      $msg = "Error al reingresar el usuario";
+   }
+   echo json_encode($msg, JSON_UNESCAPED_UNICODE);
+   die();
+}
+public function reingresar(int $id){
+   $data = $this->model->accionUser(1, $id);
+   if($data == 1){
+      $msg = "ok";
+
+   } else{
+      $msg = "Error al reingresar el usuario";
+   }
+   echo json_encode($msg, JSON_UNESCAPED_UNICODE);
+   die();
+}
+public function salir(){
+   session_destroy();
+   header("location:".base_url) ;
+}
+
+
+}
+
 
 
 
