@@ -12,7 +12,7 @@
 
 .badge-secondary{
    color: #ebeef0;
-   background-color: #2abe74;
+   background-color: #6c757d;
 }
 
 .badge-success {

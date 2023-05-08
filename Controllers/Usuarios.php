@@ -22,15 +22,19 @@ public function listar()
       }
       if($data[$i]['Estado']==1) {
          $data[$i]['Estado'] = '<span class="badge badge-success">Activo</span>';
-      }else{
-         $data[$i]['Estado'] = '<span class="badge badge-danger">Inactivo</span>';
-      }
-            $data[$i]['acciones'] = '<div>
+         $data[$i]['acciones'] = '<div>
             <button class="btn btn-primary" type="button" onclick="btnEditarUser('.$data[$i]['id'].');"><i class="fas fa-edit"></i></button>
             <button class="btn btn-danger" type="button" onclick="btnEliminarUser('.$data[$i]['id'].');"><i class="fas fa-trash-alt"></i></button>
-            <button class="btn btn-secondary" type="button" onclick="btnDeshabilitarUser('.$data[$i]['id'].');">Deshabilitar</button>
-            <button class="btn btn-success" type="button" onclick="btnReingresarUser('.$data[$i]['id'].');">Habilitar</button>
+            <button class="btn btn-secondary" type="button" onclick="btnDeshabilitarUser('.$data[$i]['id'].');">Desactivar</button>
              </div>';
+      }else{
+         $data[$i]['Estado'] = '<span class="badge badge-secondary">Inactivo</span>';
+         $data[$i]['acciones'] = '<div>
+            <button class="btn btn-danger" type="button" onclick="btnEliminarUser('.$data[$i]['id'].');"><i class="fas fa-trash-alt"></i></button>
+            <button class="btn btn-success" type="button" onclick="btnReingresarUser('.$data[$i]['id'].');">Activar</button>
+             </div>';
+      }
+            
    }
    echo json_encode($data, JSON_UNESCAPED_UNICODE);
    die();

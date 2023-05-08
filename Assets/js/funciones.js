@@ -1,4 +1,4 @@
-let tblUsuarios;
+let tblUsuarios, tblCuartos;
 
 document.addEventListener("DOMContentLoaded", function(){
     tblUsuarios = $('#tblUsuarios').DataTable( {
@@ -26,6 +26,32 @@ document.addEventListener("DOMContentLoaded", function(){
     },
     {
         'data' : 'Estado'
+    },
+    {
+        'data' : 'acciones'
+    }
+    ]
+   });
+   //fin de Usuarios
+   tblCuartos = $('#tblCuartos').DataTable( {
+    ajax: {
+        url: base_url + "Cuartos/listar",
+        dataSrc: ''
+    },
+    columns: [ {
+         'data' : 'id'
+      },
+      {
+        'data' : 'numero'
+      },
+    {
+        'data' : 'disponibilidad'
+    },
+    {
+        'data' : 'estado'
+    },
+    {
+        'data' : 'nombre'
     },
     {
         'data' : 'acciones'
@@ -149,14 +175,14 @@ function btnEditarUser(id){
             if (this.readyState == 4 && this.status == 200) {
               const res = JSON.parse(this.responseText);
               
-              usuario = document.getElementById("id").value = res.id;
-              usuario = document.getElementById("usuario").value = res.nom_usuario;
-              nombre = document.getElementById("nombre").value = res.nombres;
-              apellido = document.getElementById("apellido").value = res.apellido;
-              correo= document.getElementById("correo").value = res.correo;
-             rol = document.getElementById("rol").value = res.Rol;
-              estado = document.getElementById("estado").value = res.Estado;
-              estado = document.getElementById("claves").classList.add("d-none");
+              document.getElementById("id").value = res.id;
+              document.getElementById("usuario").value = res.nom_usuario;
+               document.getElementById("nombre").value = res.nombres;
+              document.getElementById("apellido").value = res.apellido;
+              document.getElementById("correo").value = res.correo;
+              document.getElementById("rol").value = res.Rol;
+              document.getElementById("estado").value = res.Estado;
+              document.getElementById("claves").classList.add("d-none");
               $("#nuevo_usuario").modal("show");
             }
         }
@@ -204,8 +230,8 @@ function btnEliminarUser(id){
         }
       })
 
-    }
-    function btnDeshabilitarUser(id){
+}
+function btnDeshabilitarUser(id){
         Swal.fire({
             title: 'Esta seguro de eliminar?',
             text: "El usuario no se eliminará de forma permanente, solo cambiará el estado a inactivo!",
@@ -245,8 +271,8 @@ function btnEliminarUser(id){
             }
           })
     
-        }
-    function btnReingresarUser(id){
+}
+function btnReingresarUser(id){
         Swal.fire({
             title: 'Esta seguro de reingresar?',
             icon: 'warning',
@@ -285,5 +311,219 @@ function btnEliminarUser(id){
             }
           })
     
+}
+//fin Usuarios
+function frmCuarto() {
+  document.getElementById("title").innerHTML = "Nuevo Cuarto";
+  document.getElementById("btnAccion").innerHTML = "Registrar";
+  document.getElementById("frmCuarto").reset();
+  $("#nuevo_cuarto").modal("show");
+  document.getElementById("id").value = "";
+}
+function registrarCuarto(e) {
+  e.preventDefault();
+  const numero = document.getElementById("numero");
+  const disponibilidad = document.getElementById("disponibilidad");
+  const estado = document.getElementById("estado");
+  const categoria = document.getElementById("categoria");
+  
+  if (numero.value == "" || disponibilidad.value == ""|| estado.value == "" || categoria.value == "" ) {
+      Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Todos los campos son obligatorios',
+          showConfirmButton: false,
+          timer: 3000
+        })
+  } else{
+      const url = base_url + "Cuartos/registrar";
+      const frm = document.getElementById("frmCuarto");
+      const http = new XMLHttpRequest();
+      http.open("POST", url, true);
+      http.send(new FormData(frm));
+      http.onreadystatechange = function(){
+          if (this.readyState == 4 && this.status == 200) {
+              const res= JSON.parse(this.responseText);
+             if(res == "si"){
+              Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'Cuarto registrado con éxito',
+                  showConfirmButton: false,
+                  timer: 3000
+                })
+                frm.reset();
+                $("#nuevo_cuarto").modal("hide");
+                tblCuartos.ajax.reload();
+              }else if(res == "modificado"){
+                  Swal.fire({
+                      position: 'top-end',
+                      icon: 'success',
+                      title: 'Cuarto modificado con éxito',
+                      showConfirmButton: false,
+                      timer: 3000
+                    })
+                    $("#nuevo_caurto").modal("hide");
+                   tblCuartos.ajax.reload();
+              }else{
+              Swal.fire({
+                  position: 'top-end',
+                  icon: 'error',
+                  title: res,
+                  showConfirmButton: false,
+                  timer: 3000
+                })
+             }
+          }
+      }
+  }
+
+}
+
+function btnEditarCuarto(id){
+  document.getElementById("title").innerHTML = "Modificar Cuarto";
+  document.getElementById("btnAccion").innerHTML = "Modificar";
+ 
+      const url = base_url + "Cuartos/editar/"+id;
+      const http = new XMLHttpRequest();
+      http.open("GET", url, true);
+      http.send();
+      http.onreadystatechange = function(){
+          if (this.readyState == 4 && this.status == 200) {
+            const res = JSON.parse(this.responseText);
+            
+             document.getElementById("id").value = res.id;
+             document.getElementById("numero").value = res.numero;
+            document.getElementById("disponibilidad").value = res.disponibilidad;
+            document.getElementById("estado").value = res.estado;
+            document.getElementById("categoria").value = res.categoria_id;
+            $("#nuevo_cuarto").modal("show");
+          }
+      }
+  
+
+}
+
+function btnEliminarCuarto(id){
+  Swal.fire({
+      title: 'Esta seguro de eliminar?',
+      text: "El cuarto se eliminará de forma permanente!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si!',
+      cancelButtonText: 'No!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+          const url = base_url + "Cuartos/eliminar/"+id;
+          const http = new XMLHttpRequest();
+      http.open("GET", url, true);
+      http.send();
+      http.onreadystatechange = function(){
+          if (this.readyState == 4 && this.status == 200) {
+              const res = JSON.parse(this.responseText);
+            if (res == "ok"){
+              Swal.fire(
+                  'Mensaje!',
+                  'Cuarto eliminado con éxito.',
+                  'success'
+                )
+                
+                tblCuartos.ajax.reload();
+            }else{
+              Swal.fire(
+                  'Mensaje!',
+                  res,
+                  'error'
+                )
+            }
+          }
         }
-    
+       
+      }
+    })
+
+}
+function btnDeshabilitarCuarto(id){
+      Swal.fire({
+          title: 'Esta seguro de eliminar?',
+          text: "El cuarto no se eliminará de forma permanente, solo cambiará el estado a inactivo!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si!',
+          cancelButtonText: 'No!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+              const url = base_url + "Cuartos/deshabilitar/"+id;
+              const http = new XMLHttpRequest();
+          http.open("GET", url, true);
+          http.send();
+          http.onreadystatechange = function(){
+              if (this.readyState == 4 && this.status == 200) {
+                  const res = JSON.parse(this.responseText);
+                if (res == "ok"){
+                  Swal.fire(
+                      'Mensaje!',
+                      'Cuarto eliminado con éxito.',
+                      'success'
+                    )
+                    
+                    tblCuartos.ajax.reload();
+                }else{
+                  Swal.fire(
+                      'Mensaje!',
+                      res,
+                      'error'
+                    )
+                }
+              }
+            }
+           
+          }
+        })
+  
+}
+function btnReingresarCuarto(id){
+      Swal.fire({
+          title: 'Esta seguro de reingresar?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si!',
+          cancelButtonText: 'No!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+              const url = base_url + "Cuartos/reingresar/"+id;
+              const http = new XMLHttpRequest();
+          http.open("GET", url, true);
+          http.send();
+          http.onreadystatechange = function(){
+              if (this.readyState == 4 && this.status == 200) {
+                  const res = JSON.parse(this.responseText);
+                if (res == "ok"){
+                  Swal.fire(
+                      'Mensaje!',
+                      'Cuarto reingresado con éxito.',
+                      'success'
+                    )
+                    
+                    tblCuartos.ajax.reload();
+                }else{
+                  Swal.fire(
+                      'Mensaje!',
+                      res,
+                      'error'
+                    )
+                }
+              }
+            }
+           
+          }
+        })
+  
+}
+ 

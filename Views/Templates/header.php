@@ -44,15 +44,15 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#"><h6>Gestionar cuartos</h6></a>
-                                    <a class="nav-link" href="#"><h6>Visualizar estados de los cuartos</h6></a>
+                                    <a class="nav-link" href="<?php echo base_url; ?>Cuartos"><h6><i class="fas fa-door-closed"></i> Gestionar cuartos</h6></a>
+                                    <a class="nav-link" href="#"><h6><i class="fas fa-door-open"></i> Visualizar estados de los cuartos</h6></a>
                                 </nav>
                             </div>
-                            <a class="nav-link" href="<?php echo base_url; ?>Usuarios">
+                            <a class="nav-link" href="#">
                                 <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-user-plus"></i></h5></div>
                                  <h5> Clientes</h5> 
                             </a>
-                            <a class="nav-link" href="tables.html">
+                            <a class="nav-link" href="<?php echo base_url; ?>Usuarios">
                                 <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-users"></i></h5></div>
                                 <h5> Usuarios</h5> 
                             </a>
@@ -67,8 +67,8 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#"><h6>Reportes de reservas</h6></a>
-                                    <a class="nav-link" href="#"><h6>Reporte economico</h6></a>
+                                    <a class="nav-link" href="#"><h6><i class="fas fa-money-check"></i> Reportes de reservas</h6></a>
+                                    <a class="nav-link" href="#"><h6><i class="fas fa-money-check-alt"></i> Reporte económico</h6></a>
                                 </nav>
                             </div>
                         </div>
