@@ -25,13 +25,13 @@ public function listar()
          $data[$i]['acciones'] = '<div>
             <button class="btn btn-primary" type="button" onclick="btnEditarUser('.$data[$i]['id'].');"><i class="fas fa-edit"></i></button>
             <button class="btn btn-danger" type="button" onclick="btnEliminarUser('.$data[$i]['id'].');"><i class="fas fa-trash-alt"></i></button>
-            <button class="btn btn-secondary" type="button" onclick="btnDeshabilitarUser('.$data[$i]['id'].');">Desactivar</button>
+            <button class="btn btn-secondary" type="button" onclick="btnDeshabilitarUser('.$data[$i]['id'].');"><i class="fas fa-circle"></i></button>
              </div>';
       }else{
          $data[$i]['Estado'] = '<span class="badge badge-secondary">Inactivo</span>';
          $data[$i]['acciones'] = '<div>
             <button class="btn btn-danger" type="button" onclick="btnEliminarUser('.$data[$i]['id'].');"><i class="fas fa-trash-alt"></i></button>
-            <button class="btn btn-success" type="button" onclick="btnReingresarUser('.$data[$i]['id'].');">Activar</button>
+            <button class="btn btn-success" type="button" onclick="btnReingresarUser('.$data[$i]['id'].');"><i class="fas fa-circle"></i></button>
              </div>';
       }
             

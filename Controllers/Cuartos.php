@@ -25,11 +25,14 @@ public function listar()
       if($data[$i]['estado']==1) {
          $data[$i]['estado'] = '<span class="badge badge-success">Activo</span>';
          $data[$i]['acciones'] = '<div>
+            <button class="btn btn-primary" type="button" onclick="btnEditarCuarto('.$data[$i]['id'].');"><i class="fas fa-edit"></i></button>
+            <button class="btn btn-danger" type="button" onclick="btnEliminarCuarto('.$data[$i]['id'].');"><i class="fas fa-trash-alt"></i></button>
             <button class="btn btn-secondary" type="button" onclick="btnDeshabilitarCuarto('.$data[$i]['id'].');"><i class="fas fa-circle"></i></button>
             </div>';
       }else{
          $data[$i]['estado'] = '<span class="badge badge-secondary">Inactivo</span>';
          $data[$i]['acciones'] = '<div>
+            <button class="btn btn-danger" type="button" onclick="btnEliminarCuarto('.$data[$i]['id'].');"><i class="fas fa-trash-alt"></i></button>
             <button class="btn btn-success" type="button" onclick="btnReingresarCuarto('.$data[$i]['id'].');"><i class="fas fa-circle"></i></button>
              </div>';
       }
