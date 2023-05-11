@@ -19,6 +19,7 @@ CREATE TABLE Categoria_cuarto (
   nombre VARCHAR(50) NOT NULL,
   codigo VARCHAR(10) NOT NULL,
   precio_hora DECIMAL(10, 2) NOT NULL,
+  estado BOOLEAN NOT NULL,
   PRIMARY KEY (id)
 );
 

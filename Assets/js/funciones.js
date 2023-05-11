@@ -1,4 +1,4 @@
-let tblUsuarios, tblCuartos;
+let tblUsuarios, tblCuartos, tblCategorias;
 
 document.addEventListener("DOMContentLoaded", function(){
     tblUsuarios = $('#tblUsuarios').DataTable( {
@@ -33,6 +33,32 @@ document.addEventListener("DOMContentLoaded", function(){
     ]
    });
    //fin de Usuarios
+   tblCategorias = $('#tblCategorias').DataTable( {
+    ajax: {
+        url: base_url + "Categorias/listar",
+        dataSrc: ''
+    },
+    columns: [ {
+         'data' : 'id'
+      },
+      {
+        'data' : 'nombre'
+      },
+    {
+        'data' : 'codigo'
+    },
+    {
+        'data' : 'precio_hora'
+    },
+    {
+        'data' : 'estado'
+    },
+    {
+        'data' : 'acciones'
+    }
+    ]
+   });
+   //fin cuartos
    tblCuartos = $('#tblCuartos').DataTable( {
     ajax: {
         url: base_url + "Cuartos/listar",
@@ -512,6 +538,221 @@ function btnReingresarCuarto(id){
                     )
                     
                     tblCuartos.ajax.reload();
+                }else{
+                  Swal.fire(
+                      'Mensaje!',
+                      res,
+                      'error'
+                    )
+                }
+              }
+            }
+           
+          }
+        })
+  
+}
+
+//fin Cuartos
+function frmCategoria() {
+  document.getElementById("title").innerHTML = "Nueva Categoria";
+  document.getElementById("btnAccion").innerHTML = "Registrar";
+  document.getElementById("frmCategorias").reset();
+  $("#nuevo_categoria").modal("show");
+  document.getElementById("id").value = "";
+}
+function registrarCategoria(e) {
+  e.preventDefault();
+  const nombre = document.getElementById("nombre");
+  const codigo = document.getElementById("codigo");
+  const precio_hora= document.getElementById("precio_hora");
+  const estado = document.getElementById("estado");
+  if (nombre.value == ""|| codigo.value == "" || precio_hora.value == ""  || estado.value == "") {
+      Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Todos los campos son obligatorios',
+          showConfirmButton: false,
+          timer: 3000
+        })
+  } else{
+      const url = base_url + "Categorias/registrar";
+      const frm = document.getElementById("frmCategorias");
+      const http = new XMLHttpRequest();
+      http.open("POST", url, true);
+      http.send(new FormData(frm));
+      http.onreadystatechange = function(){
+          if (this.readyState == 4 && this.status == 200) {
+              const res= JSON.parse(this.responseText);
+             if(res == "si"){
+              Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'Categoria registrada con éxito',
+                  showConfirmButton: false,
+                  timer: 3000
+                })
+                frm.reset();
+                $("#nuevo_categoria").modal("hide");
+                tblCategorias.ajax.reload();
+              }else if(res == "modificado"){
+                  Swal.fire({
+                      position: 'top-end',
+                      icon: 'success',
+                      title: 'Categoria modificado con éxito',
+                      showConfirmButton: false,
+                      timer: 3000
+                    })
+                    $("#nuevo_categoria").modal("hide");
+                    tblCategorias.ajax.reload();
+              }else{
+              Swal.fire({
+                  position: 'top-end',
+                  icon: 'error',
+                  title: res,
+                  showConfirmButton: false,
+                  timer: 3000
+                })
+             }
+          }
+      }
+  }
+
+}
+
+function btnEditarCategoria(id){
+  document.getElementById("title").innerHTML = "Modificar Categoria";
+  
+  document.getElementById("btnAccion").innerHTML = "Modificar";
+ 
+      const url = base_url + "Categorias/editar/"+id;
+      const http = new XMLHttpRequest();
+      http.open("GET", url, true);
+      http.send();
+      http.onreadystatechange = function(){
+          if (this.readyState == 4 && this.status == 200) {
+            const res = JSON.parse(this.responseText);
+            
+            document.getElementById("id").value = res.id;
+             document.getElementById("nombre").value = res.nombre;
+            document.getElementById("codigo").value = res.codigo;
+            document.getElementById("precio_hora").value = res.precio_hora;
+            document.getElementById("estado").value = res.estado;
+            $("#nuevo_categoria").modal("show");
+          }
+      }
+  
+
+}
+
+function btnEliminarCategoria(id){
+  Swal.fire({
+      title: 'Esta seguro de eliminar?',
+      text: "La categoria se eliminará de forma permanente!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si!',
+      cancelButtonText: 'No!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+          const url = base_url + "Categorias/eliminar/"+id;
+          const http = new XMLHttpRequest();
+      http.open("GET", url, true);
+      http.send();
+      http.onreadystatechange = function(){
+          if (this.readyState == 4 && this.status == 200) {
+              const res = JSON.parse(this.responseText);
+            if (res == "ok"){
+              Swal.fire(
+                  'Mensaje!',
+                  'Categoria eliminada con éxito.',
+                  'success'
+                )
+                
+                tblCategorias.ajax.reload();
+            }else{
+              Swal.fire(
+                  'Mensaje!',
+                  res,
+                  'error'
+                )
+            }
+          }
+        }
+       
+      }
+    })
+
+}
+function btnDeshabilitarCategoria(id){
+      Swal.fire({
+          title: 'Esta seguro de eliminar?',
+          text: "La categoria no se eliminará de forma permanente, solo cambiará el estado a inactivo!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si!',
+          cancelButtonText: 'No!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+              const url = base_url + "Categorias/deshabilitar/"+id;
+              const http = new XMLHttpRequest();
+          http.open("GET", url, true);
+          http.send();
+          http.onreadystatechange = function(){
+              if (this.readyState == 4 && this.status == 200) {
+                  const res = JSON.parse(this.responseText);
+                if (res == "ok"){
+                  Swal.fire(
+                      'Mensaje!',
+                      'Categoria eliminada con éxito.',
+                      'success'
+                    )
+                    
+                    tblCategorias.ajax.reload();
+                }else{
+                  Swal.fire(
+                      'Mensaje!',
+                      res,
+                      'error'
+                    )
+                }
+              }
+            }
+           
+          }
+        })
+  
+}
+function btnReingresarCategoria(id){
+      Swal.fire({
+          title: 'Esta seguro de reingresar?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si!',
+          cancelButtonText: 'No!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+              const url = base_url + "Categorias/reingresar/"+id;
+              const http = new XMLHttpRequest();
+          http.open("GET", url, true);
+          http.send();
+          http.onreadystatechange = function(){
+              if (this.readyState == 4 && this.status == 200) {
+                  const res = JSON.parse(this.responseText);
+                if (res == "ok"){
+                  Swal.fire(
+                      'Mensaje!',
+                      'Categoria reingresada con éxito.',
+                      'success'
+                    )
+                    
+                    tblCategorias.ajax.reload();
                 }else{
                   Swal.fire(
                       'Mensaje!',
