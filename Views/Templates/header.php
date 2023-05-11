@@ -48,7 +48,7 @@
                                     <a class="nav-link" href="<?php echo base_url; ?>Categorias"><h6><i class="fas fa-door-open"></i> Categorias</h6></a>
                                 </nav>
                             </div>
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="<?php echo base_url; ?>Clientes">
                                 <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-user-plus"></i></h5></div>
                                  <h5> Clientes</h5> 
                             </a>

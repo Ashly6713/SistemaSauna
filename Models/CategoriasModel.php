@@ -1,6 +1,6 @@
 <?php
 class CategoriasModel extends Query{
-    private  $nombre, $codigo, $precio_hora, $estado, $id;
+    private  $nombre, $codigo, $precio_hora, $estado, $id, $data;
 public function __construct(){
     parent::__construct();
 }
