@@ -28,8 +28,7 @@ public function listar()
             <button class="btn btn-danger" type="button" onclick="btnEliminarCliente('.$data[$i]['id'].');"><i class="fas fa-trash-alt"></i></button>
             <button class="btn btn-success" type="button" onclick="btnReingresarCliente('.$data[$i]['id'].');"><i class="fas fa-circle"></i></button>
              </div>';
-      }
-            
+      }      
    }
    echo json_encode($data, JSON_UNESCAPED_UNICODE);
    die();
@@ -47,7 +46,14 @@ public function registrar()
    if(empty($ci)||empty($nombre)|| empty($apellido)|| empty($telefono) ){
       $msg = "Todos los campos son obligatorios";
    }else{
-      if($id == "")
+      if( !preg_match("/^[[:digit:]]+$/", $ci)){
+         $msg = "ci";
+      }else if(!preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]*$/", $nombre) || !preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]*$/", $apellido) ){
+         $msg = "letras";
+      }else if ( !preg_match("/^(\d{8})$/", $telefono)) {
+         $msg = "numeros";
+      }else{
+         if($id == "")
       {  
          $data = $this->model->registrarCliente($ci, $nombre, $apellido, $telefono, $estado );
          if($data == "ok"){
@@ -67,6 +73,7 @@ public function registrar()
          } else{
             $msg = "Error al modificar el cliente";
          }
+      }
       }
       
    }

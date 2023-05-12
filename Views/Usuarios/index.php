@@ -120,6 +120,9 @@
                             <option value="<?php echo 0;?>">Inactivo</option>
                         </select>
                     </div>
+                    <div class="alert alert-danger text-center d-none" id="alertaU" role="alert">El campo Usuario no puede tener caracteres especiales (?@#$% ...) ni espacios</div>
+                    <div class="alert alert-danger text-center d-none" id="alertaL" role="alert">Los campos de Nombres y Apellidos sólo pueden tener letras</div>
+                    <div class="alert alert-danger text-center d-none" id="alertaC" role="alert">Ingrese un correo valido Ej: alguien@algunlugar.com </div>
                    <button class="btn btn-primary" type="button" onclick="registrarUser(event);" id="btnAccion">Registrar</button>
                    <button class="btn btn-danger"  data-dismiss="modal">Cancelar</button>
                 </form>

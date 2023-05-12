@@ -46,27 +46,34 @@ public function registrar()
    if(empty($nombre)|| empty($codigo)|| empty($precio_hora) ){
       $msg = "Todos los campos son obligatorios";
    }else{
-      if($id == "")
-      {  
-         $data = $this->model->registrarCategoria( $nombre, $codigo, $precio_hora, $estado );
-         if($data == "ok"){
-            $msg = "si";
-   
-         }else if($data=="existe"){
-            $msg = "La categoria ya existe";
-         } else{
-            $msg = "Error al registrar la categoria";
-         }
-        
+      if(!preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/", $nombre) || !preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/", $codigo)){
+         $msg = "letras";
+      }else if ( !preg_match("/^[0-9]+([.][0-9]+)?$/", $precio_hora)) {
+         $msg = "numeros";
       }else{
-         $data = $this->model->modificarCategoria( $nombre, $codigo, $precio_hora, $estado, $id );
-         if($data == "modificado"){
-            $msg = "modificado";
-   
-         } else{
-            $msg = "Error al modificar la categoria";
+         if($id == "")
+         {  
+            $data = $this->model->registrarCategoria( $nombre, $codigo, $precio_hora, $estado );
+            if($data == "ok"){
+               $msg = "si";
+      
+            }else if($data=="existe"){
+               $msg = "La categoria ya existe";
+            } else{
+               $msg = "Error al registrar la categoria";
+            }
+           
+         }else{
+            $data = $this->model->modificarCategoria( $nombre, $codigo, $precio_hora, $estado, $id );
+            if($data == "modificado"){
+               $msg = "modificado";
+      
+            } else{
+               $msg = "Error al modificar la categoria";
+            }
          }
       }
+      
       
    }
    echo json_encode($msg, JSON_UNESCAPED_UNICODE);

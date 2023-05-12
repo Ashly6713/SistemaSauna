@@ -74,12 +74,12 @@
                 <form method="post" id="frmCategorias">
                     <div class="form-group">
                          <input type="hidden" id="id" name = "id">
-                        <label for="nombre">Nombre de categoria</label>
+                        <label for="nombre">Nombre</label>
                         <input id="nombre" class="form-control" type="text" name="nombre" placeholder="Nombre de la categoria">
                     </div>
                     <div class="form-group">
-                        <label for="codigo">Codigo</label>
-                        <input id="codigo" class="form-control" type="text" name="codigo" placeholder="Codigo de la categoria">
+                        <label for="codigo">Código</label>
+                        <input id="codigo" class="form-control" type="text" name="codigo" placeholder="Código de la categoria">
                     </div>
                     <div class="form-group">
                         <label for="precio_hora">Precio por hora</label>
@@ -92,6 +92,8 @@
                             <option value="<?php echo 0;?>">Inactivo</option>
                         </select>
                     </div>
+                    <div class="alert alert-danger text-center d-none" id="alertaL" role="alert">Los campos de Nombre y Codigo sólo admiten Letras</div>
+                    <div class="alert alert-danger text-center d-none" id="alertaN" role="alert">El campo precio solo admite Numeros con decimal Ej: 00.00</div>
                    <button class="btn btn-primary" type="button" onclick="registrarCategoria(event);" id="btnAccion">Registrar</button>
                    <button class="btn btn-danger"  data-dismiss="modal">Cancelar</button>
                 </form>

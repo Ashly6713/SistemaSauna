@@ -52,26 +52,29 @@ public function registrar()
    if(empty($numero)||  empty($categoria) ){
       $msg = "Todos los campos son obligatorios";
    }else{
-    if($id ==""){
-         $data = $this->model->registrarCuartos($numero,  $disponibilidad,$estado, $categoria );
-         if($data == "ok"){
-            $msg = "si";
-   
-         }else if($data=="existe"){
-            $msg = "El numero ya existe";
-         } else{
-            $msg = "Error al registrar cuarto";
-         }
+       if ( !preg_match("/^[[:digit:]]+$/", $numero) ) {
+         $msg = "numeros";
       }else{
-         $data = $this->model->modificarCuarto($numero,  $disponibilidad,  $estado, $categoria,$id );
-         if($data == "modificado"){
-            $msg = "modificado";
-   
-         } else{
-            $msg = "Error al modificar el cuarto";
+         if($id ==""){
+            $data = $this->model->registrarCuartos($numero,  $disponibilidad,$estado, $categoria );
+            if($data == "ok"){
+               $msg = "si";
+      
+            }else if($data=="existe"){
+               $msg = "El numero ya existe";
+            } else{
+               $msg = "Error al registrar cuarto";
+            }
+         }else{
+            $data = $this->model->modificarCuarto($numero,  $disponibilidad,  $estado, $categoria,$id );
+            if($data == "modificado"){
+               $msg = "modificado";
+      
+            } else{
+               $msg = "Error al modificar el cuarto";
+            }
          }
       }
-      
    }
    echo json_encode($msg, JSON_UNESCAPED_UNICODE);
    die();

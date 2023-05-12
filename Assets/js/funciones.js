@@ -157,6 +157,9 @@ function frmUsuario() {
 }
 function registrarUser(e) {
     e.preventDefault();
+    document.getElementById("alertaU").classList.add("d-none");
+  document.getElementById("alertaC").classList.add("d-none");
+  document.getElementById("alertaL").classList.add("d-none");
     const usuario = document.getElementById("usuario");
     const nombre = document.getElementById("nombre");
     const apellido = document.getElementById("apellido");
@@ -204,13 +207,21 @@ function registrarUser(e) {
                       $("#nuevo_usuario").modal("hide");
                       tblUsuarios.ajax.reload();
                 }else{
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'error',
-                    title: res,
-                    showConfirmButton: false,
-                    timer: 3000
-                  })
+                  if(res == "usuario"){
+                    document.getElementById("alertaU").classList.remove("d-none");
+                  } else if(res == "letras"){
+                    document.getElementById("alertaL").classList.remove("d-none");
+                  } else if(res == "correo"){
+                    document.getElementById("alertaC").classList.remove("d-none");
+                  }else {
+                    Swal.fire({
+                      position: 'top-end',
+                      icon: 'error',
+                      title: res,
+                      showConfirmButton: false,
+                      timer: 3000
+                    })
+                  }
                }
             }
         }
@@ -219,8 +230,10 @@ function registrarUser(e) {
 }
 
 function btnEditarUser(id){
-    document.getElementById("title").innerHTML = "Modificar Usuario";
-    
+  document.getElementById("alertaU").classList.add("d-none");
+  document.getElementById("alertaC").classList.add("d-none");
+  document.getElementById("alertaL").classList.add("d-none");
+    document.getElementById("title").innerHTML = "Modificar Usuario";  
     document.getElementById("btnAccion").innerHTML = "Modificar";
    
         const url = base_url + "Usuarios/editar/"+id;
@@ -378,6 +391,7 @@ function frmCuarto() {
 }
 function registrarCuarto(e) {
   e.preventDefault();
+  document.getElementById("alertaN").classList.add("d-none");
   const numero = document.getElementById("numero");
   const disponibilidad = document.getElementById("disponibilidad");
   const estado = document.getElementById("estado");
@@ -422,13 +436,18 @@ function registrarCuarto(e) {
                     $("#nuevo_caurto").modal("hide");
                    tblCuartos.ajax.reload();
               }else{
-              Swal.fire({
-                  position: 'top-end',
-                  icon: 'error',
-                  title: res,
-                  showConfirmButton: false,
-                  timer: 3000
-                })
+                if(res == "numeros"){
+                  document.getElementById("alertaN").classList.remove("d-none");
+                }else {
+                  Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: res,
+                    showConfirmButton: false,
+                    timer: 3000
+                  })
+                }
+              
              }
           }
       }
@@ -437,6 +456,7 @@ function registrarCuarto(e) {
 }
 
 function btnEditarCuarto(id){
+  document.getElementById("alertaN").classList.add("d-none");
   document.getElementById("title").innerHTML = "Modificar Cuarto";
   document.getElementById("btnAccion").innerHTML = "Modificar";
  
@@ -447,7 +467,6 @@ function btnEditarCuarto(id){
       http.onreadystatechange = function(){
           if (this.readyState == 4 && this.status == 200) {
             const res = JSON.parse(this.responseText);
-            
              document.getElementById("id").value = res.id;
              document.getElementById("numero").value = res.numero;
             document.getElementById("disponibilidad").value = res.disponibilidad;
@@ -592,6 +611,8 @@ function frmCategoria() {
   document.getElementById("id").value = "";
 }
 function registrarCategoria(e) {
+  document.getElementById("alertaN").classList.add("d-none");
+  document.getElementById("alertaL").classList.add("d-none");
   e.preventDefault();
   const nombre = document.getElementById("nombre");
   const codigo = document.getElementById("codigo");
@@ -636,13 +657,22 @@ function registrarCategoria(e) {
                     $("#nuevo_categoria").modal("hide");
                     tblCategorias.ajax.reload();
               }else{
-              Swal.fire({
-                  position: 'top-end',
-                  icon: 'error',
-                  title: res,
-                  showConfirmButton: false,
-                  timer: 3000
-                })
+                if(res == "letras"){
+                  document.getElementById("alertaL").classList.remove("d-none");
+                } else if(res == "numeros"){
+                  document.getElementById("alertaN").classList.remove("d-none");
+                }else {
+                  document.getElementById("alertaN").classList.add("d-none");
+                  document.getElementById("alertaL").classList.add("d-none");
+                  Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: res,
+                    showConfirmButton: false,
+                    timer: 3000
+                  })
+                }
+             
              }
           }
       }
@@ -651,6 +681,8 @@ function registrarCategoria(e) {
 }
 
 function btnEditarCategoria(id){
+  document.getElementById("alertaN").classList.add("d-none");
+  document.getElementById("alertaL").classList.add("d-none");
   document.getElementById("title").innerHTML = "Modificar Categoria";
   
   document.getElementById("btnAccion").innerHTML = "Modificar";
@@ -808,6 +840,9 @@ function frmCliente() {
 }
 function registrarCliente(e) {
   e.preventDefault();
+  document.getElementById("alertaCi").classList.add("d-none");
+  document.getElementById("alertaN").classList.add("d-none");
+  document.getElementById("alertaL").classList.add("d-none");
   const ci = document.getElementById("ci");
   const nombre = document.getElementById("nombre");
   const apellido = document.getElementById("apellido");
@@ -852,13 +887,21 @@ function registrarCliente(e) {
                     $("#nuevo_cliente").modal("hide");
                     tblClientes.ajax.reload();
               }else{
+                if(res == "ci"){
+                  document.getElementById("alertaCi").classList.remove("d-none");
+                } else if(res == "letras"){
+                  document.getElementById("alertaL").classList.remove("d-none");
+                } else if(res == "numeros"){
+                  document.getElementById("alertaN").classList.remove("d-none");
+                }else {
               Swal.fire({
-                  position: 'top-end',
-                  icon: 'error',
-                  title: res,
-                  showConfirmButton: false,
-                  timer: 3000
-                })
+                position: 'top-end',
+                icon: 'error',
+                title: res,
+                showConfirmButton: false,
+                timer: 3000
+              })
+                }
              }
           }
       }
@@ -870,6 +913,9 @@ function btnEditarCliente(id){
   document.getElementById("title").innerHTML = "Modificar Cliente";
   document.getElementById("btnAccion").innerHTML = "Modificar";
  
+  document.getElementById("alertaCi").classList.add("d-none");
+  document.getElementById("alertaN").classList.add("d-none");
+  document.getElementById("alertaL").classList.add("d-none");
       const url = base_url + "Clientes/editar/"+id;
       const http = new XMLHttpRequest();
       http.open("GET", url, true);

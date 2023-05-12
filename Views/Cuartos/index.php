@@ -100,7 +100,7 @@
                            <?php } ?>
                         </select>
                     </div>
-                    
+                    <div class="alert alert-danger text-center d-none" id="alertaN" role="alert">El campo Numero solo admite  números enteros</div>
                    <button class="btn btn-primary" type="button" onclick="registrarCuarto(event);" id="btnAccion">Registrar</button>
                    <button class="btn btn-danger"  data-dismiss="modal">Cancelar</button>
                 </form>

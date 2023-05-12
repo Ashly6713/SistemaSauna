@@ -49,11 +49,12 @@ public function validar()
       $hash = hash("SHA256", $clave);
       $data = $this->model->getUsuario($usuario, $hash);
       if($data){
+         $msg = "ok";
            $_SESSION['id']  = $data['id'] ;
            $_SESSION['nom_usuario']  = $data['nom_usuario'] ;
            $_SESSION['nombres']  = $data['nombres'] ;
            $_SESSION['activo']  = true ;
-           $msg = "ok";
+           
       } else{
          $msg = "Usuario o contraseña incorrecta";
       }
@@ -78,7 +79,14 @@ public function registrar()
    if(empty($usuario)|| empty($nombre)|| empty($apellido)|| empty($correo) ){
       $msg = "Todos los campos son obligatorios";
    }else{
-      if($id == "")
+      if (!preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9]+$/", $usuario) ) {
+         $msg = "usuario";
+      }else if(!preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]*$/", $nombre) || !preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]*$/", $apellido) ){
+         $msg = "letras";
+      }else if (!preg_match("/^[^@]+@[^@]+\.[a-zA-Z]{2,}$/", $correo) ) {
+         $msg = "correo";
+      }else { 
+         if($id == "")
       {  if($clave !=$confirmar){
          $msg = "Las contraseñas no coinciden";
       }else{
@@ -102,7 +110,7 @@ public function registrar()
             $msg = "Error al modificar el usuario";
          }
       }
-      
+      } 
    }
    echo json_encode($msg, JSON_UNESCAPED_UNICODE);
    die();

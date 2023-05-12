@@ -97,6 +97,9 @@
                             <option value="<?php echo 0;?>">Inactivo</option>
                         </select>
                     </div>
+                    <div class="alert alert-danger text-center d-none" id="alertaCi" role="alert">El campo C. I. sólo admite numeros</div>
+                    <div class="alert alert-danger text-center d-none" id="alertaL" role="alert">Los campos de Nombres y Apellidos sólo pueden tener letras</div>
+                    <div class="alert alert-danger text-center d-none" id="alertaN" role="alert">El Telefono o celular sólo admite numero con 8 dígitos </div>
                    <button class="btn btn-primary" type="button" onclick="registrarCliente(event);" id="btnAccion">Registrar</button>
                    <button class="btn btn-danger"  data-dismiss="modal">Cancelar</button>
                 </form>
