@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -16,7 +15,7 @@
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
            <h1> <a class="navbar-brand ps-3 bs-border-color" href="index.html"> <FONT SIZE="+2">Sauna Minerva  </FONT>    
-                <img src="dinosaur-removebg.png" width="50" height="50"></a></h1>
+                <img src="../dinosaur-removebg.png" width="50" height="50"></a></h1>
             
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
@@ -91,4 +90,68 @@
             </div>
             <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid mt-2">
+                    <div class="container-fluid mt-2">            
+                        <h1 class="mt-4">Panel principal</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item active">---------------------------------------------</li>
+                        </ol>
+                        <div class="row">
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-primary text-white mb-4">
+                                    <div class="card-body"><h5>Clientes <i class="fas fa-user-plus" ></i></h5> </div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="#">Total Clientes</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-warning text-white mb-4">
+                                    <div class="card-body"><h5>Usuarios <i class="fas fa-users" ></i></h5> </div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="#">Total Usuarios</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-success text-white mb-4">
+                                    <div class="card-body"><h5>Reservas <i class="fas fa-ticket"></i></h5></div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="#">Total Reservas</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card bg-secondary text-white mb-4">
+                                    <div class="card-body"><h5>Cuartos <i class="fas fa-bath" ></i><h5> </div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="#">Total cuartos</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-area me-1"></i>
+                                        Ventas por mes
+                                    </div>
+                                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-shower me-1"></i> 
+                                        Categoria de cuartos con más reservas
+                                    </div>
+                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="../logo3.png" width="150" height="200"  align="right">
+<?php include "Views/Templates/footer.php";?>

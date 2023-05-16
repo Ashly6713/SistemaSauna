@@ -1,5 +1,5 @@
 </div>
-<!--<img src="logo3.png" width="150" height="200"  align="right">-->
+
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">

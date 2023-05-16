@@ -58,9 +58,28 @@ CREATE TABLE Reserva (
   FOREIGN KEY (cuarto_id) REFERENCES Cuarto(id)
 );
 
+CREATE TABLE configuracion (
+  id INT PRIMARY KEY,
+  ruc VARCHAR(11),
+  nombre VARCHAR(100),
+  telefono VARCHAR(20),
+  direccion VARCHAR(200),
+  mensaje VARCHAR(255)
+);
+
 -- INSERTAR USUARIOS
 
 -- INSERT INTO Usuario (nom_usuario,nombres, apellido, correo, contrasena, Rol)
 -- VALUES ('Admin','Juan', 'Pérez', 'juan.perez@gmail.com', '123', 1);
 -- INSERT INTO Usuario (nom_usuario,nombres, apellido, correo, contrasena, Rol)
 -- VALUES ('Emp','Mario', 'Lopez', 'mario.lopez@gmail.com', '456', 0);
+ 
+/* INSERT INTO configuracion (id, ruc, nombre, telefono, direccion, mensaje)
+VALUES (
+  DEFAULT,
+  '12345678901',
+  'Sauna y Duchas Minerva',
+  '555-123456',
+  'Calle Principal, Ciudad Ejemplo',
+  'Gracias por su preferencia.'
+); */

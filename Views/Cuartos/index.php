@@ -45,8 +45,8 @@
 }
   
     </style>
-<table class="table table-primary " id="tblCuartos">
-    <thead class="thead-dark">
+<table class="table table-sm table-hover" id="tblCuartos">
+    <thead class="table-primary">
     <tr>
             <th>Id</th>
             <th>Número</th>

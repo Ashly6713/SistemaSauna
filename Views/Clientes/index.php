@@ -44,8 +44,8 @@
 }
   
     </style>
-<table class="table table-primary " id="tblClientes">
-    <thead class="thead-dark">
+<table class="table table-sm table-hover" id="tblClientes">
+    <thead class="table-primary">
     <tr>
             <th>Id</th>
             <th>C.I.</th>
