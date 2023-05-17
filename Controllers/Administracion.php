@@ -15,8 +15,8 @@ class Administracion extends Controller {
     }
     public function home()
     {
-       //$data = $this->model->getEmpresa();
-        $this->views->getView($this, "home");
+        $data = $this->model->getCuartos();
+        $this->views->getView($this, "home", $data);
     }
     public function modificar()
     {

@@ -21,6 +21,12 @@ public function modificar(string $nit,string $nombre, string $telefono, string $
         }
     return $res;
 }
+public function getCuartos()
+{
+    $sql = "SELECT * FROM cuarto";
+    $conn = $this->selectAll($sql);
+    return $conn;
+}
 
 }
 

@@ -1,3 +1,9 @@
+<?php
+  require_once 'config/App/Conexion.php';
+  require_once 'config/App/Query.php';
+  $sql = "SELECT * FROM cuarto";
+  $conn = $data;
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -22,9 +28,9 @@
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i><?php echo $_SESSION['nom_usuario'] ?></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Perfil</a></li>
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#cambiarPass">Perfil</a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="<?php echo base_url; ?>Usuarios/salir">Cerrar Sesion</a></li>
                     </ul>
@@ -77,7 +83,7 @@
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="#"><h6><i class="fas fa-money-check"></i> Reportes de reservas</h6></a>
-                                    <a class="nav-link" href="#"><h6><i class="fas fa-money-check-alt"></i> Reporte económico</h6></a>
+                                    <a class="nav-link" href="<?php echo base_url; ?>RepEc"><h6><i class="fas fa-money-check-alt"></i> Reporte económico</h6></a>
                                 </nav>
                             </div>
                         </div>
@@ -98,7 +104,7 @@
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body"><h5>Clientes <i class="fas fa-user-plus" ></i></h5> </div>
+                                    <div class="card-body"><h4>Clientes <i class="fas fa-user-plus" ></i></h4> </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
                                         <a class="small text-white stretched-link" href="#">Total Clientes</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
@@ -107,7 +113,7 @@
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body"><h5>Usuarios <i class="fas fa-users" ></i></h5> </div>
+                                    <div class="card-body"><h4>Usuarios <i class="fas fa-users" ></i></h4> </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
                                         <a class="small text-white stretched-link" href="#">Total Usuarios</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
@@ -116,7 +122,7 @@
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-success text-white mb-4">
-                                    <div class="card-body"><h5>Reservas <i class="fas fa-ticket"></i></h5></div>
+                                    <div class="card-body"><h4>Reservas <i class="fas fa-ticket"></i></h4></div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
                                         <a class="small text-white stretched-link" href="#">Total Reservas</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
@@ -125,7 +131,7 @@
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-secondary text-white mb-4">
-                                    <div class="card-body"><h5>Cuartos <i class="fas fa-bath" ></i><h5> </div>
+                                    <div class="card-body"><h4>Cuartos <i class="fas fa-bath" ></i><h4> </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
                                         <a class="small text-white stretched-link" href="#">Total cuartos</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
@@ -133,25 +139,40 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-area me-1"></i>
-                                        Ventas por mes
-                                    </div>
-                                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-shower me-1"></i> 
-                                        Categoria de cuartos con más reservas
-                                    </div>
-                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
+            <!--CARDS-->
+            <div class="row">
+            <?php
+              for($i=0;$i< count($data); $i++){
+                $row[$i]= $data[$i];
+            ?>
+        
+            <div class="col-xl-2 col-md-8">
+                <div class="card mb-3" style="max-width: 16rem;">
+                    <div class="card-header">
+                        <h5>
+                        <p class="room_number" align="center"> <i class="fas fa-bath"></i> Cuarto: <?php echo $row[$i]['numero'];?></p>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="caption">
+                            <p class="rate">
+                                <i class="fas fa-star" ></i>
+                                <i class="fas fa-star" ></i>
+                                <i class="fas fa-star" ></i>
+                                <i class="fas fa-star" ></i>
+                                <i class="fas fa-star" ></i>
+                            </p>
+                            <p class="room_number">Estado <?php echo $row[$i]['estado'];?></p>
+                            <p class="room_number">Disponibilidad <?php echo $row[$i]['disponibilidad'];?></p>
                         </div>
+                    </div>
+                    <button class="add">Reservar</button>
+                </div>
+             </div>
+                <?php 
+                }
+                ?> 
+            
+        </div>
                         <img src="../logo3.png" width="150" height="200"  align="right">
 <?php include "Views/Templates/footer.php";?>

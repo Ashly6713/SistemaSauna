@@ -147,6 +147,41 @@ function frmLogin(e) {
     }
 
 }
+function frmCambiarPass(e){
+  e.preventDefault();
+  const actual = document.getElementById('clave_actual').value;
+  const nueva = document.getElementById('clave_nueva').value;
+  const confirmar = document.getElementById('confirmar_clave').value;
+  if(actual == '' || nueva == '' || confirmar == ''){
+    Swal.fire({
+      position: 'top-end',
+      icon: 'warning',
+      title: 'Todos los campos son obligatorios',
+      showConfirmButton: false,
+      timer: 3000
+    })
+  } else {
+    const url = base_url + "Usuarios/cambiarPass";
+    const frm = document.getElementById("frmCambiarPass");
+    const http = new XMLHttpRequest();
+    http.open("POST", url, true);
+    http.send(new FormData(frm));
+    http.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+            const res= JSON.parse(this.responseText);
+              $("#cambiarPass").modal("hide");
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: res,
+                showConfirmButton: false,
+                timer: 3000
+              })
+         }
+  }
+ }
+}
+
 function frmUsuario() {
     document.getElementById("title").innerHTML = "Nuevo Usuario";
     document.getElementById("btnAccion").innerHTML = "Registrar";
