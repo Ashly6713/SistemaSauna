@@ -1,6 +1,6 @@
 <?php
 class CategoriasModel extends Query{
-    private  $nombre, $codigo, $precio_hora, $estado, $id, $data;
+    private  $nombre, $capacidad, $precio_hora, $estado, $id, $data;
 public function __construct(){
     parent::__construct();
 }
@@ -10,18 +10,18 @@ public function getCategorias()
     $data = $this->selectAll($sql);
     return $data;
 }
-public function registrarCategoria(string $nombre, string $codigo, string $precio_hora, int $estado )
+public function registrarCategoria(string $nombre, string $capacidad, string $precio_hora, int $estado )
 {
     $this->nombre = $nombre;
-    $this->codigo = $codigo;
+    $this->capacidad = $capacidad;
     $this->precio_hora = $precio_hora;
     $this->estado = $estado;
     $vericar = "SELECT * FROM categoria_cuarto WHERE nombre = '$this->nombre'";
     $existe = $this->select($vericar);
     if(empty($existe)){
 
-        $sql = "INSERT INTO categoria_cuarto(nombre, codigo, precio_hora, estado) VALUES (?,?,?,?)";
-        $datos = array($this->nombre, $this->codigo, $this->precio_hora, $this->estado);
+        $sql = "INSERT INTO categoria_cuarto(nombre, capacidad, precio_hora, estado) VALUES (?,?,?,?)";
+        $datos = array($this->nombre, $this->capacidad, $this->precio_hora, $this->estado);
         $data = $this->save($sql, $datos);
         if($data == 1){
           $res = 'ok';
@@ -35,15 +35,15 @@ public function registrarCategoria(string $nombre, string $codigo, string $preci
 }
 
 
-public function modificarCategoria(string $nombre, string $codigo, string $precio_hora, int $estado, int $id )
+public function modificarCategoria(string $nombre, string $capacidad, string $precio_hora, int $estado, int $id )
 {
     $this->nombre = $nombre;
-    $this->codigo = $codigo;
+    $this->capacidad = $capacidad;
     $this->precio_hora = $precio_hora;
     $this->id = $id;
     $this->estado = $estado;
-    $sql = "UPDATE categoria_cuarto SET nombre = ?, codigo = ?, precio_hora = ?,  estado = ? WHERE id = ?";
-    $datos = array($this->nombre, $this->codigo, $this->precio_hora, $this->estado, $this->id);
+    $sql = "UPDATE categoria_cuarto SET nombre = ?, capacidad = ?, precio_hora = ?,  estado = ? WHERE id = ?";
+    $datos = array($this->nombre, $this->capacidad, $this->precio_hora, $this->estado, $this->id);
     $data = $this->save($sql, $datos);
     if($data == 1){
       $res = 'modificado';

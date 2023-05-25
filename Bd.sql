@@ -18,7 +18,7 @@ CREATE TABLE Usuario (
 CREATE TABLE Categoria_cuarto (
   id INT NOT NULL AUTO_INCREMENT,
   nombre VARCHAR(50) NOT NULL,
-  codigo VARCHAR(10) NOT NULL,
+  capacidad INT NOT NULL,
   precio_hora DECIMAL(10, 2) NOT NULL,
   estado BOOLEAN NOT NULL,
   PRIMARY KEY (id)

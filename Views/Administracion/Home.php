@@ -26,7 +26,10 @@
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar-->
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav ms-auto">      
+                <li class="nav-item active">
+                    <a class="nav-link" href="<?php echo base_url; ?>Administracion/Home">Home <span class="sr-only">(current)</span></a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i><?php echo $_SESSION['nom_usuario'] ?></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -36,22 +39,16 @@
                     </ul>
                 </li>
             </ul>
-            </nav>
+        </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
                 <nav class="sb-sidenav accordion sb-sidenav-dark bg-dark " id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-cogs" ></i></h5> </div>
-                                <h5 >  Administración</h5>
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            <a class="nav-link" href="<?php echo base_url; ?>Administracion">
+                                <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-building"></i></h5></div>
+                                 <h5> Administración</h5> 
                             </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="<?php echo base_url; ?>Administracion"><h6><i class="fas fa-tools"></i> Configuración</h6></a>
-                                </nav>
-                            </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-bath" ></i></h5> </div>
                                 <h5 >  Cuartos</h5>
@@ -71,16 +68,16 @@
                                 <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-users"></i></h5></div>
                                 <h5> Usuarios</h5> 
                             </a>
-                            <a class="nav-link" href="tables.html">
+                            <a class="nav-link" href="<?php echo base_url; ?>Usuarios">
                                 <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-ticket"></i></h5></div>
                                 <h5>Reservas</h5>
                             </a>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseRep" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-area-chart"></i></h5></div>
                                 <h5> Reportes</h5>
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <div class="collapse" id="collapseRep" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="#"><h6><i class="fas fa-money-check"></i> Reportes de reservas</h6></a>
                                     <a class="nav-link" href="<?php echo base_url; ?>RepEc"><h6><i class="fas fa-money-check-alt"></i> Reporte económico</h6></a>
@@ -139,31 +136,29 @@
                                 </div>
                             </div>
                         </div>
-            <!--CARDS-->
+                        <!--CARDS-->
             <div class="row">
             <?php
               for($i=0;$i< count($data); $i++){
                 $row[$i]= $data[$i];
             ?>
-        
-            <div class="col-xl-2 col-md-8">
-                <div class="card mb-3" style="max-width: 16rem;">
-                    <div class="card-header">
-                        <h5>
-                        <p class="room_number" align="center"> <i class="fas fa-bath"></i> Cuarto: <?php echo $row[$i]['numero'];?></p>
+            <div class="col-xl-2">
+                <div class="card bg-secondary bg-opacity-10 mb-3" align="center" style="max-width: 16rem;">
+                    <div class="card-header" style="max-height: 3rem;">
+                        <h5><p class="room_number" > <i class="fas fa-bath"></i> Cuarto: <?php echo $row[$i]['numero'];?></p>
                         </h5>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="max-height: 6rem;">
                         <div class="caption">
-                            <p class="rate">
-                                <i class="fas fa-star" ></i>
-                                <i class="fas fa-star" ></i>
-                                <i class="fas fa-star" ></i>
-                                <i class="fas fa-star" ></i>
-                                <i class="fas fa-star" ></i>
+                            <p class="categoria"> <?php echo $row[$i]['nombre'];?></p>
+                            <p class="rate" >
+                            <?php
+                                for($j=0;$j< $row[$i]['capacidad']; $j++){
+                                ?><i class="fas fa-person" ></i>
+                            <?php 
+                            }
+                            ?> 
                             </p>
-                            <p class="room_number">Estado <?php echo $row[$i]['estado'];?></p>
-                            <p class="room_number">Disponibilidad <?php echo $row[$i]['disponibilidad'];?></p>
                         </div>
                     </div>
                     <button class="add">Reservar</button>

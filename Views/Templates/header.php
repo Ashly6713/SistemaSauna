@@ -34,14 +34,14 @@
                     </ul>
                 </li>
             </ul>
-            </nav>
+        </nav>
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
                 <nav class="sb-sidenav accordion sb-sidenav-dark bg-dark " id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <a class="nav-link" href="<?php echo base_url; ?>Administracion">
-                                <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-user-plus"></i></h5></div>
+                                <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-building"></i></h5></div>
                                  <h5> Administración</h5> 
                             </a>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
@@ -63,17 +63,17 @@
                                 <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-users"></i></h5></div>
                                 <h5> Usuarios</h5> 
                             </a>
-                            <a class="nav-link" href="tables.html">
+                            <a class="nav-link" href="<?php echo base_url; ?>Reservas">
                                 <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-ticket"></i></h5></div>
                                 <h5>Reservas</h5>
                             </a>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseRep" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-area-chart"></i></h5></div>
                                 <h5> Reportes</h5>
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
+                            <div class="collapse" id="collapseRep" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
                                     <a class="nav-link" href="#"><h6><i class="fas fa-money-check"></i> Reservas</h6></a>
                                     <a class="nav-link" href="<?php echo base_url; ?>RepEc"><h6><i class="fas fa-money-check-alt"></i> Gráficos</h6></a>
                                 </nav>

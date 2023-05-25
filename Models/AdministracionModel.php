@@ -23,9 +23,9 @@ public function modificar(string $nit,string $nombre, string $telefono, string $
 }
 public function getCuartos()
 {
-    $sql = "SELECT * FROM cuarto";
-    $conn = $this->selectAll($sql);
-    return $conn;
+    $sql = "SELECT c.*, cc.id as categoria_id, cc.nombre, cc.capacidad FROM cuarto c INNER JOIN categoria_cuarto cc WHERE c.categoria_id = cc.id";
+    $data = $this->selectAll($sql);
+    return $data;
 }
 
 }

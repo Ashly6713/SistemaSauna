@@ -39,21 +39,21 @@ public function listar()
 public function registrar()
 {  
    $nombre = $_POST['nombre'];
-   $codigo = $_POST['codigo'];
+   $capacidad = $_POST['capacidad'];
    $precio_hora = $_POST['precio_hora'];
    $estado = $_POST['estado'];
    $id = $_POST['id'];
-   if(empty($nombre)|| empty($codigo)|| empty($precio_hora) ){
+   if(empty($nombre)|| empty($capacidad)|| empty($precio_hora) ){
       $msg = "Todos los campos son obligatorios";
    }else{
-      if(!preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/", $nombre) || !preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/", $codigo)){
+      if(!preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/", $nombre) ){
          $msg = "letras";
-      }else if ( !preg_match("/^[0-9]+([.][0-9]+)?$/", $precio_hora)) {
+      }else if ( !preg_match("/^[0-9]+([.][0-9]+)?$/", $precio_hora) || !preg_match("/^[[:digit:]]+$/", $capacidad)) {
          $msg = "numeros";
       }else{
          if($id == "")
          {  
-            $data = $this->model->registrarCategoria( $nombre, $codigo, $precio_hora, $estado );
+            $data = $this->model->registrarCategoria( $nombre, $capacidad, $precio_hora, $estado );
             if($data == "ok"){
                $msg = "si";
       
@@ -64,7 +64,7 @@ public function registrar()
             }
            
          }else{
-            $data = $this->model->modificarCategoria( $nombre, $codigo, $precio_hora, $estado, $id );
+            $data = $this->model->modificarCategoria( $nombre, $capacidad, $precio_hora, $estado, $id );
             if($data == "modificado"){
                $msg = "modificado";
       

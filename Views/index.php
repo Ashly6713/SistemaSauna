@@ -34,9 +34,7 @@
                                                 <label class="small mb-1" for="clave"><i class="fas fa-key"></i>  Contraseña</label>
                                                 
                                             </div>
-                                            <div class="alert alert-danger text-center d-none" id="alerta" role="alert">
-
-                                            </div>
+                                            <div class="alert alert-danger text-center d-none" id="alerta" role="alert"> - </div>
                                             <div claa="form-group d-flex align-items-center justify-content-between mt-4 " >
                                                 <button class="form-control btn btn-primary mt-3" type="submit" onclick="frmLogin(event);">Log In</button>
                                             </div>

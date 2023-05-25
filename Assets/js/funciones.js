@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function(){
         'data' : 'nombre'
       },
     {
-        'data' : 'codigo'
+        'data' : 'capacidad'
     },
     {
         'data' : 'precio_hora'
@@ -650,10 +650,10 @@ function registrarCategoria(e) {
   document.getElementById("alertaL").classList.add("d-none");
   e.preventDefault();
   const nombre = document.getElementById("nombre");
-  const codigo = document.getElementById("codigo");
+  const capacidad = document.getElementById("capacidad");
   const precio_hora= document.getElementById("precio_hora");
   const estado = document.getElementById("estado");
-  if (nombre.value == ""|| codigo.value == "" || precio_hora.value == ""  || estado.value == "") {
+  if (nombre.value == ""|| capacidad.value == "" || precio_hora.value == ""  || estado.value == "") {
       Swal.fire({
           position: 'top-end',
           icon: 'error',
@@ -732,7 +732,7 @@ function btnEditarCategoria(id){
             
             document.getElementById("id").value = res.id;
              document.getElementById("nombre").value = res.nombre;
-            document.getElementById("codigo").value = res.codigo;
+            document.getElementById("capacidad").value = res.capacidad;
             document.getElementById("precio_hora").value = res.precio_hora;
             document.getElementById("estado").value = res.estado;
             $("#nuevo_categoria").modal("show");
@@ -1116,4 +1116,44 @@ function modificarEmpresa(){
       }
   }   
 
+}
+//Fin Informacion de la empresa
+function buscarNumero(e){
+  e.preventDefault();
+  if(e.which == 13){
+    const num = document.getElementById("numero").value;
+    const url = base_url + "Reservas/buscarNumero/"+num;
+    const http = new XMLHttpRequest();
+    http.open("GET", url, true);
+    http.send();
+    http.onreadystatechange = function(){
+      if (this.readyState == 4 && this.status == 200) {
+        const res = JSON.parse(this.responseText);
+        if(res){
+          document.getElementById("categoria").value = res.nombre;
+          document.getElementById("precio_hora").value = res.precio_hora;
+          document.getElementById("id").value = res.id;
+          document.getElementById("hora_inicio").focus();
+        } else {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'El cuarto no existe',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          document.getElementById("numero").value = '';
+          document.getElementById("numero").focus();
+        }
+      }
+    }
+  }
+}
+function calcularHoras(e){
+  e.preventDefault();
+  const hrIn = document.getElementById("hora_inicio").value;
+  const cant = document.getElementById("cantidad").value;
+  document.getElementById("hora_fin").value =  hrIn;
+  document.getElementById("hora_fin").stepUp(cant);  ;
+ 
 }

@@ -74,9 +74,9 @@
             <div class="modal-body">
                 <form method="post" id="frmCuarto">
                     <div class="form-group">
-                        <label for="numero">Numero</label>
+                        <label for="numero">Número</label>
                         <input type="hidden" id="id" name = "id">
-                        <input id="numero" class="form-control" type="text" name="numero" placeholder="Numero del cuarto">
+                        <input id="numero" class="form-control" type="number" name="numero" placeholder="Numero del cuarto">
                     </div>
                     <div class="form-group">
                         <label for="disponibilidad">Disponibilidad</label>
