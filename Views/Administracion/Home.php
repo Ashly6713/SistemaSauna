@@ -68,7 +68,7 @@
                                 <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-users"></i></h5></div>
                                 <h5> Usuarios</h5> 
                             </a>
-                            <a class="nav-link" href="<?php echo base_url; ?>Usuarios">
+                            <a class="nav-link" href="<?php echo base_url; ?>Reservas">
                                 <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-ticket"></i></h5></div>
                                 <h5>Reservas</h5>
                             </a>

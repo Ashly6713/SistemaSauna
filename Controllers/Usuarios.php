@@ -77,7 +77,7 @@ public function registrar()
    $id = $_POST['id'];
    $hash = hash("SHA256", $clave);
    if(empty($usuario)|| empty($nombre)|| empty($apellido)|| empty($correo) ){
-      $msg = "Todos los campos son obligatorios";
+      $msg = array('msg' => 'Todos los campos son obligatorios', 'icono' => 'warning');
    }else{
       if (!preg_match("/^[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9]+$/", $usuario) ) {
          $msg = "usuario";
@@ -88,26 +88,25 @@ public function registrar()
       }else { 
          if($id == "")
       {  if($clave !=$confirmar){
-         $msg = "Las contraseñas no coinciden";
+         $msg = array('msg' => 'Las contraseñas no coinciden', 'icono' => 'warning');
       }else{
          $data = $this->model->registrarUsuario($usuario,  $nombre, $apellido, $correo, $hash, $rol, $estado );
          if($data == "ok"){
             $msg = "si";
-   
+            $msg = array('msg' => 'Usuario registrado con éxito', 'icono' => 'success');
          }else if($data=="existe"){
-            $msg = "El usuario ya existe";
+            $msg = array('msg' => 'El usuario ya existe', 'icono' => 'warning');
          } else{
-            $msg = "Error al registrar usuario";
+            $msg = array('msg' => 'Error al registrar usuario', 'icono' => 'error');
          }
       }
         
       }else{
          $data = $this->model->modificarUsuario($usuario,  $nombre, $apellido, $correo, $rol, $estado, $id );
          if($data == "modificado"){
-            $msg = "modificado";
-   
+            $msg = array('msg' => 'Usuario Modificado con éxito', 'icono' => 'success');
          } else{
-            $msg = "Error al modificar el usuario";
+            $msg = array('msg' => 'Error al modificar Usuario', 'icono' => 'error');
          }
       }
       } 
@@ -124,10 +123,9 @@ public function editar(int $id){
 public function eliminar(int $id){
    $data = $this->model->eliminarUser($id);
    if($data == 1){
-      $msg = "ok";
-
+      $msg = array('msg' => 'Usuario eliminado', 'icono' => 'success');
    } else{
-      $msg = "Error al eliminar el usuario";
+      $msg = array('msg' => 'Error al elimiar Usuario', 'icono' => 'error');
    }
    echo json_encode($msg, JSON_UNESCAPED_UNICODE);
    die();
@@ -135,10 +133,9 @@ public function eliminar(int $id){
 public function deshabilitar(int $id){
    $data = $this->model->accionUser(0, $id);
    if($data == 1){
-      $msg = "ok";
-
+      $msg = array('msg' => 'Usuario desactivado', 'icono' => 'success');
    } else{
-      $msg = "Error al reingresar el usuario";
+      $msg = array('msg' => 'Error al desactivar Usuario', 'icono' => 'error');
    }
    echo json_encode($msg, JSON_UNESCAPED_UNICODE);
    die();
@@ -146,10 +143,9 @@ public function deshabilitar(int $id){
 public function reingresar(int $id){
    $data = $this->model->accionUser(1, $id);
    if($data == 1){
-      $msg = "ok";
-
+      $msg = array('msg' => 'Usuario Reactivado', 'icono' => 'success');
    } else{
-      $msg = "Error al reingresar el usuario";
+      $msg = array('msg' => 'Error al Reactivar Usuario', 'icono' => 'error');
    }
    echo json_encode($msg, JSON_UNESCAPED_UNICODE);
    die();

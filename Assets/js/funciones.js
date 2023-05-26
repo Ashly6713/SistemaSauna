@@ -192,25 +192,17 @@ function frmUsuario() {
 }
 function registrarUser(e) {
     e.preventDefault();
-    document.getElementById("alertaU").classList.add("d-none");
+  document.getElementById("alertaU").classList.add("d-none");
   document.getElementById("alertaC").classList.add("d-none");
   document.getElementById("alertaL").classList.add("d-none");
     const usuario = document.getElementById("usuario");
     const nombre = document.getElementById("nombre");
     const apellido = document.getElementById("apellido");
     const correo= document.getElementById("correo");
-    const clave = document.getElementById("clave");
-    const confirmar= document.getElementById("confirmar");
     const rol = document.getElementById("rol");
     const estado = document.getElementById("estado");
     if (usuario.value == "" || nombre.value == ""|| apellido.value == "" || correo.value == ""  || rol.value == "" || estado.value == "") {
-        Swal.fire({
-            position: 'top-end',
-            icon: 'error',
-            title: 'Todos los campos son obligatorios',
-            showConfirmButton: false,
-            timer: 3000
-          })
+        alertas('Todos los campos son obligatorios', 'warning');
     } else{
         const url = base_url + "Usuarios/registrar";
         const frm = document.getElementById("frmUsuarios");
@@ -219,45 +211,19 @@ function registrarUser(e) {
         http.send(new FormData(frm));
         http.onreadystatechange = function(){
             if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
                 const res= JSON.parse(this.responseText);
-               if(res == "si"){
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'Usuario registrado con éxito',
-                    showConfirmButton: false,
-                    timer: 3000
-                  })
-                  frm.reset();
-                  $("#nuevo_usuario").modal("hide");
-                  tblUsuarios.ajax.reload();
-                }else if(res == "modificado"){
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'success',
-                        title: 'Usuario modificado con éxito',
-                        showConfirmButton: false,
-                        timer: 3000
-                      })
-                      $("#nuevo_usuario").modal("hide");
-                      tblUsuarios.ajax.reload();
-                }else{
-                  if(res == "usuario"){
-                    document.getElementById("alertaU").classList.remove("d-none");
-                  } else if(res == "letras"){
-                    document.getElementById("alertaL").classList.remove("d-none");
-                  } else if(res == "correo"){
-                    document.getElementById("alertaC").classList.remove("d-none");
-                  }else {
-                    Swal.fire({
-                      position: 'top-end',
-                      icon: 'error',
-                      title: res,
-                      showConfirmButton: false,
-                      timer: 3000
-                    })
-                  }
-               }
+                
+                tblUsuarios.ajax.reload();
+                if(res == "usuario"){
+                  document.getElementById("alertaU").classList.remove("d-none");
+                } else if(res == "letras"){
+                  document.getElementById("alertaL").classList.remove("d-none");
+                } else if(res == "correo"){
+                  document.getElementById("alertaC").classList.remove("d-none");
+                }else{alertas(res.msg, res.icono);
+                  $("#nuevo_usuario").modal("hide");}
+                
             }
         }
     }
@@ -313,21 +279,8 @@ function btnEliminarUser(id){
         http.onreadystatechange = function(){
             if (this.readyState == 4 && this.status == 200) {
                 const res = JSON.parse(this.responseText);
-              if (res == "ok"){
-                Swal.fire(
-                    'Mensaje!',
-                    'Usuario eliminado con éxito.',
-                    'success'
-                  )
-                  
-                  tblUsuarios.ajax.reload();
-              }else{
-                Swal.fire(
-                    'Mensaje!',
-                    res,
-                    'error'
-                  )
-              }
+                 alertas(res.msg, res.icono);
+                 tblUsuarios.ajax.reload();
             }
           }
          
@@ -337,7 +290,7 @@ function btnEliminarUser(id){
 }
 function btnDeshabilitarUser(id){
         Swal.fire({
-            title: 'Esta seguro de eliminar?',
+            title: 'Esta seguro de Desactivar?',
             text: "El usuario no se eliminará de forma permanente, solo cambiará el estado a inactivo!",
             icon: 'warning',
             showCancelButton: true,
@@ -354,21 +307,8 @@ function btnDeshabilitarUser(id){
             http.onreadystatechange = function(){
                 if (this.readyState == 4 && this.status == 200) {
                     const res = JSON.parse(this.responseText);
-                  if (res == "ok"){
-                    Swal.fire(
-                        'Mensaje!',
-                        'Usuario eliminado con éxito.',
-                        'success'
-                      )
-                      
-                      tblUsuarios.ajax.reload();
-                  }else{
-                    Swal.fire(
-                        'Mensaje!',
-                        res,
-                        'error'
-                      )
-                  }
+                    tblUsuarios.ajax.reload();
+                    alertas(res.msg, res.icono);
                 }
               }
              
@@ -393,25 +333,11 @@ function btnReingresarUser(id){
             http.send();
             http.onreadystatechange = function(){
                 if (this.readyState == 4 && this.status == 200) {
-                    const res = JSON.parse(this.responseText);
-                  if (res == "ok"){
-                    Swal.fire(
-                        'Mensaje!',
-                        'Usuario reingresado con éxito.',
-                        'success'
-                      )
-                      
-                      tblUsuarios.ajax.reload();
-                  }else{
-                    Swal.fire(
-                        'Mensaje!',
-                        res,
-                        'error'
-                      )
-                  }
+                    const res = JSON.parse(this.responseText); 
+                    tblUsuarios.ajax.reload();
+                    alertas(res.msg, res.icono);
                 }
               }
-             
             }
           })
     
@@ -1118,42 +1044,106 @@ function modificarEmpresa(){
 
 }
 //Fin Informacion de la empresa
+function saltar(e,id)
+{
+	(e.keyCode)?k=e.keyCode:k=e.which;
+	if(k==13)
+	{
+		// Si la variable id contiene "submit" enviamos el formulario
+		if(id=="submit")
+		{
+			document.forms[0].submit();
+		}else{
+			// nos posicionamos en el siguiente input
+			document.getElementById(id).focus();
+		}
+	}
+}
 function buscarNumero(e){
   e.preventDefault();
-  if(e.which == 13){
-    const num = document.getElementById("numero").value;
-    const url = base_url + "Reservas/buscarNumero/"+num;
-    const http = new XMLHttpRequest();
-    http.open("GET", url, true);
-    http.send();
-    http.onreadystatechange = function(){
-      if (this.readyState == 4 && this.status == 200) {
-        const res = JSON.parse(this.responseText);
-        if(res){
-          document.getElementById("categoria").value = res.nombre;
-          document.getElementById("precio_hora").value = res.precio_hora;
-          document.getElementById("id").value = res.id;
-          document.getElementById("hora_inicio").focus();
-        } else {
-          Swal.fire({
-            position: 'top-end',
-            icon: 'error',
-            title: 'El cuarto no existe',
-            showConfirmButton: false,
-            timer: 2000
-          })
-          document.getElementById("numero").value = '';
-          document.getElementById("numero").focus();
+  const num = document.getElementById("numero").value;
+   if(num != '' ){
+    if(e.which == 13){
+      const num = document.getElementById("numero").value;
+      const url = base_url + "Reservas/buscarNumero/"+num;
+      const http = new XMLHttpRequest();
+      http.open("GET", url, true);
+      http.send();
+      http.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+          const res = JSON.parse(this.responseText);
+          if(res){
+            document.getElementById("categoria").value = res.nombre;
+            document.getElementById("precio_hora").value = res.precio_hora;
+            document.getElementById("id").value = res.id;
+            document.getElementById("hora_inicio").removeAttribute('disabled');
+            document.getElementById("hora_inicio").focus();
+            document.getElementById("cantidad").removeAttribute('disabled');
+          } else {
+            alertas('El producto no existe', 'warning');
+            document.getElementById("numero").value = '';
+            document.getElementById("numero").focus();
+          }
         }
       }
     }
+  } else{
+    alertas('Ingrese el número', 'warning');
   }
+  
 }
 function calcularHoras(e){
   e.preventDefault();
   const hrIn = document.getElementById("hora_inicio").value;
   const cant = document.getElementById("cantidad").value;
+  const precio_hora = document.getElementById("precio_hora").value;
   document.getElementById("hora_fin").value =  hrIn;
-  document.getElementById("hora_fin").stepUp(cant);  ;
+  document.getElementById("hora_fin").stepUp(cant); 
+  var preTot =  (cant/60)*precio_hora;
+  var rPreTot = preTot.toFixed(2);
+  var decimal = rPreTot - Math.trunc(rPreTot);
+  if(decimal == 0.0 || decimal == 0.50 ){
+    document.getElementById("precio_total").value =  rPreTot;
+  }else{
+    if(decimal > 0.50 ){
+      document.getElementById("precio_total").value = Math.trunc(rPreTot)+1;
+    } else{
+      document.getElementById("precio_total").value = Math.trunc(rPreTot);
+    }
+  }
+  
+  if(e.which == 13){
+     if(cant > 0){
+      const url = base_url + "Reservas/ingresar";
+      const frm = document.getElementById("frmReserva");
+      const http = new XMLHttpRequest();
+      http.open("POST", url, true);
+      http.send(new FormData(frm));
+      http.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+          console.log(this.responseText);
+          /*const res = JSON.parse(this.responseText);
+          alertas(res.msg, res.icono);
+          frm.reset();
+          //cargarDetalle();
+          document.getElementById('cantidad').setAttribute('disabled', 'disabled');
+          document.getElementById('numero').focus();*/
+          
+        }
+      }
+     }
+  }
  
+}
+
+//fin Reservas
+
+function alertas(mensaje, icono){
+  Swal.fire({
+    position: 'top-end',
+    icon: icono,
+    title: mensaje,
+    showConfirmButton: false,
+    timer: 3000
+  })
 }

@@ -49,6 +49,8 @@ CREATE TABLE Reserva (
   fecha_compra DATETIME NOT NULL,
   hora_inicio TIME NOT NULL,
   hora_fin TIME NOT NULL,
+  cantidad INT NOT NULL,
+  sub_total DECIMAL(10, 2) NOT NULL,
   cliente_id INT NOT NULL,
   cuarto_id INT NOT NULL,
   usuario_id INT NOT NULL,
