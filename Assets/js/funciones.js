@@ -136,6 +136,7 @@ function frmLogin(e) {
         http.onreadystatechange = function(){
             if (this.readyState == 4 && this.status == 200) {
                 const res= JSON.parse(this.responseText);
+                console.log(res);
                 if(res == "ok") {
                     window.location = base_url + "Administracion/home";
                 }else{
@@ -1059,6 +1060,40 @@ function saltar(e,id)
 		}
 	}
 }
+function buscarCi(e){
+  e.preventDefault();
+  const num = document.getElementById("ci").value;
+   if(num != '' ){
+    if(e.which == 13){
+      const ci = document.getElementById("ci").value;
+      const url = base_url + "Reservas/buscarCi/"+ci;
+      const http = new XMLHttpRequest();
+      http.open("GET", url, true);
+      http.send();
+      http.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) {
+          const res = JSON.parse(this.responseText);
+          if(res){
+            document.getElementById("nombre").value = res.nombre;
+            document.getElementById("apellido").value = res.apellido;
+            document.getElementById("id_cli").value = res.id;
+            document.getElementById("telefono").value = res.telefono;
+          } else {
+            alertas('El cliente no existe', 'warning');
+            document.getElementById("ci").value = '';
+            document.getElementById("ci").focus();
+            document.getElementById("nombre").value = '';
+            document.getElementById("apellido").value = '';
+            document.getElementById("id_cli").value = '';
+            document.getElementById("telefono").value = '';
+          }
+        }
+      }
+    }
+  } else{
+    alertas('Ingrese el C.I.', 'warning');
+  }
+}
 function buscarNumero(e){
   e.preventDefault();
   const num = document.getElementById("numero").value;
@@ -1090,7 +1125,6 @@ function buscarNumero(e){
   } else{
     alertas('Ingrese el número', 'warning');
   }
-  
 }
 function calcularHoras(e){
   e.preventDefault();
@@ -1121,21 +1155,71 @@ function calcularHoras(e){
       http.send(new FormData(frm));
       http.onreadystatechange = function(){
         if (this.readyState == 4 && this.status == 200) {
-          console.log(this.responseText);
-          /*const res = JSON.parse(this.responseText);
-          alertas(res.msg, res.icono);
-          frm.reset();
-          //cargarDetalle();
+          const res = JSON.parse(this.responseText);
+            alertas(res.msg, res.icono);
+            document.getElementById("numero").value = '';
+            document.getElementById("categoria").value = '';
+            document.getElementById("precio_hora").value = '';
+            document.getElementById("id").value = '';
+            document.getElementById("hora_inicio").value = '';
+            document.getElementById("hora_fin").value = '';
+            document.getElementById("cantidad").value = '';
+            document.getElementById("precio_total").value = '';
+            cargarDetalle();
+            //frm.reset();
           document.getElementById('cantidad').setAttribute('disabled', 'disabled');
-          document.getElementById('numero').focus();*/
+          document.getElementById('numero').focus();
           
         }
       }
      }
   }
- 
 }
-
+cargarDetalle();
+function cargarDetalle(){
+  const url = base_url + "Reservas/listar";
+      const http = new XMLHttpRequest();
+      http.open("GET", url, true);
+      http.send();
+      http.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) { 
+          const res = JSON.parse(this.responseText);
+          //console.log(res);
+          let html = '';
+          res.detalle.forEach(row => {
+            html += `<tr>
+            <td>${row['cuarto_id']}</td> 
+            <td>${row['numero']}</td>
+            <td>${row['nombre']}</td>
+            <td>${row['precio_hora']}</td>
+            <td>${row['hora_inicio']}</td>
+            <td>${row['hora_fin']}</td>
+            <td>${row['cantidad']}</td>
+            <td>${row['sub_total']}</td>
+            <td>
+            <button class="btn btn-danger" type="button" onclick="deleteDetalle(${row['cuarto_id']})">
+            <i class="fas fa-trash-alt"></i></button>
+            </td>
+           </tr>`;
+          });
+          document.getElementById("tblDetalle").innerHTML = html;
+          document.getElementById("total").value = res.total_pagar.total;
+         }
+      }
+}
+function deleteDetalle(id){
+  const url = base_url + "Reservas/delete/"+id;
+      const http = new XMLHttpRequest();
+      http.open("GET", url, true);
+      http.send();
+      http.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) { 
+            const res = JSON.parse(this.responseText);
+            alertas(res.msg, res.icono);
+            cargarDetalle();
+        }
+      }
+}
 //fin Reservas
 
 function alertas(mensaje, icono){

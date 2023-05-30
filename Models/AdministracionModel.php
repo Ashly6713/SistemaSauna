@@ -28,6 +28,7 @@ public function getCuartos()
     return $data;
 }
 
+
 }
 
 

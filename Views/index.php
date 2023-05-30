@@ -21,7 +21,7 @@
                                   <div class="col-md-6">
                                      <div class="m-5 text-center">
                                       <h1>Bienbenido!</h1>
-                                  </div>
+                                      </div>
                                 
                                     <div class="card-body">
                                         <form class="m-5" id="frmLogin">
@@ -34,15 +34,13 @@
                                                 <label class="small mb-1" for="clave"><i class="fas fa-key"></i>  Contraseña</label>
                                                 
                                             </div>
-                                            <div class="alert alert-danger text-center d-none" id="alerta" role="alert">
-
-                                            </div>
+                                            <div class="alert alert-danger text-center d-none" id="alerta" name="alerta" role="alert">Error: </div>
                                             <div claa="form-group d-flex align-items-center justify-content-between mt-4 " >
                                                 <button class="form-control btn btn-primary mt-3" type="submit" onclick="frmLogin(event);">Log In</button>
                                             </div>
                                         </form>
                                     </div>
-                                 </div>
+                                </div>
                                     <div class="col-md-6">
                                          <div >
                                               <img src="Swampy.webp" alt="login" class="img-fluid p-5">

@@ -50,11 +50,11 @@ public function validar()
       $data = $this->model->getUsuario($usuario, $hash);
       if($data){
          $msg = "ok";
+         print_r($data);
            $_SESSION['id']  = $data['id'] ;
            $_SESSION['nom_usuario']  = $data['nom_usuario'] ;
            $_SESSION['nombres']  = $data['nombres'] ;
            $_SESSION['activo']  = true ;
-           
       } else{
          $msg = "Usuario o contraseña incorrecta";
       }

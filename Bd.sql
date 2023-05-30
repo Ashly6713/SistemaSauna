@@ -45,18 +45,25 @@ CREATE TABLE Cliente (
 
 CREATE TABLE Reserva (
   id INT NOT NULL AUTO_INCREMENT,
-  precio DECIMAL(10, 2) NOT NULL,
   fecha_compra DATETIME NOT NULL,
+  total DECIMAL(10, 2) NOT NULL,
+  cliente_id INT NOT NULL,
+  usuario_id INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (cliente_id) REFERENCES Cliente(id),
+  FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
+);
+CREATE TABLE detalle_Reserva (
+  id INT NOT NULL AUTO_INCREMENT,
+  precio DECIMAL(10, 2) NOT NULL,
   hora_inicio TIME NOT NULL,
   hora_fin TIME NOT NULL,
   cantidad INT NOT NULL,
   sub_total DECIMAL(10, 2) NOT NULL,
-  cliente_id INT NOT NULL,
   cuarto_id INT NOT NULL,
-  usuario_id INT NOT NULL,
+  reserva_id INT NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (cliente_id) REFERENCES Cliente(id),
-  FOREIGN KEY (usuario_id) REFERENCES Usuario(id),
+  FOREIGN KEY (reserva_id) REFERENCES Reserva(id),
   FOREIGN KEY (cuarto_id) REFERENCES Cuarto(id)
 );
 
