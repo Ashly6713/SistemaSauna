@@ -6,14 +6,20 @@ public function __construct(){
 }
 public function getCuNum(string $num)
 {
-    $sql = "SELECT c.*, cc.nombre, cc.capacidad, cc.precio_hora, cc.estado FROM cuarto c INNER JOIN categoria_cuarto cc WHERE c.categoria_id = cc.id AND c.numero = '$num'" ;
+    $sql = "SELECT c.*, cc.nombre, cc.capacidad, cc.precio_hora, cc.estado FROM cuarto c INNER JOIN categoria_cuarto cc WHERE c.categoria_id = cc.id AND c.numero = '$num' AND c.estado = 1  AND c.disponibilidad = 1" ;
     $data = $this->select($sql);
     return $data;
 }
 public function getCi(string $ci)
 {
-    $sql = "SELECT * FROM cliente WHERE ci = $ci" ;
+    $sql = "SELECT * FROM cliente WHERE ci = $ci AND estado = 1" ;
     $data = $this->select($sql);
+    return $data;
+}
+public function getClientes()
+{
+    $sql = "SELECT * FROM cliente WHERE estado = 1" ;
+    $data = $this->selectAll($sql);
     return $data;
 }
 public function getCuartos(int $id)
@@ -37,7 +43,7 @@ public function registrarDetalle(string $precio, string $hora_inicio, string $ho
 
 public function getDetalle(int $id)
 {
-    $sql = "SELECT r.*, c.id as cuarto_id, c.numero, ca.nombre, ca.precio_hora FROM detalle r INNER JOIN cuarto c ON c.id = r.cuarto_id INNER JOIN categoria_cuarto ca ON ca.id = c.categoria_id  WHERE r.usuario_id =  $id";
+    $sql = "SELECT d.*, c.id as cuarto_id, c.numero, ca.nombre, ca.precio_hora FROM detalle d INNER JOIN cuarto c ON c.id = d.cuarto_id INNER JOIN categoria_cuarto ca ON ca.id = c.categoria_id  WHERE d.usuario_id =  $id";
     $data = $this->selectAll($sql);
     return $data;
 }
@@ -54,6 +60,52 @@ public function deleteDelete(int $id)
    $data = $this->save($sql, $datos);
    if($data == 1){
     $res = 'ok';
+    }else {
+        $res = 'error';
+    }
+    return $res;
+}
+public function consultarDetalle(int $id_cuarto, int $id_usuario)
+{
+   $sql = "SELECT * FROM detalle WHERE cuarto_id =  $id_cuarto AND usuario_id = $id_usuario";
+   $data = $this->select($sql);
+   return $data;
+}
+public function actualizarDetalle(string $precio,  string $hora_inicio, string $hora_fin, int $cantidad, string $sub_total, int $cliente_id, int $cuarto_id, int $usuario_id)
+{
+    $sql = "UPDATE detalle SET precio = ?,  hora_inicio = ?, hora_fin = ?, cantidad = ?, sub_total = ? WHERE cliente_id = ? AND cuarto_id = ? AND usuario_id = ?";
+    $datos = array($precio, $hora_inicio, $hora_fin, $cantidad, $sub_total, $cliente_id,$cuarto_id, $usuario_id);
+    $data = $this->save($sql, $datos);
+    if($data == 1){
+        $res = 'modificado';
+    }else {
+          $res = 'error';
+    }
+    return $res;
+}
+public function registraReserva(string $fecha_compra, string $total, int $cliente_id, int $usuario_id)
+{
+    $sql = "INSERT INTO reserva(fecha_compra, total, cliente_id, usuario_id) VALUES (?,?,?,?)";
+    $datos = array($fecha_compra, $total, $cliente_id, $usuario_id);
+    $data = $this->save($sql, $datos);
+    if($data == 1){
+        $res = 'ok';
+    }else {
+        $res = 'error';
+    }
+    return $res;
+}
+public function id_reserva(){
+    $sql = "SELECT MAX(id) AS id FROM reserva";
+    $data = $this->select($sql);
+     return $data;
+}
+public function registrarDetalleReserva(string $precio, string $hora_inicio, string $hora_fin, int $cantidad,string $sub_total,int $cuarto_id,int $reserva_id){
+    $sql = "INSERT INTO detalle_reserva(precio, hora_inicio, hora_fin, cantidad, sub_total, cuarto_id, reserva_id) VALUES (?,?,?,?,?,?,?)";
+    $datos = array($precio, $hora_inicio, $hora_fin, $cantidad, $sub_total, $cuarto_id, $reserva_id);
+    $data = $this->save($sql, $datos);
+    if($data == 1){
+        $res = 'ok';
     }else {
         $res = 'error';
     }

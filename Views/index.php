@@ -11,7 +11,7 @@
         <script src="<?php echo base_url; ?>Assets/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="bg-primary bg-opacity-50">
-        <div id="layoutAuthentication">
+     <div id="layoutAuthentication">
             <div id="layoutAuthentication_content">
             <section class="d-flex flex-column min-vh-100 justify-content-center aling-items-center">
                     <div class="container">
@@ -30,13 +30,13 @@
                                                 <label class="small mb-1"  for="usuario"><i class="fas fa-user"></i>  Usuario</label>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                 <input class="form-control py-4.5" id="clave" name="clave" type="password" placeholder="Ingrese Contraseña" />
+                                                 <input class="form-control py-4.5" id="clave" name="clave" type="password" onkeyup="saltar(event,'login')" placeholder="Ingrese Contraseña" />
                                                 <label class="small mb-1" for="clave"><i class="fas fa-key"></i>  Contraseña</label>
                                                 
                                             </div>
                                             <div class="alert alert-danger text-center d-none" id="alerta" name="alerta" role="alert">Error: </div>
                                             <div claa="form-group d-flex align-items-center justify-content-between mt-4 " >
-                                                <button class="form-control btn btn-primary mt-3" type="submit" onclick="frmLogin(event);">Log In</button>
+                                                <button class="form-control btn btn-primary mt-3" id="login" name="login" type="submit" onclick="frmLogin(event)">Log In</button>
                                             </div>
                                         </form>
                                     </div>

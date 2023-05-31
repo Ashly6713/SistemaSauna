@@ -132,7 +132,7 @@ date_default_timezone_set('America/La_Paz');?>
         </div>
     </div>
     <div class="col-md-2 ml-10"> 
-        <button type="button" class="btn btn-primary">Registrar Reserva</button>
+        <button class="btn btn-primary mt-2 btn-block" type="button" onclick="generarReserva()" >Registrar Reserva</button>
     </div>
 </div>
 <?php  include "Views/Templates/footer.php"; ?>

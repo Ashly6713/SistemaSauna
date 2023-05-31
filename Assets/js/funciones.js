@@ -1,7 +1,10 @@
-let tblUsuarios, tblCuartos, tblCategorias, tblClientes;
+let  tblCuartos, tblCategorias, tblClientes, tblUsuarios ;
+
+
 
 document.addEventListener("DOMContentLoaded", function(){
-    tblUsuarios = $('#tblUsuarios').DataTable( {
+  if (document.getElementById('tblUsuarios')){  
+  tblUsuarios = $('#tblUsuarios').DataTable( {
     ajax: {
         url: base_url + "Usuarios/listar",
         dataSrc: ''
@@ -31,8 +34,9 @@ document.addEventListener("DOMContentLoaded", function(){
         'data' : 'acciones'
     }
     ]
-   });
+   }); }
    //fin de Usuarios
+   if (document.getElementById('tblCategorias')){ 
    tblCategorias = $('#tblCategorias').DataTable( {
     ajax: {
         url: base_url + "Categorias/listar",
@@ -58,8 +62,9 @@ document.addEventListener("DOMContentLoaded", function(){
         'data' : 'acciones'
     }
     ]
-   });
+   }); }
    //fin cuartos
+   if (document.getElementById('tblCuartos')){ 
    tblCuartos = $('#tblCuartos').DataTable( {
     ajax: {
         url: base_url + "Cuartos/listar",
@@ -84,8 +89,9 @@ document.addEventListener("DOMContentLoaded", function(){
         'data' : 'acciones'
     }
     ]
-   });
+   }); }
    //fin categoria cuartos
+   if (document.getElementById('tblUsuarios')){ 
    tblClientes = $('#tblClientes').DataTable( {
     ajax: {
         url: base_url + "Clientes/listar",
@@ -113,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function(){
         'data' : 'acciones'
     }
     ]
-   });
+   }); }
 })
 function frmLogin(e) {
     e.preventDefault();
@@ -135,11 +141,11 @@ function frmLogin(e) {
         http.send(new FormData(frm));
         http.onreadystatechange = function(){
             if (this.readyState == 4 && this.status == 200) {
+              console.log(this.responseText);
                 const res= JSON.parse(this.responseText);
-                console.log(res);
                 if(res == "ok") {
-                    window.location = base_url + "Administracion/home";
-                }else{
+                    window.location = base_url + "Administracion/Home";
+                }else{ 
                     document.getElementById("alerta").classList.remove("d-none");
                     document.getElementById("alerta").innerHTML = res;
                 }
@@ -214,7 +220,6 @@ function registrarUser(e) {
             if (this.readyState == 4 && this.status == 200) {
                 console.log(this.responseText);
                 const res= JSON.parse(this.responseText);
-                
                 tblUsuarios.ajax.reload();
                 if(res == "usuario"){
                   document.getElementById("alertaU").classList.remove("d-none");
@@ -1021,10 +1026,10 @@ function btnReingresarCliente(id){
         })
   
 }
-/* para dettale
+//Tabla Detalle
 if (document.getElementById('tblDetalle')){
   cargarDetalle();
-}*/
+}
 
 
 //Informacion de la empresa
@@ -1106,6 +1111,7 @@ function buscarNumero(e){
       http.send();
       http.onreadystatechange = function(){
         if (this.readyState == 4 && this.status == 200) {
+          
           const res = JSON.parse(this.responseText);
           if(res){
             document.getElementById("categoria").value = res.nombre;
@@ -1175,7 +1181,7 @@ function calcularHoras(e){
      }
   }
 }
-cargarDetalle();
+//cargarDetalle();
 function cargarDetalle(){
   const url = base_url + "Reservas/listar";
       const http = new XMLHttpRequest();
@@ -1184,7 +1190,6 @@ function cargarDetalle(){
       http.onreadystatechange = function(){
         if (this.readyState == 4 && this.status == 200) { 
           const res = JSON.parse(this.responseText);
-          //console.log(res);
           let html = '';
           res.detalle.forEach(row => {
             html += `<tr>
@@ -1219,6 +1224,37 @@ function deleteDetalle(id){
             cargarDetalle();
         }
       }
+}
+function generarReserva(){
+  Swal.fire({
+    title: 'Esta seguro de realizar Reserva?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si!',
+    cancelButtonText: 'No!'
+  }).then((result) => {
+    const id_cliente = document.getElementById("id_cli").value ;
+    console.log(id_cliente);
+    if (result.isConfirmed) {
+        const url = base_url + "Reservas/registrarReserva/"+id_cliente;
+        const http = new XMLHttpRequest();
+          http.open("GET", url, true);
+          http.send();
+          http.onreadystatechange = function(){
+            console.log(this.responseText);
+              if (this.readyState == 4 && this.status == 200) {
+                  const res = JSON.parse(this.responseText);
+            
+            alertas(res.msg, res.icono);
+        }
+
+      }
+     
+    }
+  })
+
 }
 //fin Reservas
 

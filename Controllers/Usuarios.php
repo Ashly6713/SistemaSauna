@@ -42,7 +42,7 @@ public function listar()
 public function validar()
 {
    if (empty($_POST['usuario']) || empty($_POST['clave'])){
-         $msg = "Los campos estan vacios";
+         $msg = "Los campos estan vacios"; 
    } else{
       $usuario = $_POST['usuario'];
       $clave = $_POST['clave'];
@@ -50,16 +50,15 @@ public function validar()
       $data = $this->model->getUsuario($usuario, $hash);
       if($data){
          $msg = "ok";
-         print_r($data);
            $_SESSION['id']  = $data['id'] ;
            $_SESSION['nom_usuario']  = $data['nom_usuario'] ;
            $_SESSION['nombres']  = $data['nombres'] ;
            $_SESSION['activo']  = true ;
       } else{
          $msg = "Usuario o contraseña incorrecta";
+         
       }
    }
-
    echo json_encode($msg, JSON_UNESCAPED_UNICODE);
    die();
 }
@@ -154,8 +153,6 @@ public function salir(){
    session_destroy();
    header("location:".base_url) ;
 }
-
-
 }
 
 
