@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function(){
     ]
    }); }
    //fin categoria cuartos
-   if (document.getElementById('tblUsuarios')){ 
+   if (document.getElementById('tblClientes')){ 
    tblClientes = $('#tblClientes').DataTable( {
     ajax: {
         url: base_url + "Clientes/listar",
@@ -426,24 +426,21 @@ function btnEditarCuarto(id){
   document.getElementById("alertaN").classList.add("d-none");
   document.getElementById("title").innerHTML = "Modificar Cuarto";
   document.getElementById("btnAccion").innerHTML = "Modificar";
- 
-      const url = base_url + "Cuartos/editar/"+id;
-      const http = new XMLHttpRequest();
-      http.open("GET", url, true);
-      http.send();
-      http.onreadystatechange = function(){
-          if (this.readyState == 4 && this.status == 200) {
-            const res = JSON.parse(this.responseText);
-             document.getElementById("id").value = res.id;
-             document.getElementById("numero").value = res.numero;
-            document.getElementById("disponibilidad").value = res.disponibilidad;
-            document.getElementById("estado").value = res.estado;
-            document.getElementById("categoria").value = res.categoria_id;
-            $("#nuevo_cuarto").modal("show");
-          }
+  const url = base_url + "Cuartos/editar/"+id;
+  const http = new XMLHttpRequest();
+  http.open("GET", url, true);
+  http.send();
+  http.onreadystatechange = function(){
+      if (this.readyState == 4 && this.status == 200) {
+        const res = JSON.parse(this.responseText);
+         document.getElementById("id").value = res.id;
+         document.getElementById("numero").value = res.numero;
+        document.getElementById("disponibilidad").value = res.disponibilidad;
+        document.getElementById("estado").value = res.estado;
+        document.getElementById("categoria").value = res.categoria_id;
+        $("#nuevo_cuarto").modal("show");
       }
-  
-
+  }
 }
 
 function btnEliminarCuarto(id){
@@ -1236,7 +1233,6 @@ function generarReserva(){
     cancelButtonText: 'No!'
   }).then((result) => {
     const id_cliente = document.getElementById("id_cli").value ;
-    console.log(id_cliente);
     if (result.isConfirmed) {
         const url = base_url + "Reservas/registrarReserva/"+id_cliente;
         const http = new XMLHttpRequest();
@@ -1246,8 +1242,24 @@ function generarReserva(){
             console.log(this.responseText);
               if (this.readyState == 4 && this.status == 200) {
                   const res = JSON.parse(this.responseText);
-            
-            alertas(res.msg, res.icono);
+                  if(res.icono == "success"){
+                    Swal.fire(
+                      'Mensaje!',
+                      'Reserva generada.',
+                      'success'
+                    )
+                    const ruta = base_url + "Reservas/generarPdf/"+ res.id_reserva;
+                    window.open(ruta);
+                    setTimeout(() =>{
+                      window.location.reload();
+                    }, 300);
+                  } else {
+                    Swal.fire(
+                      'Mensaje!',
+                      res.msg,
+                      'error'
+                    )
+                  }
         }
 
       }

@@ -107,13 +107,76 @@ class Reservas extends Controller {
                 $cuarto_id = $row['cuarto_id'];
                 $this->model->registrarDetalleReserva($precio, $hora_inicio, $hora_fin, $cantidad, $sub_total, $cuarto_id, $reserva_id['id']);
             }
-            $msg = array('msg'=>'Reserva generada', 'icono'=> 'success');
+            $vaciar = $this->model->vaciarDetalle($usuario_id);
+            if($vaciar == 'ok'){
+                $msg =  array('msg'=>'ok', 'icono'=> 'success', 'id_reserva'=> $reserva_id['id']);
+            }
         } else{
             $msg = array('msg'=>'Error al generar Reserva', 'icono'=> 'error');
         }
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();
-    }   
+    } 
+    public function generarPdf($id_reserva)
+    {
+        
+        require('Libraries/fpdf/fpdf.php');
+        
+        $pdf = new FPDF('P','mm', array(80,100));//array ancho y alto
+        $pdf->AddPage();
+        $pdf->SetMargins(5, 0, 0);
+        $pdf->SetTitle('Reporte Compra');
+        $pdf->SetFont('Arial','B',13);
+        $pdf->Cell(60,10, utf8_decode('Sauna Minerva'), 0, 1, 'C');
+        $pdf->Image(base_url . 'Assets/img/log.png', 53, 17, 18, 19);// , tamaño, atura, 25*25 
+        $pdf->SetFont('Arial','B',6);
+        $pdf->Cell(11, 5, 'NIT: ', 0, 0, 'L');
+        $pdf->SetFont('Arial','',6);
+        $pdf->Cell(20, 5, '740468522', 0, 1, 'L');
+
+        $pdf->SetFont('Arial','B',6);
+        $pdf->Cell(11, 5, utf8_decode('Teléfono: '), 0, 0, 'L');
+        $pdf->SetFont('Arial','',6);
+        $pdf->Cell(11, 5, utf8_decode('8888888 '), 0, 0, 'L');
+        $pdf->SetFont('Arial','B',6);
+        $pdf->Cell(11, 5, utf8_decode('Dirección: '), 0, 0, 'L');
+        $pdf->SetFont('Arial','',6);
+        $pdf->Cell(11, 5, utf8_decode('Calle ejemplo '), 0, 1, 'L');
+
+        $pdf->SetFont('Arial','B',6);
+        $pdf->Cell(11, 5, 'Ticket:', 0, 0, 'L');
+        $pdf->SetFont('Arial','',6);
+        $pdf->SetFont('Arial','B',6);
+        $pdf->Cell(11, 5, 'Fecha:', 0, 1, 'L');
+        $pdf->SetFont('Arial','',6);
+        $pdf->Ln();
+        //Encabezado Cliente
+        $pdf->SetFillColor(0,0,0);
+        $pdf->SetTextColor(255,255,255);
+        $pdf->Cell(15, 5, 'C. I.', 0, 0, 'L', true);
+        $pdf->Cell(37, 5, 'Nombre', 0, 0, 'L', true);
+        $pdf->Cell(15, 5, 'Telefono', 0, 1, 'L', true);
+
+        $pdf->SetTextColor(0,0,0);
+        $pdf->Ln();
+
+        //Encabezado Cuartos
+        $pdf->SetFillColor(0,0,0);
+        $pdf->SetTextColor(255,255,255);
+        $pdf->Cell(9, 5, 'Cuarto', 0, 0, 'L', true);
+        $pdf->Cell(12, 5, 'Categoria', 0, 0, 'L', true);
+        $pdf->Cell(11, 5, 'Hr. Inicio', 0, 0, 'L', true);
+        $pdf->Cell(11, 5, 'Hr. Fin', 0, 0, 'L', true);
+        $pdf->Cell(13, 5, 'Precio hora', 0, 0, 'L', true);
+        $pdf->Cell(11, 5, 'Sub Total', 0, 1, 'L', true);
+        $pdf->SetTextColor(0,0,0);
+        $total = 0.00;
+        $pdf->Ln();
+        $pdf->SetFont('Arial','B',6);
+        $pdf->Cell(68, 3,'Total a pagar', 0, 1, 'R');
+        $pdf->SetFont('Arial','',6);
+        $pdf->Output();
+    }  
 
 }
 

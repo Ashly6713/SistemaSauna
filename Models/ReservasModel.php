@@ -111,6 +111,37 @@ public function registrarDetalleReserva(string $precio, string $hora_inicio, str
     }
     return $res;
 }
+public function getEmpresa()
+{
+    $sql = "SELECT * FROM configuracion";
+    $data = $this->select($sql);
+     return $data;
+}
+public function vaciarDetalle(int $usuario_id)
+{
+    $sql = "DELETE FROM detalle WHERE usuario_id = ?";
+    $datos = array($usuario_id);
+    $data = $this->save($sql, $datos);
+    if($data == 1){
+        $res = 'ok';
+    }else {
+        $res = 'error';
+    }
+    return $res;
+}
+public function getCuReserva(int $reserva_id)
+{
+    $sql = "SELECT r.*, d.*, ca.*, c.id as cuarto_id, c.numero  FROM reserva r INNER JOIN detalle_reserva d ON r.id = d.reserva_id INNER JOIN cuarto c ON c.id = d.cuarto_id INNER JOIN categoria_cuarto ca ON ca.id = c.categoria_id  WHERE r.id =  $reserva_id";
+    $data = $this->selectAll($sql);
+    return $data;
+}
+public function getCliReserva(int $id)
+{
+    $sql = "SELECT * FROM cliente WHERE id = $id AND estado = 1" ;
+    $data = $this->select($sql);
+    return $data;
+}
+
 
 }
 
