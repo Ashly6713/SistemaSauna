@@ -119,6 +119,13 @@ class Reservas extends Controller {
     } 
     public function generarPdf($id_reserva)
     {
+        $empresa = $this->model->getEmpresa();
+        
+        $cuartos = $this->model->getCuReserva($id_reserva);
+        $cliente_id = $cuartos[0]['cliente_id'];
+        $cliente = $this->model->getCliReserva($cliente_id);
+        $Date= strtotime($cuartos[0]['fecha_compra']);
+        $Fecha =  date("d-m-Y", $Date);
         
         require('Libraries/fpdf/fpdf.php');
         
@@ -127,29 +134,32 @@ class Reservas extends Controller {
         $pdf->SetMargins(5, 0, 0);
         $pdf->SetTitle('Reporte Compra');
         $pdf->SetFont('Arial','B',13);
-        $pdf->Cell(60,10, utf8_decode('Sauna Minerva'), 0, 1, 'C');
+        $pdf->Cell(60,10, utf8_decode($empresa['nombre']), 0, 1, 'C');
         $pdf->Image(base_url . 'Assets/img/log.png', 53, 17, 18, 19);// , tamaño, atura, 25*25 
         $pdf->SetFont('Arial','B',6);
         $pdf->Cell(11, 5, 'NIT: ', 0, 0, 'L');
         $pdf->SetFont('Arial','',6);
-        $pdf->Cell(20, 5, '740468522', 0, 1, 'L');
+        $pdf->Cell(20, 5, $empresa['nit'], 0, 1, 'L');
 
         $pdf->SetFont('Arial','B',6);
         $pdf->Cell(11, 5, utf8_decode('Teléfono: '), 0, 0, 'L');
         $pdf->SetFont('Arial','',6);
-        $pdf->Cell(11, 5, utf8_decode('8888888 '), 0, 0, 'L');
+        $pdf->Cell(20, 5, $empresa['telefono'], 0, 1, 'L');
+        
         $pdf->SetFont('Arial','B',6);
         $pdf->Cell(11, 5, utf8_decode('Dirección: '), 0, 0, 'L');
         $pdf->SetFont('Arial','',6);
-        $pdf->Cell(11, 5, utf8_decode('Calle ejemplo '), 0, 1, 'L');
+        $pdf->Cell(20, 5, $empresa['direccion'], 0, 1, 'L');
 
         $pdf->SetFont('Arial','B',6);
         $pdf->Cell(11, 5, 'Ticket:', 0, 0, 'L');
         $pdf->SetFont('Arial','',6);
+        $pdf->Cell(32, 5, $id_reserva, 0, 0, 'L');
         $pdf->SetFont('Arial','B',6);
-        $pdf->Cell(11, 5, 'Fecha:', 0, 1, 'L');
+        $pdf->Cell(11, 5, 'Fecha:', 0, 0, 'L');
         $pdf->SetFont('Arial','',6);
-        $pdf->Ln();
+        $pdf->Cell(20, 5, $Fecha, 0, 1, 'L');
+
         //Encabezado Cliente
         $pdf->SetFillColor(0,0,0);
         $pdf->SetTextColor(255,255,255);
@@ -158,6 +168,9 @@ class Reservas extends Controller {
         $pdf->Cell(15, 5, 'Telefono', 0, 1, 'L', true);
 
         $pdf->SetTextColor(0,0,0);
+        $pdf->Cell(15, 5, $cliente['ci'], 0, 0, 'L');
+        $pdf->Cell(37, 5,utf8_decode( $cliente['nombre'].' '.$cliente['apellido']), 0, 0, 'L');
+        $pdf->Cell(15, 5, $cliente['telefono'], 0, 0, 'L');
         $pdf->Ln();
 
         //Encabezado Cuartos
@@ -171,10 +184,20 @@ class Reservas extends Controller {
         $pdf->Cell(11, 5, 'Sub Total', 0, 1, 'L', true);
         $pdf->SetTextColor(0,0,0);
         $total = 0.00;
+        foreach($cuartos as $row) {
+            $total = $total + $row['sub_total'];
+            $pdf->Cell(9, 5, $row['numero'], 0, 0, 'L');
+            $pdf->Cell(12, 5, $row['nombre'], 0, 0, 'L');
+            $pdf->Cell(11, 5, $row['hora_inicio'], 0, 0, 'L');
+            $pdf->Cell(11, 5, $row['hora_fin'], 0, 'L');
+            $pdf->Cell(13, 5, $row['precio_hora'], 0, 0, 'L');
+            $pdf->Cell(11, 5, number_format($row['sub_total'], 2, '.', ','), 0, 1, 'L');
+        }
         $pdf->Ln();
         $pdf->SetFont('Arial','B',6);
         $pdf->Cell(68, 3,'Total a pagar', 0, 1, 'R');
         $pdf->SetFont('Arial','',6);
+        $pdf->Cell(68, 5, number_format($total, 2, '.', ',').' Bs.', 0, 1, 'R');
         $pdf->Output();
     }  
 
