@@ -7,7 +7,8 @@ class Reservas extends Controller {
     }  
     public function index()
     {
-        $data = $this->model->getClientes();
+        $data['categorias'] = $this->model->getCategorias();
+        $data['clientes']= $this->model->getClientes();
         $this->views->getView($this, "index", $data);
     }
     public function buscarCi($ci)
@@ -106,6 +107,7 @@ class Reservas extends Controller {
                 $sub_total = $row['sub_total'];
                 $cuarto_id = $row['cuarto_id'];
                 $this->model->registrarDetalleReserva($precio, $hora_inicio, $hora_fin, $cantidad, $sub_total, $cuarto_id, $reserva_id['id']);
+                $this->model->actualizarDisponibilidad($cuarto_id);
             }
             $vaciar = $this->model->vaciarDetalle($usuario_id);
             if($vaciar == 'ok'){

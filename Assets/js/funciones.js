@@ -1,7 +1,5 @@
 let  tblCuartos, tblCategorias, tblClientes, tblUsuarios ;
 
-
-
 document.addEventListener("DOMContentLoaded", function(){
   if (document.getElementById('tblUsuarios')){  
   tblUsuarios = $('#tblUsuarios').DataTable( {
@@ -33,7 +31,35 @@ document.addEventListener("DOMContentLoaded", function(){
     {
         'data' : 'acciones'
     }
-    ]
+    ],
+    language: {
+      "url": "//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json"
+    },
+    dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>"+
+          "<'row'<'col-sm-12'tr>>"+ 
+          "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+          buttons: [
+            {
+                extend:    'copyHtml5',
+                text:      '<i class="fa fa-file fa-2x"></i>',
+                titleAttr: 'Copy'
+            },
+            {
+                extend:    'excelHtml5',
+                text:      '<i class="fa fa-file-excel fa-2x"></i>',
+                titleAttr: 'Excel'
+            },
+            {
+                extend:    'csvHtml5',
+                text:      '<i class="fa fa-file-text fa-2x"></i>',
+                titleAttr: 'CSV'
+            },
+            {
+                extend:    'pdfHtml5',
+                text:      '<i class="fa fa-file-pdf fa-2x"></i>',
+                titleAttr: 'PDF'
+            }
+        ]
    }); }
    //fin de Usuarios
    if (document.getElementById('tblCategorias')){ 
@@ -61,7 +87,35 @@ document.addEventListener("DOMContentLoaded", function(){
     {
         'data' : 'acciones'
     }
-    ]
+    ],
+    language: {
+      "url": "//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json"
+    },
+    dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>"+
+          "<'row'<'col-sm-12'tr>>"+ 
+          "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+          buttons: [
+            {
+                extend:    'copyHtml5',
+                text:      '<i class="fa fa-file fa-2x"></i>',
+                titleAttr: 'Copy'
+            },
+            {
+                extend:    'excelHtml5',
+                text:      '<i class="fa fa-file-excel fa-2x"></i>',
+                titleAttr: 'Excel'
+            },
+            {
+                extend:    'csvHtml5',
+                text:      '<i class="fa fa-file-text fa-2x"></i>',
+                titleAttr: 'CSV'
+            },
+            {
+                extend:    'pdfHtml5',
+                text:      '<i class="fa fa-file-pdf fa-2x"></i>',
+                titleAttr: 'PDF'
+            }
+        ]
    }); }
    //fin cuartos
    if (document.getElementById('tblCuartos')){ 
@@ -88,7 +142,35 @@ document.addEventListener("DOMContentLoaded", function(){
     {
         'data' : 'acciones'
     }
-    ]
+    ],
+    language: {
+      "url": "//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json"
+    },
+    dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>"+
+          "<'row'<'col-sm-12'tr>>"+ 
+          "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+          buttons: [
+            {
+                extend:    'copyHtml5',
+                text:      '<i class="fa fa-file fa-2x"></i>',
+                titleAttr: 'Copy'
+            },
+            {
+                extend:    'excelHtml5',
+                text:      '<i class="fa fa-file-excel fa-2x"></i>',
+                titleAttr: 'Excel'
+            },
+            {
+                extend:    'csvHtml5',
+                text:      '<i class="fa fa-file-text fa-2x"></i>',
+                titleAttr: 'CSV'
+            },
+            {
+                extend:    'pdfHtml5',
+                text:      '<i class="fa fa-file-pdf fa-2x"></i>',
+                titleAttr: 'PDF'
+            }
+        ]
    }); }
    //fin categoria cuartos
    if (document.getElementById('tblClientes')){ 
@@ -118,7 +200,35 @@ document.addEventListener("DOMContentLoaded", function(){
     {
         'data' : 'acciones'
     }
-    ]
+    ],
+    language: {
+      "url": "//cdn.datatables.net/plug-ins/1.10.11/i18n/Spanish.json"
+    },
+    dom: "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>"+
+          "<'row'<'col-sm-12'tr>>"+ 
+          "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+          buttons: [
+            {
+                extend:    'copyHtml5',
+                text:      '<i class="fa fa-file fa-2x"></i>',
+                titleAttr: 'Copy'
+            },
+            {
+                extend:    'excelHtml5',
+                text:      '<i class="fa fa-file-excel fa-2x"></i>',
+                titleAttr: 'Excel'
+            },
+            {
+                extend:    'csvHtml5',
+                text:      '<i class="fa fa-file-text fa-2x"></i>',
+                titleAttr: 'CSV'
+            },
+            {
+                extend:    'pdfHtml5',
+                text:      '<i class="fa fa-file-pdf fa-2x"></i>',
+                titleAttr: 'PDF'
+            }
+        ]
    }); }
 })
 function frmLogin(e) {
@@ -1059,6 +1169,7 @@ function saltar(e,id)
 		}else{
 			// nos posicionamos en el siguiente input
 			document.getElementById(id).focus();
+      document.getElementById(id).removeAttribute('disabled');
 		}
 	}
 }
@@ -1115,8 +1226,8 @@ function buscarNumero(e){
             document.getElementById("precio_hora").value = res.precio_hora;
             document.getElementById("id").value = res.id;
             document.getElementById("hora_inicio").removeAttribute('disabled');
-            document.getElementById("hora_inicio").focus();
             document.getElementById("cantidad").removeAttribute('disabled');
+            document.getElementById("cantidad").focus();
           } else {
             alertas('El producto no existe', 'warning');
             document.getElementById("numero").value = '';
@@ -1268,6 +1379,14 @@ function generarReserva(){
   })
 
 }
+
+function cargarCu(){
+  const categoria = document.getElementById("categoria").value;
+  const horaIn = document.getElementById("hora_inicio").value;
+  document.getElementById("numero").focus();
+  document.getElementById("numero").removeAttribute('disabled');
+}
+
 //fin Reservas
 
 function alertas(mensaje, icono){

@@ -94,9 +94,8 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid mt-2">            
-                        <h1 class="mt-4">Panel principal</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">---------------------------------------------</li>
+                            <h1><li class="breadcrumb-item active">Panel Principal</li></h1>
                         </ol>
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
@@ -137,37 +136,43 @@
                             </div>
                         </div>
                         <!--CARDS-->
+        <div class="card bg-white bg-opacity-10">
             <div class="row">
             <?php
               for($i=0;$i< count($data); $i++){
                 $row[$i]= $data[$i];
             ?>
             <div class="col-xl-2">
-                <div class="card bg-secondary bg-opacity-10 mb-3" align="center" style="max-width: 16rem;">
-                    <div class="card-header" style="max-height: 3rem;">
-                        <h5><p class="room_number" > <i class="fas fa-bath"></i> Cuarto: <?php echo $row[$i]['numero'];?></p>
-                        </h5>
-                    </div>
-                    <div class="card-body" style="max-height: 6rem;">
-                        <div class="caption">
-                            <p class="categoria"> <?php echo $row[$i]['nombre'];?></p>
-                            <p class="rate" >
-                            <?php
-                                for($j=0;$j< $row[$i]['capacidad']; $j++){
-                                ?><i class="fas fa-person" ></i>
-                            <?php 
-                            }
-                            ?> 
-                            </p>
-                        </div>
-                    </div>
-                    <button class="add">Reservar</button>
-                </div>
+                    <?php if($row[$i]['estado'] == 0){  ?>
+                            <div class="card bg-secondary bg-opacity-25 mb-3" align="center" style="max-width: 16rem;">
+                    <?php  } else if($row[$i]['disponibilidad'] == 1 && $row[$i]['estado'] == 1 ){  ?>
+                            <div class="card bg-success bg-opacity-25 mb-3" align="center" style="max-width: 16rem;">
+                    <?php  } else if($row[$i]['disponibilidad'] == 0 && $row[$i]['estado'] == 1 ){  ?>
+                            <div class="card bg-danger bg-opacity-25 mb-3" align="center" style="max-width: 16rem;">
+                    <?php  } ?> 
+                            <div class="card-header" style="max-height: 3rem;">
+                                <h5><p class="room_number" > <i class="fas fa-bath"></i> Nro.<?php echo $row[$i]['numero'];?></p>
+                                </h5>
+                            </div>
+                            <div class="card-body" style="max-height: 6rem;">
+                                <div class="caption">
+                                    <p class="categoria"> <?php echo $row[$i]['nombre'];?></p>
+                                    <p class="rate">
+                                    <?php  for($j=0;$j< $row[$i]['capacidad']; $j++){ ?>
+                                        <i class="fas fa-person" ></i>
+                                    <?php  } ?> 
+                                    </p>
+                                </div>
+                            </div>
+                            <?php if($row[$i]['disponibilidad'] == 1 && $row[$i]['estado'] == 1 ){  ?>
+                                <button class="add">Reservar</button>
+                            <?php } ?> 
+                     </div>
              </div>
                 <?php 
                 }
                 ?> 
-            
+                </div>
         </div>
                         <img src="../logo3.png" width="150" height="200"  align="right">
 <?php include "Views/Templates/footer.php";?>

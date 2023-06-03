@@ -18,7 +18,7 @@ public function listar()
       if($data[$i]['Rol']==1) {
          $data[$i]['Rol'] = '<p>Administrador</p>';
       }else{
-         $data[$i]['Rol'] = '<p>Empleado</p';
+         $data[$i]['Rol'] = '<p>Empleado</p>';
       }
       if($data[$i]['Estado']==1) {
          $data[$i]['Estado'] = '<span class="badge badge-success">Activo</span>';

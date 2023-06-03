@@ -48,7 +48,7 @@
     <thead class="table-primary">
     <tr>
             <th>Id</th>
-            <th>Nombre de Usuario</th>
+            <th>Usuario</th>
             <th>Nombres</th>
             <th>Apellidos</th>
             <th>Correo</th>
@@ -109,8 +109,8 @@
                     <div class="form-group">
                         <label for="rol">Rol</label>
                         <select id="rol" class="form-control" name="rol">
-                            <option value="<?php echo 1;?>">Administrador</option>
-                            <option value="<?php echo 0;?>">Empleado</option>
+                            <option value="<?php echo 1;?>">Administrador </option>
+                            <option value="<?php echo 0;?>">Empleado </option>
                         </select>
                     </div>
                     <div class="form-group">

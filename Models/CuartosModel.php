@@ -6,7 +6,7 @@ public function __construct(){
 }
 public function getCategorias()
 {
-    $sql = "SELECT * FROM categoria_cuarto";
+    $sql = "SELECT * FROM categoria_cuarto WHERE estado = 1";
     $data = $this->selectAll($sql);
     return $data;
 }

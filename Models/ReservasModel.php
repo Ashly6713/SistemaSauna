@@ -4,6 +4,12 @@ class ReservasModel extends Query{
 public function __construct(){
     parent::__construct();
 }
+public function getCategorias()
+{
+    $sql = "SELECT * FROM categoria_cuarto WHERE estado = 1";
+    $data = $this->selectAll($sql);
+    return $data;
+}
 public function getCuNum(string $num)
 {
     $sql = "SELECT c.*, cc.nombre, cc.capacidad, cc.precio_hora, cc.estado FROM cuarto c INNER JOIN categoria_cuarto cc WHERE c.categoria_id = cc.id AND c.numero = '$num' AND c.estado = 1  AND c.disponibilidad = 1" ;
@@ -142,6 +148,13 @@ public function getCliReserva(int $id)
     return $data;
 }
 
+public function actualizarDisponibilidad(int $cuarto_id)
+{
+    $sql = "UPDATE cuarto SET disponibilidad = 0 WHERE id = $cuarto_id" ;
+    $datos = array($cuarto_id);
+    $data = $this->save($sql, $datos);
+    return $data;
+}
 
 }
 

@@ -61,20 +61,8 @@ date_default_timezone_set('America/La_Paz');?>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
-                        <label for="categoria"><i class="fas fa-grip-horizontal"></i> Categoria</label>
-                        <input id="categoria" class="form-control" type="text" name="categoria" placeholder="Categoria" disabled>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label for="precio_hora"><i class="fas fa-coins"></i> Precio por hora</label>
-                        <input id="precio_hora" class="form-control" type="text" name="precio_hora" placeholder="Bs." disabled>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
                         <label for="hora_inicio"><i class="fas fa-calendar-plus"></i> Hora de Inicio</label>
-                        <input id="hora_inicio" class="form-control" type="time" name="hora_inicio" placeholder="Hora de Inicio" onkeyup="saltar(event,'cantidad')" disabled required>
+                        <input id="hora_inicio" class="form-control" type="time" name="hora_inicio" placeholder="Hora de Inicio" onkeyup="saltar(event,'categoria')" required>
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -89,6 +77,22 @@ date_default_timezone_set('America/La_Paz');?>
                             <label for="cantidad"><i class="fas fa-clock"></i> Tiempo en minutos</label>
                             <input id="cantidad" class="form-control" type="number" name="cantidad" placeholder="Cantidad de minutos" onkeyup="calcularHoras(event);" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required disabled>
                         </div> 
+                    </div>
+                </div>
+                <div class="col-md-2">
+                <div class="form-group">
+                        <label for="categoria">Categoria</label>
+                        <select id="categoria" class="form-control" name="categoria" onchange="cargarCu()" disabled>
+                        <?php foreach ($data['categorias'] as $row){ ?>
+                            <option value="<?php echo $row['id'];?>"><?php echo $row['nombre']; ?></option>
+                           <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="precio_hora"><i class="fas fa-coins"></i> Precio por hora</label>
+                        <input id="precio_hora" class="form-control" type="text" name="precio_hora" placeholder="Bs." disabled>
                     </div>
                 </div>
                 <div class="col-md-2">
