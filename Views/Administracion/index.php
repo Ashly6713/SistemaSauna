@@ -1,4 +1,5 @@
 <?php include "Views/Templates/header.php";?>
+<script>localStorage.removeItem("selectedValue"); </script>
 <div class="card">
     <div class="card-header bg-primary bg-opacity-50 text-white" >
       <h5>  Datos de la Empresa </h5>

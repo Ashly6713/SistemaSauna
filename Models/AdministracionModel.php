@@ -27,6 +27,24 @@ public function getCuartos()
     $data = $this->selectAll($sql);
     return $data;
 }
+public function getClientes()
+{
+    $sql = "SELECT * FROM cliente";
+    $data = $this->selectAll($sql);
+    return $data;
+}
+public function getUsuarios()
+{
+    $sql = "SELECT * FROM usuario";
+    $data = $this->selectAll($sql);
+    return $data;
+}
+public function getReservas()
+{
+    $sql = "SELECT * FROM reserva";
+    $data = $this->selectAll($sql);
+    return $data;
+}
 
 
 }

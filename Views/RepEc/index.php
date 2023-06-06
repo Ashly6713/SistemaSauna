@@ -1,6 +1,6 @@
 <?php include "Views/Templates/header.php";?>
 <h1 class="mt-4" align="center">Reporte Económico</h1>
-
+<script>localStorage.removeItem("selectedValue"); </script>
 <main>
 <div class="row">
                             <div class="col-xl-6">

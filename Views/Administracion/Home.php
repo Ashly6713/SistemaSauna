@@ -7,6 +7,14 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+    <script>
+    localStorage.removeItem("selectedValue");
+    function abrirNuevaVentana(id) {
+      var selectValue = id;
+      localStorage.setItem("selectedValue", selectValue);
+      window.location.href = "<?php echo base_url; ?>Reservas";
+    }
+    </script>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -100,47 +108,47 @@
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body"><h4>Clientes <i class="fas fa-user-plus" ></i></h4> </div>
+                                    <div class="card-body"><h4>Clientes: <?php echo count($data['clientes'])?>  <i class="fas fa-user-plus" style="float: right;"></i><h4> </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Total Clientes</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                        <a class="small text-white" href="<?php echo base_url; ?>Clientes">Ver Clientes</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body"><h4>Usuarios <i class="fas fa-users" ></i></h4> </div>
+                                    <div class="card-body"><h4>Usuarios: <?php echo count($data['usuarios'])?>  <i class="fas fa-users" style="float: right;"></i><h4> </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Total Usuarios</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                        <a class="small text-white" href="<?php echo base_url; ?>Usuarios">Ver Usuarios</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-success text-white mb-4">
-                                    <div class="card-body"><h4>Reservas <i class="fas fa-ticket"></i></h4></div>
+                                    <div class="card-body"><h4>Reservas: <?php echo count($data['reservas'])?>  <i class="fas fa-ticket" style="float: right;"></i><h4> </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Total Reservas</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                        <a class="small text-white" href="<?php echo base_url; ?>Reservas">Ver Reservas</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-secondary text-white mb-4">
-                                    <div class="card-body"><h4>Cuartos <i class="fas fa-bath" ></i><h4> </div>
+                                    <div class="card-body"><h4>Cuartos: <?php echo count($data['cuartos'])?>  <i class="fas fa-bath" style="float: right;"></i><h4> </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="#">Total cuartos</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                        <a class="small text-white" href="<?php echo base_url; ?>Cuartos">Ver cuartos</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!--CARDS-->
-        <div class="card bg-white bg-opacity-10">
+    <div class="card bg-white bg-opacity-25">
+            <div class="card-header" style="max-height: 3rem;">
+                <h5><p class="room_number" >Estado de los Cuartos</p> </h5>
+            </div>  
+            <div class="card-body" > 
             <div class="row">
             <?php
-              for($i=0;$i< count($data); $i++){
-                $row[$i]= $data[$i];
+              for($i=0;$i< count($data['cuartos']); $i++){
+                $row[$i]= $data['cuartos'][$i];
             ?>
             <div class="col-xl-2">
                     <?php if($row[$i]['estado'] == 0){  ?>
@@ -156,7 +164,7 @@
                             </div>
                             <div class="card-body" style="max-height: 6rem;">
                                 <div class="caption">
-                                    <p class="categoria"> <?php echo $row[$i]['nombre'];?></p>
+                                    <p class="categoria"><?php echo $row[$i]['nombre'];?></p>
                                     <p class="rate">
                                     <?php  for($j=0;$j< $row[$i]['capacidad']; $j++){ ?>
                                         <i class="fas fa-person" ></i>
@@ -165,14 +173,13 @@
                                 </div>
                             </div>
                             <?php if($row[$i]['disponibilidad'] == 1 && $row[$i]['estado'] == 1 ){  ?>
-                                <button class="add">Reservar</button>
+                                <button class="btn btn-light mt-2 btn-block" type="button"  onclick="abrirNuevaVentana(<?php echo $row[$i]['categoria_id'];?>)">Reservar</button>
                             <?php } ?> 
                      </div>
              </div>
-                <?php 
-                }
-                ?> 
+                <?php  }  ?> 
                 </div>
-        </div>
+            </div>
+    </div>
                         <img src="../logo3.png" width="150" height="200"  align="right">
 <?php include "Views/Templates/footer.php";?>

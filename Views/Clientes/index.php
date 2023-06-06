@@ -2,7 +2,7 @@
 <ol class="breadcrumb mb-4">
      <h1><li class="breadcrumb-item active">Clientes</li></h1>
 </ol>
-
+<script>localStorage.removeItem("selectedValue"); </script>
 <button class="btn btn-outline-primary btn-lg mb-2" type="button" onclick="frmCliente();"><i class="fas fa-plus"></i> Nuevo</button>
 <style>
     .badge-primary {

@@ -1,10 +1,26 @@
 <?php include "Views/Templates/header.php";
-date_default_timezone_set('America/La_Paz');?>
+date_default_timezone_set('America/La_Paz'); ?>
 <ol class="breadcrumb mb-4">
      <h1><li class="breadcrumb-item active">Nueva Reserva</li></h1>
 </ol>
 <!-- CLIENTE -->
-<form id="frmReserva">
+<script>
+ var selectedValue = localStorage.getItem("selectedValue");
+ if(selectedValue > 0){
+    document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("categoria").value = selectedValue;
+    var selectElement = document.getElementById("categoria");
+    document.getElementById("categoria").removeAttribute('disabled');
+    var changeEvent = new Event("change");
+    selectElement.dispatchEvent(changeEvent);
+    });
+ }else {
+    document.addEventListener("DOMContentLoaded", function() {
+      document.getElementById("categoria").value = '0';
+    });
+ } 
+</script>
+<form id="frmReserva">                 
     <div class="card bg-white bg-opacity-10">
         <div class="card-header bg-secondary bg-opacity-25">
             <h6>Datos del Cliente </h6>
@@ -36,10 +52,10 @@ date_default_timezone_set('America/La_Paz');?>
                             <input id="telefono" class="form-control" type="text" name="telefono" placeholder="Telefono" disabled>  
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-2"> 
                         <div class="form-group">
-                            <label for="fecha"><i class="fas fa-calendar-alt"></i> Fecha</label>
-                            <input id="fecha" class="form-control" type="text" name="fecha" value="<?php echo date('d-m-Y');?>"disabled >
+                            <label for="fecha"><i class="fas fa-calendar-alt" ></i> Fecha</label>
+                            <input id="fecha" class="form-control"    type="text" name="fecha" value="<?php echo date('d-m-Y');?>"disabled >
                         </div>
                     </div>
                 </div>
@@ -56,13 +72,26 @@ date_default_timezone_set('America/La_Paz');?>
                     <div class="form-group">
                         <label for="numero"><i class="fas fa-hashtag"></i> Número de Cuarto</label>
                         <input type="hidden" id="id" name="id">
-                        <input id="numero" class="form-control" type="number" step="1" name="numero" placeholder="Número" onkeyup="buscarNumero(event);" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                        <select id="numero" class="form-control" name="numero" onchange="buscarNumero(event)"  onkeyup="saltar(event,'hora_inicio')" disabled>
+                            <option value="">Please select</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="categoria">Categoria</label>
+                        <select id="categoria" class="form-control" name="categoria" onchange="cargarCu()"  onkeyup="saltar(event,'hora_inicio')" disabled required>
+                        <option value="0">Seleccione categoria</option>
+                        <?php foreach ($data['categorias'] as $row){ ?>
+                            <option value="<?php echo $row['id']; ?>"><?php echo $row['nombre']; ?></option>
+                           <?php } ?>
+                        </select>
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="hora_inicio"><i class="fas fa-calendar-plus"></i> Hora de Inicio</label>
-                        <input id="hora_inicio" class="form-control" type="time" name="hora_inicio" placeholder="Hora de Inicio" onkeyup="saltar(event,'categoria')" required>
+                        <input id="hora_inicio" class="form-control" type="time" name="hora_inicio" placeholder="Hora de Inicio" onkeyup="saltar(event,'cantidad');" disabled required>
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -75,18 +104,8 @@ date_default_timezone_set('America/La_Paz');?>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="cantidad"><i class="fas fa-clock"></i> Tiempo en minutos</label>
-                            <input id="cantidad" class="form-control" type="number" name="cantidad" placeholder="Cantidad de minutos" onkeyup="calcularHoras(event);" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required disabled>
+                            <input id="cantidad" class="form-control" type="number" name="cantidad" placeholder="Cantidad de minutos"   onkeyup="calcularHoras(event);" onkeypress='return event.charCode >= 48 && event.charCode <= 57' required disabled>
                         </div> 
-                    </div>
-                </div>
-                <div class="col-md-2">
-                <div class="form-group">
-                        <label for="categoria">Categoria</label>
-                        <select id="categoria" class="form-control" name="categoria" onchange="cargarCu()" disabled>
-                        <?php foreach ($data['categorias'] as $row){ ?>
-                            <option value="<?php echo $row['id'];?>"><?php echo $row['nombre']; ?></option>
-                           <?php } ?>
-                        </select>
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -136,7 +155,7 @@ date_default_timezone_set('America/La_Paz');?>
         </div>
     </div>
     <div class="col-md-2 ml-10"> 
-        <button class="btn btn-primary mt-2 btn-block" type="button" onclick="generarReserva()" >Registrar Reserva</button>
+        <button class="btn btn-primary mt-2 btn-block" type="button" onclick="generarReserva()">Registrar Reserva</button>
     </div>
 </div>
 <?php  include "Views/Templates/footer.php"; ?>

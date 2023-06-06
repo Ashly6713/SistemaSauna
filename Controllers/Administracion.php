@@ -10,12 +10,15 @@ class Administracion extends Controller {
     }  
     public function index()
     {
-       $data = $this->model->getEmpresa();
+        $data = $this->model->getEmpresa();
         $this->views->getView($this, "index", $data);
     }
     public function home()
     {
-        $data = $this->model->getCuartos();
+        $data['clientes'] = $this->model->getClientes();
+        $data['usuarios'] = $this->model->getUsuarios();
+        $data['reservas'] = $this->model->getReservas();
+        $data['cuartos'] = $this->model->getCuartos();
         $this->views->getView($this, "home", $data);
     }
     public function modificar()

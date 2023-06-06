@@ -10,9 +10,9 @@ public function getCategorias()
     $data = $this->selectAll($sql);
     return $data;
 }
-public function getCuNum(string $num)
+public function getCuNum(int $id)
 {
-    $sql = "SELECT c.*, cc.nombre, cc.capacidad, cc.precio_hora, cc.estado FROM cuarto c INNER JOIN categoria_cuarto cc WHERE c.categoria_id = cc.id AND c.numero = '$num' AND c.estado = 1  AND c.disponibilidad = 1" ;
+    $sql = "SELECT c.*, cc.nombre, cc.capacidad, cc.precio_hora, cc.estado FROM cuarto c INNER JOIN categoria_cuarto cc WHERE c.categoria_id = cc.id AND c.id = $id AND c.estado = 1" ;
     $data = $this->select($sql);
     return $data;
 }
@@ -153,6 +153,23 @@ public function actualizarDisponibilidad(int $cuarto_id)
     $sql = "UPDATE cuarto SET disponibilidad = 0 WHERE id = $cuarto_id" ;
     $datos = array($cuarto_id);
     $data = $this->save($sql, $datos);
+    return $data;
+}
+public function getDisponibles(int $categoria, string $hora_inicio, string $hora_fin)
+{   date_default_timezone_set('America/La_Paz');  
+    $fecha_compra = date('Y-m-d');
+    $sql = "SELECT c.id, c.numero, cc.precio_hora
+    FROM Cuarto c
+    INNER JOIN Categoria_cuarto cc ON c.categoria_id = cc.id
+    WHERE c.id NOT IN (
+      SELECT dr.cuarto_id
+      FROM detalle_reserva dr
+      INNER JOIN Reserva r ON dr.reserva_id = r.id
+      WHERE (dr.hora_inicio <= '$hora_fin' AND dr.hora_fin >= '$hora_inicio')
+        AND r.fecha_compra = '$fecha_compra'
+    )
+    AND cc.id = $categoria AND c.estado = 1";
+    $data = $this->selectAll($sql);
     return $data;
 }
 

@@ -17,9 +17,9 @@ class Reservas extends Controller {
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
     }
-    public function buscarNumero($num)
+    public function buscarNumero($id)
     {
-        $data = $this->model->getCuNum($num);
+        $data = $this->model->getCuNum($id);
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
     }
@@ -29,7 +29,6 @@ class Reservas extends Controller {
         $id = $_POST['id'];
         $cliente_id = $_POST['id_cli'];
         $datos = $this->model->getCuartos($id);
-        $id_producto = $datos['id'];
         $precio = $datos['precio_hora'];
         $hora_inicio = $_POST['hora_inicio'];
         $cantidad = $_POST['cantidad'];
@@ -201,7 +200,18 @@ class Reservas extends Controller {
         $pdf->SetFont('Arial','',6);
         $pdf->Cell(68, 5, number_format($total, 2, '.', ',').' Bs.', 0, 1, 'R');
         $pdf->Output();
-    }  
+    } 
+    
+    public function disponibles()
+    {
+        $hora_inicio = $_POST['hora_inicio'];
+        $cantidad = $_POST['cantidad'];
+        $hora_fin = date('H:i',strtotime ( '+'.$cantidad.' minute' , strtotime ($hora_inicio) )) ;
+        $categoria = $_POST['categoria'];
+        $data = $this->model->getDisponibles($categoria, $hora_inicio, $hora_fin);
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        die();
+    }
 
 }
 

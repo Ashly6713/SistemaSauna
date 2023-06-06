@@ -32,11 +32,10 @@
                                             <div class="form-floating mb-3">
                                                  <input class="form-control py-4.5" id="clave" name="clave" type="password" onkeyup="saltar(event,'login')" placeholder="Ingrese Contraseña" />
                                                 <label class="small mb-1" for="clave"><i class="fas fa-key"></i>  Contraseña</label>
-                                                
-                                            </div>
-                                            <div class="alert alert-danger text-center d-none" id="alerta" name="alerta" role="alert">Error: </div>
+                                                </div>
+                                            <div class="alert alert-danger text-center d-none" id="alerta" role="alert"></div>
                                             <div claa="form-group d-flex align-items-center justify-content-between mt-4 " >
-                                                <button class="form-control btn btn-primary mt-3" id="login" name="login" type="submit" onclick="frmLogin(event)">Log In</button>
+                                                <button class="form-control btn btn-primary mt-3" type="submit" onclick="frmLogin(event);">Log In</button>
                                             </div>
                                         </form>
                                     </div>
