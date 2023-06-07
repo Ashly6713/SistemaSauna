@@ -2,9 +2,6 @@
 class Usuarios extends Controller{
    public function __construct(){
       session_start();
-      if(empty( $_SESSION['activo'])){
-          header("location:".base_url) ;
-      }
       parent:: __construct();
   } 
 public function index()
@@ -58,9 +55,8 @@ public function validar()
          $msg = "Usuario o contraseña incorrecta";
       }
    }
-   echo $msg;
-   echo json_encode($msg, JSON_UNESCAPED_UNICODE);
-   die();
+  echo json_encode($msg, JSON_UNESCAPED_UNICODE);
+  die();
 }
 
 public function registrar()

@@ -251,9 +251,11 @@ function frmLogin(e) {
       http.send(new FormData(frm));
       http.onreadystatechange = function(){
           if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText);
               const res= JSON.parse(this.responseText);
+              
               if(res == "ok") {
-                  window.location = base_url + "Administracion/Home";
+                  window.location = base_url + "Home";
               }else{
                   document.getElementById("alerta").classList.remove("d-none");
                   document.getElementById("alerta").innerHTML = res;
@@ -1466,3 +1468,57 @@ function alertas(mensaje, icono){
 }
 
 //fin alertas
+
+actualizar();
+actualizarNo();
+//actualizar No disponibles
+function actualizarNo(){
+  const url = base_url + "Reservas/actualizarNo";
+      const http = new XMLHttpRequest();
+      http.open("GET", url, true);
+      http.send();
+      http.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) { 
+          console.log(this.responseText);
+          //const res = JSON.parse(this.responseText);
+         }
+      }
+}
+//actualizar
+function actualizar(){
+  const url = base_url + "Reservas/actualizar";
+      const http = new XMLHttpRequest();
+      http.open("GET", url, true);
+      http.send();
+      http.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) { 
+          console.log(this.responseText);
+          //const res = JSON.parse(this.responseText);
+         }
+      }
+}
+//estados
+function togglePopup() {
+  var popup = document.getElementById("popup");
+  if (popup.style.display === "none") {
+    popup.style.display = "block";
+  } else {
+    popup.style.display = "none";
+  }
+}
+//Hora fin
+function HoraFin(e, cuarto_id){
+  
+  e.preventDefault();
+  const url = base_url + "Administracion/obtenerHoraFin/"+cuarto_id;
+
+      const http = new XMLHttpRequest();
+      http.open("GET", url, true);
+      http.send();
+      http.onreadystatechange = function(){
+        if (this.readyState == 4 && this.status == 200) { 
+          const res = JSON.parse(this.responseText);
+         document.getElementById("hora_fin"+cuarto_id).value = res.hora_fin;
+         }
+      }
+}

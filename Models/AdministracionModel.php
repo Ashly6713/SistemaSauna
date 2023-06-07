@@ -45,7 +45,20 @@ public function getReservas()
     $data = $this->selectAll($sql);
     return $data;
 }
-
+public function getHoraFin($id)
+{
+    date_default_timezone_set('America/La_Paz');
+    $fecha = date('Y-m-d');
+    $hora = date('H:i'); 
+    $sql = "SELECT dr.hora_fin
+    FROM detalle_reserva dr
+    JOIN Reserva r ON dr.reserva_id = r.id
+    WHERE dr.cuarto_id =$id
+      AND r.fecha_compra = '$fecha'
+      AND '$hora' BETWEEN dr.hora_inicio AND dr.hora_fin;";
+    $data = $this->select($sql);
+    return $data;
+}
 
 }
 

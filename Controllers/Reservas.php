@@ -106,7 +106,7 @@ class Reservas extends Controller {
                 $sub_total = $row['sub_total'];
                 $cuarto_id = $row['cuarto_id'];
                 $this->model->registrarDetalleReserva($precio, $hora_inicio, $hora_fin, $cantidad, $sub_total, $cuarto_id, $reserva_id['id']);
-                $this->model->actualizarDisponibilidad($cuarto_id);
+               // $this->model->actualizarDisponibilidad($cuarto_id);
             }
             $vaciar = $this->model->vaciarDetalle($usuario_id);
             if($vaciar == 'ok'){
@@ -211,6 +211,28 @@ class Reservas extends Controller {
         $data = $this->model->getDisponibles($categoria, $hora_inicio, $hora_fin);
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         die();
+    }
+    public function actualizar()
+    {
+        $data1 = $this->model->actualizarDisponibles();
+        if($data1 == 'ok'){
+             $msg = array('msg'=>'Actualizado', 'icono'=> 'success');
+         } else{
+             $msg = array('msg'=>'Error al actualizar', 'icono'=> 'error');
+         }
+         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
+         die();
+    }
+    public function actualizarNo()
+    {
+        $data2 = $this->model->actualizarNoDisponibles();
+        if( $data2 !='error'){
+             $msg = array('msg'=> $data2, 'icono'=> 'success');
+         } else{
+             $msg = array('msg'=>'Error No disponibles', 'icono'=> 'error');
+         }
+         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
+         die();
     }
 
 }

@@ -55,7 +55,7 @@ date_default_timezone_set('America/La_Paz'); ?>
                     <div class="col-md-2"> 
                         <div class="form-group">
                             <label for="fecha"><i class="fas fa-calendar-alt" ></i> Fecha</label>
-                            <input id="fecha" class="form-control"    type="text" name="fecha" value="<?php echo date('d-m-Y');?>"disabled >
+                            <input id="fecha" class="form-control"    type="text" name="fecha" value="<?php echo date('d-m-Y');?>" disabled >
                         </div>
                     </div>
                 </div>
@@ -91,7 +91,7 @@ date_default_timezone_set('America/La_Paz'); ?>
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="hora_inicio"><i class="fas fa-calendar-plus"></i> Hora de Inicio</label>
-                        <input id="hora_inicio" class="form-control" type="time" name="hora_inicio" placeholder="Hora de Inicio" onkeyup="saltar(event,'cantidad');" disabled required>
+                        <input id="hora_inicio" class="form-control" type="time" name="hora_inicio" value="<?php echo date('H-i');?>" onkeyup="saltar(event,'cantidad');" disabled required>
                     </div>
                 </div>
                 <div class="col-md-2">

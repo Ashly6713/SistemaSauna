@@ -148,12 +148,55 @@ public function getCliReserva(int $id)
     return $data;
 }
 
-public function actualizarDisponibilidad(int $cuarto_id)
+public function actualizarDisponibles()
 {
-    $sql = "UPDATE cuarto SET disponibilidad = 0 WHERE id = $cuarto_id" ;
-    $datos = array($cuarto_id);
+    date_default_timezone_set('America/La_Paz');
+    $fecha = date('Y-m-d');
+    $hora = date('H:i:s');
+    $sql = "UPDATE Cuarto
+    SET disponibilidad = ?
+    WHERE NOT EXISTS (
+      SELECT 1
+      FROM detalle_reserva dr
+      INNER JOIN Reserva r ON dr.reserva_id = r.id
+      WHERE dr.cuarto_id = Cuarto.id
+        AND r.fecha_compra = '$fecha'
+        AND '$hora' BETWEEN dr.hora_inicio AND dr.hora_fin
+    );" ;
+    $datos = array(1);
     $data = $this->save($sql, $datos);
-    return $data;
+    if($data == 1){
+        $res = 'ok';
+    }else {
+        $res = 'error';
+    }
+    return $res;
+}
+public function actualizarNoDisponibles()
+{
+    date_default_timezone_set('America/La_Paz');
+    $fecha = date('Y-m-d');
+    $hora = date('H:i:s');
+    $sql = "UPDATE Cuarto
+    SET disponibilidad = ?
+    WHERE id IN (
+      SELECT cuarto_id
+      FROM detalle_reserva
+      WHERE reserva_id IN (
+        SELECT id
+        FROM Reserva
+        WHERE fecha_compra = '$fecha' 
+        AND '$hora' BETWEEN hora_inicio AND hora_fin
+      )
+    );" ;
+    $datos = array(0);
+    $data = $this->save($sql, $datos);
+    if($data == 1){
+        $res = $hora;
+    }else {
+        $res = 'error';
+    }
+    return $res;
 }
 public function getDisponibles(int $categoria, string $hora_inicio, string $hora_fin)
 {   date_default_timezone_set('America/La_Paz');  

@@ -93,10 +93,6 @@
                             </div>
                         </div>
                     </div>
-                    <!--<div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Start Bootstrap
-                    </div>-->
                 </nav>
             </div>
             <div id="layoutSidenav_content">
@@ -142,7 +138,19 @@
                         <!--CARDS-->
     <div class="card bg-white bg-opacity-25">
             <div class="card-header" style="max-height: 3rem;">
-                <h5><p class="room_number" >Estado de los Cuartos</p> </h5>
+                <div class="row">
+                    <div class="col-xl-3">
+                        <h4>Estado de los Cuartos</h4>
+                    </div>
+                    <div class="col-xl-1">
+                        <button onclick="togglePopup()" class="fas fa-angle-right text-primary"></button>
+                    </div>
+                    <div id="popup" style="display: none;" class="col-xl-4">
+                        <span><i class="fas fa-crop-alt text-success"></i> Disponible</span>
+                        <span><i class="fas fa-crop-alt text-danger"></i> No Disponible</span>
+                        <span><i class="fas fa-crop-alt text-secondary"></i> Inactivo</span>
+                    </div>    
+                </div>
             </div>  
             <div class="card-body" > 
             <div class="row">
@@ -157,24 +165,31 @@
                             <div class="card bg-success bg-opacity-25 mb-3" align="center" style="max-width: 16rem;">
                     <?php  } else if($row[$i]['disponibilidad'] == 0 && $row[$i]['estado'] == 1 ){  ?>
                             <div class="card bg-danger bg-opacity-25 mb-3" align="center" style="max-width: 16rem;">
-                    <?php  } ?> 
-                            <div class="card-header" style="max-height: 3rem;">
+                                <div class="row">
+                                    <div class="col-xl-1 mb-3">
+                                        <button  class="fas fa-angle-right" onclick="HoraFin(event, <?php echo $row[$i]['id'];?>);"> Hora fin</button> 
+                                    </div>
+                                    <div class="col-xl-1">
+                                        <input id="hora_fin<?php echo $row[$i]['id'];?>" name="hora_fin<?php echo $row[$i]['id'];?>" value="" size="10" disabled></button>
+                                    </div>
+                                </div>
+                               <?php  } ?> 
+                            <div class="card-header" style="max-height: 2rem;">
                                 <h5><p class="room_number" > <i class="fas fa-bath"></i> Nro.<?php echo $row[$i]['numero'];?></p>
                                 </h5>
                             </div>
-                            <div class="card-body" style="max-height: 6rem;">
+                            <div class="card-body" style="max-height: 5rem;">
                                 <div class="caption">
-                                    <p class="categoria"><?php echo $row[$i]['nombre'];?></p>
-                                    <p class="rate">
+                                    <label class="categoria"><?php echo $row[$i]['nombre'];?></label>
+                                    <br>
                                     <?php  for($j=0;$j< $row[$i]['capacidad']; $j++){ ?>
                                         <i class="fas fa-person" ></i>
                                     <?php  } ?> 
-                                    </p>
                                 </div>
                             </div>
                             <?php if($row[$i]['disponibilidad'] == 1 && $row[$i]['estado'] == 1 ){  ?>
-                                <button class="btn btn-light mt-2 btn-block" type="button"  onclick="abrirNuevaVentana(<?php echo $row[$i]['categoria_id'];?>)">Reservar</button>
-                            <?php } ?> 
+                                        <button class="btn btn-light btn-block" type="button"  onclick="abrirNuevaVentana(<?php echo $row[$i]['categoria_id'];?>)">Reservar</button>
+                                    <?php } ?> 
                      </div>
              </div>
                 <?php  }  ?> 

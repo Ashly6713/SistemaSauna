@@ -3,9 +3,6 @@ class Administracion extends Controller {
     public function __construct()
     {
         session_start();
-        if (empty($_SESSION['activo'])) {
-            header("location: ". base_url);
-        }
         parent::__construct();
     }  
     public function index()
@@ -36,6 +33,12 @@ class Administracion extends Controller {
 
         }
         echo json_encode($msg);
+        die();
+    }
+    public function obtenerHoraFin($id)
+    {
+        $data = $this->model->getHoraFin($id);
+        echo json_encode($data);
         die();
     }
 }
