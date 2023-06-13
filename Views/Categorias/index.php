@@ -4,6 +4,11 @@
 </ol>
 <script>localStorage.removeItem("selectedValue"); </script>
 <button class="btn btn-outline-primary btn-lg mb-2" type="button" onclick="frmCategoria();"><i class="fas fa-plus"></i> Nuevo</button>
+<script>
+    window.onload = function() {
+      document.title = "Categorias de cuartos";
+    };
+</script>
 <style>
     .badge-primary {
    color: #ebeef0;

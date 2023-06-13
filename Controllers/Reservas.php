@@ -128,6 +128,7 @@ class Reservas extends Controller {
         $data = $this->model->getHistorialReservas();
         for ($i = 0; $i < count($data); $i++){
             $data[$i]['acciones'] = '<div>
+            <a class="btn btn-danger" href="'. base_url."Reservas/generarPdf/".$data[$i]['id'].'" terget="_blank"><i class="fas fa-file-pdf"></i></a>
             </div>';
         }
         echo json_encode($data, JSON_UNESCAPED_UNICODE);

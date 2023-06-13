@@ -4,7 +4,12 @@
 </ol>
 
 <button class="btn btn-outline-primary btn-lg mb-2" type="button" onclick="frmCuarto();"><i class="fas fa-plus"></i> Nuevo</button>
-<script>localStorage.removeItem("selectedValue"); </script>
+<script>localStorage.removeItem("selectedValue");</script>
+<script>
+    window.onload = function() {
+      document.title = "Cuartos";
+    };
+</script>
 <style>
     .badge-primary {
    color: #ebeef0;

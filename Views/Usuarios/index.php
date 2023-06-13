@@ -1,9 +1,15 @@
 <?php include "Views/Templates/header.php";?>
+<title>Usuarios</title>
 <ol class="breadcrumb mb-4">
      <h1><li class="breadcrumb-item active">Usuarios</li></h1>
 </ol>
 <script>localStorage.removeItem("selectedValue"); </script>
 <button class="btn btn-outline-primary btn-lg mb-2" type="button" onclick="frmUsuario();"><i class="fas fa-plus"></i> Nuevo</button>
+<script>
+    window.onload = function() {
+      document.title = "Usuarios";
+    };
+</script>
 <style>
     .badge-primary {
    color: #ebeef0;

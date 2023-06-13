@@ -3,6 +3,11 @@ date_default_timezone_set('America/La_Paz'); ?>
 <ol class="breadcrumb mb-4">
      <h1><li class="breadcrumb-item active">Nueva Reserva</li></h1>
 </ol>
+<script>
+    window.onload = function() {
+      document.title = "Reservas";
+    };
+</script>
 <!-- CLIENTE -->
 <script>
  var selectedValue = localStorage.getItem("selectedValue");
