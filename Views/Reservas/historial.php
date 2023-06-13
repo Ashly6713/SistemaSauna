@@ -91,24 +91,49 @@
 
 
 <!--HISTORIAL--> 
+
+<style>
+  .tooltip-container {
+    position: relative;
+  }
+
+  .tooltip-container::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: -30px; /* Ajusta la posición vertical del mensaje flotante */
+    left: 0;
+    background-color: #007bff; /* Color de fondo azul */
+    color: #fff;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .tooltip-container:hover::before {
+    opacity: 1;
+  }
+</style>
 <div class="card">
     <div class="card-header bg-dark text-white">
         Reservas
     </div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-light table-bordered table-hover" id="t_historial_r" style="width:100%">
-                <thead class="table table-primary">
+            <table class="table table-light table-bordered table-hover" id="t_historial_r" style="width:100%">    
+            <thead class="table table-primary">   
                     <tr>
                         <th>#</th>
-                        <th>Fecha compra</th>
+                        <th>Fecha</th>
                         <th>Total</th>
-                        <th>Ci</th>
-                        <th>Nombres del Cliente</th>
-                        <th>Apellidos del Cliente</th>
-                        <th>Usuario</th>
-                        <th>Nombres de Usuario</th>
-                        <th>Apellidos de Usuario</th>
+                        <th ><div class="tooltip-container" data-tooltip="Cliente">Ci </div></th> 
+                        <th ><div class="tooltip-container" data-tooltip="Cliente">Nombres</div></th>
+                        <th ><div class="tooltip-container" data-tooltip="Cliente">Apellidos</div></th> 
+                        <th><div class="tooltip-container" data-tooltip="Usuario">Usuario</th>
+                        <th><div class="tooltip-container" data-tooltip="Usuario">Nombres</th>
+                        <th><div class="tooltip-container" data-tooltip="Usuario">Apellidos</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -119,3 +144,6 @@
     </div>
 </div>
 <?php include "Views/Templates/footer.php";?>
+
+|         Cliente         |
+| Ci | Nombres | Apellido |
