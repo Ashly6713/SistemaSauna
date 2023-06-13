@@ -8,7 +8,8 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Sauna Minerva</title>
-        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" /> 
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+         
         <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
         <link href="<?php echo base_url; ?>Assets/css/styles.css" rel="stylesheet" />
        <!-- <link href="<?php echo base_url; ?>Assets/DataTables/datatables.min.css" rel="stylesheet" /> -->
@@ -18,7 +19,7 @@
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
            <h1> <a class="navbar-brand ps-3 bs-border-color" href="index.html"> <FONT SIZE="+2">Sauna Minerva  </FONT>    
-                <img src="dinosaur-removebg.png" width="50" height="50"></a></h1>
+                <img src="../dinosaur-removebg.png" width="50" height="50"></a></h1>
             
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
@@ -82,12 +83,39 @@
                             </div>
                         </div>
                     </div>
-                    <!--<div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Start Bootstrap
-                    </div>-->
                 </nav>
             </div>
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid mt-2">
+
+
+<!--HISTORIAL--> 
+<div class="card">
+    <div class="card-header bg-dark text-white">
+        Reservas
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-light table-bordered table-hover" id="t_historial_r" style="width:100%">
+                <thead class="table table-primary">
+                    <tr>
+                        <th>#</th>
+                        <th>Fecha compra</th>
+                        <th>Total</th>
+                        <th>Ci</th>
+                        <th>Nombres del Cliente</th>
+                        <th>Apellidos del Cliente</th>
+                        <th>Usuario</th>
+                        <th>Nombres de Usuario</th>
+                        <th>Apellidos de Usuario</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="tblDetalle">
+                </tbody>
+            </table>
+        </div>   
+    </div>
+</div>
+<?php include "Views/Templates/footer.php";?>

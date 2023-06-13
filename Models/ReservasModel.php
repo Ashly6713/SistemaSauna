@@ -215,6 +215,12 @@ public function getDisponibles(int $categoria, string $hora_inicio, string $hora
     $data = $this->selectAll($sql);
     return $data;
 }
+public function getHistorialReservas()
+{
+    $sql = "SELECT u.nom_usuario, u.nombres as nombre_u, u.apellido as apellido_u, c.ci, c.nombre, c.apellido, r.* FROM cliente c INNER JOIN Reserva r ON r.cliente_id = c.id INNER JOIN usuario u ON u.id = r.usuario_id";
+    $data = $this->selectAll($sql);
+    return $data;
+}
 
 }
 

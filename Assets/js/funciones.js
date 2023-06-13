@@ -1,4 +1,4 @@
-let  tblCuartos, tblCategorias, tblClientes, tblUsuarios ;
+let  tblCuartos, tblCategorias, tblClientes, tblUsuarios;
 
 document.addEventListener("DOMContentLoaded", function(){
   if (document.getElementById('tblUsuarios')){  
@@ -230,6 +230,45 @@ document.addEventListener("DOMContentLoaded", function(){
             }
         ]
    }); }
+   //fin Clientes
+    $('#t_historial_r').DataTable( {
+     ajax: {
+         url: base_url + "Reservas/listar_reservas",
+         dataSrc: ''
+     },
+     columns: [ {
+          'data' : 'id'
+       },
+       {
+         'data' : 'fecha_compra'
+       },
+       {
+         'data' : 'total'
+       },
+       {
+        'data' : 'ci'
+        },
+        {
+            'data' : 'nombre'
+        },
+        {
+            'data' : 'apellido'
+        },
+        {
+          'data' : 'nom_usuario'
+         },
+        {
+            'data' : 'nombre_u'
+        },
+        {
+            'data' : 'apellido_u'
+        },
+        {
+            'data' : 'acciones'
+        }
+    
+      ]
+    }); 
 })
 function frmLogin(e) {
   e.preventDefault();
@@ -1243,14 +1282,40 @@ function buscarNumero(e){
     alertas('Ingrese el número', 'warning');
   }
 }
+
+function restarHoras(hora1, hora2) {
+  var partesHora1 = hora1.split(":");
+  var partesHora2 = hora2.split(":");
+
+  var horas1 = parseInt(partesHora1[0]);
+  var minutos1 = parseInt(partesHora1[1]);
+
+  var horas2 = parseInt(partesHora2[0]);
+  var minutos2 = parseInt(partesHora2[1]);
+
+  // Convertir todo a minutos
+  var totalMinutos1 = horas1 * 60 + minutos1;
+  var totalMinutos2 = horas2 * 60 + minutos2;
+
+  // Restar los minutos
+  var diferenciaMinutos = totalMinutos1 - totalMinutos2;
+
+  return diferenciaMinutos;
+}
 function calcularHoras(e){
   e.preventDefault();
   const hrIn = document.getElementById("hora_inicio").value;
   const ci = document.getElementById("ci").value;
   const cant = document.getElementById("cantidad").value;
   document.getElementById("hora_fin").value =  hrIn;
-  document.getElementById("hora_fin").stepUp(cant); 
+  document.getElementById("hora_fin").stepUp(cant);
+  const hrFin = document.getElementById("hora_fin").value;
+  var cant2 = restarHoras(hrFin, hrIn);
   if(e.which == 13){
+    if(cant2<cant){ 
+      alertas('Sólo quedan '+cant2+' minutos', 'warning');
+      document.getElementById("cantidad").value = cant2;
+    }
     if(cant > 0){
       const url = base_url + "Reservas/disponibles";
       const frm = document.getElementById("frmReserva");
@@ -1480,7 +1545,6 @@ function actualizarNo(){
       http.onreadystatechange = function(){
         if (this.readyState == 4 && this.status == 200) { 
           console.log(this.responseText);
-          //const res = JSON.parse(this.responseText);
          }
       }
 }
@@ -1493,7 +1557,6 @@ function actualizar(){
       http.onreadystatechange = function(){
         if (this.readyState == 4 && this.status == 200) { 
           console.log(this.responseText);
-          //const res = JSON.parse(this.responseText);
          }
       }
 }

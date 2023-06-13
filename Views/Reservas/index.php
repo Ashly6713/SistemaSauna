@@ -129,7 +129,7 @@ date_default_timezone_set('America/La_Paz'); ?>
 
 
 <p></p><!--tabla -->
-<table class="table table-light table-bordered table-hover">
+<table class="table table-light table-bordered table-hover" style="width:100%">
     <thead class="table table-primary">
         <tr>
             <th>ID</th>

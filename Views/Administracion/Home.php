@@ -87,7 +87,7 @@
                             </a>
                             <div class="collapse" id="collapseRep" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#"><h6><i class="fas fa-money-check"></i> Reportes de reservas</h6></a>
+                                    <a class="nav-link" href="<?php echo base_url; ?>Reservas/historial"><h6><i class="fas fa-money-check"></i> Reportes de reservas</h6></a>
                                     <a class="nav-link" href="<?php echo base_url; ?>RepEc"><h6><i class="fas fa-money-check-alt"></i> Reporte económico</h6></a>
                                 </nav>
                             </div>

@@ -11,6 +11,11 @@ class Reservas extends Controller {
         $data['clientes']= $this->model->getClientes();
         $this->views->getView($this, "index", $data);
     }
+    public function historial()
+    {
+        $data['clientes']= $this->model->getClientes();
+        $this->views->getView($this, "historial", $data);
+    }
     public function buscarCi($ci)
     {
         $data = $this->model->getCi($ci);
@@ -118,6 +123,16 @@ class Reservas extends Controller {
         echo json_encode($msg, JSON_UNESCAPED_UNICODE);
         die();
     } 
+    public function listar_reservas()
+    {
+        $data = $this->model->getHistorialReservas();
+        for ($i = 0; $i < count($data); $i++){
+            $data[$i]['acciones'] = '<div>
+            </div>';
+        }
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        die();
+    }
     public function generarPdf($id_reserva)
     {
         $empresa = $this->model->getEmpresa();
