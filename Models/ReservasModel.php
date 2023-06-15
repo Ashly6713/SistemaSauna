@@ -222,6 +222,13 @@ public function getHistorialReservas()
     return $data;
 }
 
+public function getRangoFechas(string $desde, string $hasta)
+{
+    $sql = "SELECT u.nom_usuario, u.nombres as nombre_u, u.apellido as apellido_u, c.ci, c.nombre, c.apellido, r.* FROM cliente c INNER JOIN Reserva r ON r.cliente_id = c.id INNER JOIN usuario u ON u.id = r.usuario_id WHERE r.fecha_compra BETWEEN '$desde' AND '$hasta'";
+    $data = $this->selectAll($sql);
+    return $data;
+}
+
 }
 
 

@@ -1,5 +1,5 @@
 <?php
-const base_url = "http://localhost/SistemaSauna3/";
+const base_url = "http://localhost/SistemaSauna/";
 const host = "localhost";
 const user = "root";
 const pass = "";

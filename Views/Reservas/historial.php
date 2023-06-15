@@ -116,9 +116,31 @@
     opacity: 1;
   }
 </style>
-<div class="card">
+<?php date_default_timezone_set('America/La_Paz'); ?>                
+<form action="<?php echo base_url;?>Reservas/pdf" method="POST" target="_blank">
+                <div class="row">
+                    <div class="col-md-3"> 
+                        <div class="form-group">
+                            <label for="min"> Desde</label>
+                            <input id="min" name="desde" type="date" value="<?php echo date('Y-m-d');?>">  
+                        </div>
+                    </div>
+                    <div class="col-md-3"> 
+                        <div class="form-group">
+                            <label for="hasta"> Hasta</label>
+                            <input id="hasta" name="hasta" type="date" value="<?php echo date('Y-m-d');?>">  
+                        </div>
+                    </div>
+                    <div class="col-md-3"> 
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-danger">PDF</button> 
+                        </div>
+                    </div>
+                </div>
+</form>
+<div class="card my-2">
     <div class="card-header bg-dark text-white">
-        Reservas
+        <h5>Reservas</h5>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -137,7 +159,7 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody id="tblDetalle">
+                <tbody id="t_historial_r">
                 </tbody>
             </table>
         </div>   

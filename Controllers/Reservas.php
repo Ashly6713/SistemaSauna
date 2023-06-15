@@ -251,6 +251,70 @@ class Reservas extends Controller {
          die();
     }
 
+    public function pdf()
+    {
+        $desde = $_POST['desde'];
+        $hasta = $_POST['hasta'];
+        if (empty($desde) || empty($hasta)){
+            $data = $this->model->getHistorialReservas();
+        }else{
+            $data = $this->model->getRangoFechas($desde, $hasta);
+        }
+        require('Libraries/fpdf/fpdf.php');
+        $pdf = new FPDF('P','mm', 'Letter');//array ancho y alto
+        $pdf->AddPage();
+        $pdf->SetMargins(10, 0, 0);
+        $pdf->SetTitle('Reporte Reservas');
+        $pdf->SetFont('Arial','B',20);
+        $pdf->Cell(200, 10, utf8_decode('Reporte de Reservas'), 0, 1, 'C');
+        $pdf->Image(base_url . 'Assets/img/log.png', 196, 7, 14, 15);// , tamaño, atura, 25*25 
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(15, 5, 'Desde:', 0, 0, 'L');
+        $pdf->SetFont('Arial','',10);
+        $pdf->Cell(32, 5, $desde, 0, 0, 'L');
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(11, 5, 'Hata:', 0, 0, 'L');
+        $pdf->SetFont('Arial','',10);
+        $pdf->Cell(20, 5, $hasta, 0, 1, 'L');
+        $pdf->SetFont('Arial','B',10);
+        $pdf->SetFillColor(0,0,0);
+        $pdf->SetTextColor(255,255,255);
+        $pdf->Cell(8, 5, 'Id', 0, 0, 'L', true);
+        $pdf->Cell(20, 5, 'Fecha', 0, 0, 'L', true);
+        $pdf->Cell(15, 5, 'Total', 0, 0, 'L', true);
+        $pdf->Cell(16, 5, 'C. I.', 0, 0, 'L', true);
+        $pdf->Cell(30, 5, 'Nombres', 0, 0, 'L', true);
+        $pdf->Cell(30, 5, 'Apellidos', 0, 0, 'L', true);
+        $pdf->Cell(20, 5, 'Usuario', 0, 0, 'L', true);
+        $pdf->Cell(30, 5, 'Nombres', 0, 0, 'L', true);
+        $pdf->Cell(30, 5, 'Apellidos', 0, 1, 'L', true);
+        $pdf->SetFont('Arial','',9);
+        
+        $pdf->SetTextColor(0,0,0);
+        $total = 0.00;
+        foreach($data as $row) {
+            $total = $total + $row['total'];
+            $pdf->Cell(8, 5, $row['id'], 0, 0, 'L');
+            $pdf->Cell(20, 5, $row['fecha_compra'], 0, 0, 'L');
+            $pdf->Cell(15, 5, $row['total'], 0, 0, 'L');
+            $pdf->Cell(16, 5, $row['ci'], 0, 0, 'L');
+            $pdf->Cell(30, 5, utf8_decode($row['nombre']), 0, 0, 'L');
+            $pdf->Cell(30, 5, utf8_decode($row['apellido']), 0, 0, 'L');
+            $pdf->Cell(20, 5, utf8_decode($row['nom_usuario']), 0, 0, 'L');
+            $pdf->Cell(30, 5, utf8_decode($row['nombre_u']), 0, 0, 'L');
+            $pdf->Cell(30, 5, utf8_decode($row['apellido_u']), 0, 1, 'L');
+        }
+        $pdf->Ln();
+        $pdf->SetFont('Arial','B',9);
+        $pdf->Cell(172, 3,'', 0, 0, 'R');
+        $pdf->SetFillColor(0,0,0);
+        $pdf->SetTextColor(255,255,255);
+        $pdf->Cell(24, 5,'Total Vendido', 0, 1, 'R', true);
+        $pdf->SetTextColor(0,0,0);
+        $pdf->Cell(196, 5, number_format($total, 2, '.', ',').' Bs.', 0, 1, 'R');
+        $pdf->Output();
+    } 
+
 }
 
 ?>
