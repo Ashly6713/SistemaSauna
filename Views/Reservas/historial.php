@@ -119,16 +119,28 @@
 <?php date_default_timezone_set('America/La_Paz'); ?>                
 <form action="<?php echo base_url;?>Reservas/pdf" method="POST" target="_blank">
                 <div class="row">
-                    <div class="col-md-3"> 
+                    <div class="col-md-2"> 
                         <div class="form-group">
-                            <label for="min"> Desde</label>
+                            <label for="min"> <i class="fas fa-calendar-plus"></i> Desde</label>
                             <input id="min" name="desde" type="date" value="<?php echo date('Y-m-d');?>">  
                         </div>
                     </div>
-                    <div class="col-md-3"> 
+                    <div class="col-md-2"> 
                         <div class="form-group">
-                            <label for="hasta"> Hasta</label>
+                            <label for="hasta"><i class="fas fa-calendar-check"></i>  Hasta</label>
                             <input id="hasta" name="hasta" type="date" value="<?php echo date('Y-m-d');?>">  
+                        </div>
+                    </div>
+                    <div class="col-md-2"> 
+                        <div class="form-group">
+                            <label for="ci"><i class="fas fa-user-plus"></i> C. I</label>
+                            <input id="ci" class="form-control" name="ci" type="text" pattern="[A-Za-z0-9]{6,}" title="El carnet de identidad debe contener al menos 6 números">  
+                        </div>
+                    </div>
+                    <div class="col-md-2"> 
+                        <div class="form-group">
+                            <label for="usuario"><i class="fas fa-users"></i> Usuario</label>
+                            <input id="usuario" class="form-control" name="usuario" type="text"  pattern="[A-Za-z0-9]+" title="Solo se permiten letras y números" >  
                         </div>
                     </div>
                     <div class="col-md-3"> 
@@ -136,6 +148,7 @@
                             <button type="submit" class="btn btn-danger">PDF</button> 
                         </div>
                     </div>
+                    
                 </div>
 </form>
 <div class="card my-2">
@@ -166,6 +179,3 @@
     </div>
 </div>
 <?php include "Views/Templates/footer.php";?>
-
-|         Cliente         |
-| Ci | Nombres | Apellido |

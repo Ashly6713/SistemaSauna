@@ -43,7 +43,8 @@
             </div>
         </div>
         <script src="<?php echo base_url; ?>Assets/js/jquery-3.6.4.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>'
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>'
         <script src="<?php echo base_url; ?>Assets/js/scripts.js"></script>
         <script src="<?php echo base_url; ?>Assets/js/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="<?php echo base_url; ?>Assets/js/datatables-simple-demo.js"></script>

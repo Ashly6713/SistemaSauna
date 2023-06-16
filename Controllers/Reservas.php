@@ -255,10 +255,24 @@ class Reservas extends Controller {
     {
         $desde = $_POST['desde'];
         $hasta = $_POST['hasta'];
-        if (empty($desde) || empty($hasta)){
+        $ci = $_POST['ci'];
+        $usuario = $_POST['usuario'];
+        
+        if (empty($desde) && empty($hasta) && empty($ci)&& empty($usuario)){
             $data = $this->model->getHistorialReservas();
-        }else{
+        }else if( $ci=="" && $usuario=="" ){
             $data = $this->model->getRangoFechas($desde, $hasta);
+        }else if( !empty($ci) && empty($usuario)){
+           $data = $this->model->getRangoFechasCi($desde, $hasta, $ci);
+        }else if( !empty($usuario) && empty($ci)){
+            $data = $this->model->getRangoFechasUsuario($desde, $hasta, $usuario);
+        } else {
+             $data = $this->model->getRangoFechasCiUsuario($desde, $hasta, $ci, $usuario);
+        }
+        $mensaje = "No existen registros con estos parametros";
+        if(empty($data)){ 
+            echo "<script>alert('" . $mensaje . "');</script>";
+            die();
         }
         require('Libraries/fpdf/fpdf.php');
         $pdf = new FPDF('P','mm', 'Letter');//array ancho y alto
