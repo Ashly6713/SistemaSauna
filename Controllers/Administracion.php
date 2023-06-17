@@ -28,9 +28,9 @@ class Administracion extends Controller {
         $id = $_POST['id'];
         $data = $this->model->modificar($nit, $nombre, $telefono, $dir, $mensaje,$id);
         if($data == 'ok'){
-            $msg = 'ok';
-        }else{
-
+            $msg = array('msg' => 'Datos modificados con éxito', 'icono' => 'success');
+        } else{
+           $msg = array('msg' => 'Error al modificar', 'icono' => 'error');
         }
         echo json_encode($msg);
         die();
@@ -38,6 +38,18 @@ class Administracion extends Controller {
     public function obtenerHoraFin($id)
     {
         $data = $this->model->getHoraFin($id);
+        echo json_encode($data);
+        die();
+    }
+    public function reporteVendido()
+    {
+        $data = $this->model->getVendido();
+        echo json_encode($data);
+        die();
+    }
+    public function reporteVentas()
+    {
+        $data = $this->model->getVentas();
         echo json_encode($data);
         die();
     }

@@ -60,6 +60,26 @@ public function getHoraFin($id)
     return $data;
 }
 
+public function getVendido()
+{
+    $sql = "SELECT Cuarto.numero, COUNT(*) AS veces_reservado
+    FROM Cuarto
+    INNER JOIN detalle_reserva ON Cuarto.id = detalle_reserva.cuarto_id
+    GROUP BY Cuarto.id 
+    ORDER BY veces_reservado DESC
+    LIMIT 10";
+    $data = $this->selectAll($sql);
+    return $data;
+}
+public function getVentas()
+{
+    $sql = "SELECT MONTH(fecha_compra) AS mes, COUNT(*) AS cantidad_ventas
+    FROM Reserva
+    GROUP BY mes";
+    $data = $this->selectAll($sql);
+    return $data;
+}
+
 }
 
 

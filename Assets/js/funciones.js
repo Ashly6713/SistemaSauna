@@ -1213,9 +1213,7 @@ function modificarEmpresa(){
   http.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
          const res = JSON.parse(this.responseText);
-        if(res == 'ok'){
-          alert('Modificado');
-        }
+          alertas(res.msg, res.icono);
       }
   }   
 
@@ -1613,3 +1611,52 @@ function HoraFin(e, cuarto_id){
          }
       }
 }
+//Reporte grafico
+//reporteVendidos();
+function reporteVendidos(){
+  const url = base_url + "Administracion/reporteVendido";
+  const http = new XMLHttpRequest();
+  http.open("POST", url, true);
+  http.send();
+  http.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+         const res = JSON.parse(this.responseText);
+         let nombre = [];
+          let cantidad = [];
+         for(let i = 0; i< res.length; i++){
+           nombre.push('Nro.:'+res[i]['numero']);
+           cantidad.push(res[i]['veces_reservado']) ;
+         }
+         var ctx = document.getElementById("masReservado");
+          var myPieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+              labels: nombre,
+              datasets: [{
+                data: cantidad,
+                backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745', '#33FFEC','#A533FF' ],
+              }],
+            },
+          });
+      }
+  }
+}
+function convertirNumeroAMes(numeroMes) {
+  const nombresMeses = [
+    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+  ];
+  
+  // Restar 1 al número del mes, ya que los índices del array comienzan en 0
+  const indiceMes = numeroMes - 1;
+  
+  // Verificar si el número del mes es válido
+  if (indiceMes >= 0 && indiceMes < nombresMeses.length) {
+    return nombresMeses[indiceMes];
+  } else {
+    return 'Mes inválido';
+  }
+}
+
+// Bar Chart Example
+
