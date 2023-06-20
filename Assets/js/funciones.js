@@ -1612,7 +1612,7 @@ function HoraFin(e, cuarto_id){
       }
 }
 //Reporte grafico
-//reporteVendidos();
+reporteVendidos();
 function reporteVendidos(){
   const url = base_url + "Administracion/reporteVendido";
   const http = new XMLHttpRequest();
@@ -1657,6 +1657,74 @@ function convertirNumeroAMes(numeroMes) {
     return 'Mes inválido';
   }
 }
+reporteVentas();
+function reporteVentas(){
+  const url = base_url + "Administracion/reporteVentas";
+  const http = new XMLHttpRequest();
+  http.open("POST", url, true);
+  http.send();
+  http.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+         const res = JSON.parse(this.responseText);
+         let mes = [];
+          let cantidad = [];
+         for(let i = 0; i< res.length; i++){
+           mes.push(convertirNumeroAMes(res[i]['mes']));
+           cantidad.push(res[i]['cantidad_ventas']) ;
+         }
+         var ctx = document.getElementById("VentasPorMes");
+          var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: mes,
+              datasets: [{
+                label: "Ventas",
+                lineTension: 0.3,
+                backgroundColor: "rgba(2,117,216,0.2)",
+                borderColor: "rgba(2,117,216,1)",
+                pointRadius: 5,
+                pointBackgroundColor: "rgba(2,117,216,1)",
+                pointBorderColor: "rgba(255,255,255,0.8)",
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "rgba(2,117,216,1)",
+                pointHitRadius: 50,
+                pointBorderWidth: 2,
+                data: cantidad,
+              }],
+            },
+            options: {
+              scales: {
+                xAxes: [{
+                  time: {
+                    unit: 'date'
+                  },
+                  gridLines: {
+                    display: false
+                  },
+                  ticks: {
+                    maxTicksLimit: 7
+                  }
+                }],
+                yAxes: [{
+                  ticks: {
+                    min: 0,
+                    max: 40000,
+                    maxTicksLimit: 5
+                  },
+                  gridLines: {
+                    color: "rgba(0, 0, 0, .125)",
+                  }
+                }],
+              },
+              legend: {
+                display: false
+              }
+            }
+          });
+      }
+  }
+}
+
 
 // Bar Chart Example
 
