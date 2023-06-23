@@ -84,6 +84,19 @@ public function eliminarUser(int $id){
     $data = $this->save($sql, $datos);
     return $data;
 }
+public function modificarPass(string $clave, int $id )
+{
+    $sql = "UPDATE usuario SET contrasena = ? WHERE id = ?";
+    $datos = array($clave, $id);
+    $data = $this->save($sql, $datos);
+    return $data;
+}
+public function getPass(string $clave, int $id )
+{
+    $sql = "SELECT * FROM usuario WHERE contrasena = '$clave'  AND id = $id";
+    $data = $this->select($sql);
+    return $data;
+}
 
 
 }

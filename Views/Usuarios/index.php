@@ -101,7 +101,7 @@
                     <div class="col-md-6">
                        <div class="form-group">
                         <label for="clave">Contraseña</label>
-                        <input id="clave" class="form-control" type="password" name="clave" placeholder="Contrasena">
+                        <input id="clave" class="form-control" type="password" name="clave" placeholder="Contrasena" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required title="La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número.">
                        </div>
                     </div>
                     <div class="col-md-6">

@@ -50,6 +50,7 @@ public function validar()
            $_SESSION['id']  = $data['id'] ;
            $_SESSION['nom_usuario']  = $data['nom_usuario'] ;
            $_SESSION['nombres']  = $data['nombres'] ;
+           $_SESSION['rol']  = $data['Rol'] ;
            $_SESSION['activo']  = true ;
       } else{
          $msg = "Usuario o contraseña incorrecta";
@@ -141,6 +142,35 @@ public function reingresar(int $id){
       $msg = array('msg' => 'Usuario Reactivado', 'icono' => 'success');
    } else{
       $msg = array('msg' => 'Error al Reactivar Usuario', 'icono' => 'error');
+   }
+   echo json_encode($msg, JSON_UNESCAPED_UNICODE);
+   die();
+}
+public function cambiarPass(){
+   $actual= $_POST['clave_actual'];
+   $nueva = $_POST['clave_nueva'];
+   $confirmar = $_POST['confirmar_clave'];
+   if(empty($actual) || empty($nueva) || empty($confirmar)){
+      $msg = array('msg' => 'Todos los campos son obligatorios', 'icono' => 'warning');
+   } else{
+      if($nueva != $confirmar){
+      $msg = array('msg' => 'Las contraseñas no coinciden', 'icono' => 'warning');
+      } else{
+            $id = $_SESSION['id'];
+            $hash = hash("SHA256", $actual);
+            $data = $this->model->getPass($hash, $id); 
+            if(!empty($data)){
+                $verificar = $this->model->modificarPass(hash("SHA256", $nueva), $id);
+               
+               if($verificar == 1){
+                  $msg = array('msg' => 'Contraseña modificada', 'icono' => 'success');
+               }else{
+                  $msg = array('msg' => 'Error al modifcar la contraseña', 'icono' => 'error');
+               }
+            } else {
+               $msg = array('msg' => 'La contraseña actual es incorrecta ', 'icono' => 'warning');
+            }
+      }
    }
    echo json_encode($msg, JSON_UNESCAPED_UNICODE);
    die();

@@ -1,5 +1,5 @@
 <?php include "Views/Templates/header.php";?>
-<h1 class="mt-4" align="center">Reporte Económico</h1>
+<h1 class="mt-4" align="center">Reportes Gráficos</h1>
 <script>localStorage.removeItem("selectedValue"); </script>
 <main>
 <div class="row">
@@ -10,7 +10,7 @@
                      Cuarto más reservado
             </div>
             <div class="card-body">
-                <canvas id="masReservado" width="100%" height="40"></canvas>
+                <canvas id="masReservado" width="100%" height="90"></canvas>
             </div>
         </div>
      </div>
@@ -22,7 +22,7 @@
                         Ventas por mes
                 </div>
                 <div class="card-body">
-                    <canvas id="myAreaChart" width="100%" height="40"></canvas>
+                    <canvas id="VentasPorMes" width="100%" height="45"></canvas>
                 </div>
             </div>
         </div>  
@@ -33,15 +33,11 @@
                         Ventas por día
                 </div>
                 <div class="card-body">
-                    <canvas id="myBarChart" width="100%" height="40"></canvas>
+                    <canvas id="VentasPorSemana" width="100%" height="45"></canvas>
                 </div>
             </div>
         </div> 
     </div>                                                  
 </div>
 </main> 
-<script src="<?php echo base_url; ?>Assets/js/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="<?php echo base_url; ?>Assets/demo/chart-area-demo.js"></script>
-        <script src="<?php echo base_url; ?>Assets/demo/chart-bar-demo.js"></script> 
-
  <?php include "Views/Templates/footer.php";?>

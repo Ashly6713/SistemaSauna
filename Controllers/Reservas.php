@@ -146,13 +146,13 @@ class Reservas extends Controller {
         
         require('Libraries/fpdf/fpdf.php');
         
-        $pdf = new FPDF('P','mm', array(80,100));//array ancho y alto
+        $pdf = new FPDF('P','mm', array(80,100));//arra y ancho y alto
         $pdf->AddPage();
         $pdf->SetMargins(5, 0, 0);
         $pdf->SetTitle('Reporte Compra');
         $pdf->SetFont('Arial','B',13);
         $pdf->Cell(60,10, utf8_decode($empresa['nombre']), 0, 1, 'C');
-        $pdf->Image(base_url . 'Assets/img/log.png', 53, 17, 18, 19);// , tamaño, atura, 25*25 
+        $pdf->Image(base_url . 'Assets/img/log.png', 55, 17, 18, 19);// , tamaño, atura, 25*25 
         $pdf->SetFont('Arial','B',6);
         $pdf->Cell(11, 5, 'NIT: ', 0, 0, 'L');
         $pdf->SetFont('Arial','',6);

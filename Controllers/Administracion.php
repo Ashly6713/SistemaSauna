@@ -53,6 +53,13 @@ class Administracion extends Controller {
         echo json_encode($data);
         die();
     }
+    
+    public function reporteVentasSemana()
+    {
+        $data = $this->model->getVentasSemana();
+        echo json_encode($data);
+        die();
+    }
 }
 
 ?>

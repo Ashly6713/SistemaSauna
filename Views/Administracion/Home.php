@@ -53,10 +53,11 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark bg-dark " id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
+                            <?php if($_SESSION['rol'] == 1) {?>
                             <a class="nav-link" href="<?php echo base_url; ?>Administracion">
                                 <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-building"></i></h5></div>
                                  <h5> Administración</h5> 
-                            </a>
+                            </a> 
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-bath" ></i></h5> </div>
                                 <h5 >  Cuartos</h5>
@@ -68,29 +69,30 @@
                                     <a class="nav-link" href="<?php echo base_url; ?>Categorias"><h6><i class="fas fa-door-open"></i> Categorias</h6></a>
                                 </nav>
                             </div>
-                            <a class="nav-link" href="<?php echo base_url; ?>Clientes">
-                                <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-user-plus"></i></h5></div>
-                                 <h5> Clientes</h5> 
-                            </a>
                             <a class="nav-link" href="<?php echo base_url; ?>Usuarios">
                                 <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-users"></i></h5></div>
                                 <h5> Usuarios</h5> 
+                            </a><?php }?>
+                            <a class="nav-link" href="<?php echo base_url; ?>Clientes">
+                                <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-user-plus"></i></h5></div>
+                                 <h5> Clientes</h5> 
                             </a>
                             <a class="nav-link" href="<?php echo base_url; ?>Reservas">
                                 <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-ticket"></i></h5></div>
                                 <h5>Reservas</h5>
                             </a>
+                            <?php if($_SESSION['rol'] == 1) {?>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseRep" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon text-white"><h5><i class="fas fa-area-chart"></i></h5></div>
                                 <h5> Reportes</h5>
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseRep" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="<?php echo base_url; ?>Reservas/historial"><h6><i class="fas fa-money-check"></i> Reportes de reservas</h6></a>
-                                    <a class="nav-link" href="<?php echo base_url; ?>RepEc"><h6><i class="fas fa-money-check-alt"></i> Reporte económico</h6></a>
+                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                    <a class="nav-link" href="<?php echo base_url; ?>Reservas/historial"><h6><i class="fas fa-money-check"></i> Reservas</h6></a>
+                                    <a class="nav-link" href="<?php echo base_url; ?>RepEc"><h6><i class="fas fa-money-check-alt"></i> Gráficos</h6></a>
                                 </nav>
-                            </div>
+                            </div><?php }?>
                         </div>
                     </div>
                 </nav>
@@ -109,7 +111,7 @@
                                         <a class="small text-white" href="<?php echo base_url; ?>Clientes">Ver Clientes</a>
                                     </div>
                                 </div>
-                            </div>
+                            </div><?php if($_SESSION['rol'] == 1) {?>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-warning text-white mb-4">
                                     <div class="card-body"><h4>Usuarios: <?php echo count($data['usuarios'])?>  <i class="fas fa-users" style="float: right;"></i><h4> </div>
@@ -117,7 +119,7 @@
                                         <a class="small text-white" href="<?php echo base_url; ?>Usuarios">Ver Usuarios</a>
                                     </div>
                                 </div>
-                            </div>
+                            </div><?php }?>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-success text-white mb-4">
                                     <div class="card-body"><h4>Reservas: <?php echo count($data['reservas'])?>  <i class="fas fa-ticket" style="float: right;"></i><h4> </div>
@@ -129,8 +131,10 @@
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-secondary text-white mb-4">
                                     <div class="card-body"><h4>Cuartos: <?php echo count($data['cuartos'])?>  <i class="fas fa-bath" style="float: right;"></i><h4> </div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white" href="<?php echo base_url; ?>Cuartos">Ver cuartos</a>
+                                    <div class="card-footer d-flex align-items-center justify-content-between"> 
+                                    <?php if($_SESSION['rol'] == 1) {?>
+                                        <a class="small text-white" href="<?php echo base_url; ?>Cuartos">Ver cuartos</a> <?php } else{?>
+                                            <span class="label">--------</span> <?php } ?>
                                     </div>
                                 </div>
                             </div>

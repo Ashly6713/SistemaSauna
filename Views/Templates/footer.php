@@ -30,7 +30,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="clave_nueva">Contraseña Nueva</label>
-                                <input id="clave_nueva" class="form-control" type="password" name="clave_nueva" placeholder="Nueva Contraseña">
+                                <input id="clave_nueva" class="form-control" type="password" name="clave_nueva" placeholder="Nueva Contraseña" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required title="La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número.">
                             </div>
                             <div class="form-group">
                                 <label for="confirmar_clave">Confirmar Contraseña</label>

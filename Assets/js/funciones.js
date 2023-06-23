@@ -337,33 +337,27 @@ function frmCambiarPass(e){
   const nueva = document.getElementById('clave_nueva').value;
   const confirmar = document.getElementById('confirmar_clave').value;
   if(actual == '' || nueva == '' || confirmar == ''){
-    Swal.fire({
-      position: 'top-end',
-      icon: 'warning',
-      title: 'Todos los campos son obligatorios',
-      showConfirmButton: false,
-      timer: 3000
-    })
+    alertas('Todos los campos son obligatorios', 'warning');
   } else {
-    const url = base_url + "Usuarios/cambiarPass";
+    if(nueva != confirmar){
+      alertas('Las contraseñas no no coinciden', 'warning');
+    }else{
+      
+      const url = base_url + "Usuarios/cambiarPass";
     const frm = document.getElementById("frmCambiarPass");
     const http = new XMLHttpRequest();
     http.open("POST", url, true);
     http.send(new FormData(frm));
     http.onreadystatechange = function(){
         if (this.readyState == 4 && this.status == 200) {
+          console.log(this.responseText);
             const res= JSON.parse(this.responseText);
-              $("#cambiarPass").modal("hide");
-              Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: res,
-                showConfirmButton: false,
-                timer: 3000
-              })
+            $("#cambiarPass").modal("hide");
+            alertas(res.msg, res.icono);
          }
+    }
   }
- }
+  }
 }
 
 function frmUsuario() {
@@ -1612,7 +1606,10 @@ function HoraFin(e, cuarto_id){
       }
 }
 //Reporte grafico
-reporteVendidos();
+if (document.getElementById('masReservado')){
+  reporteVendidos();
+}
+
 function reporteVendidos(){
   const url = base_url + "Administracion/reporteVendido";
   const http = new XMLHttpRequest();
@@ -1634,7 +1631,7 @@ function reporteVendidos(){
               labels: nombre,
               datasets: [{
                 data: cantidad,
-                backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745', '#33FFEC','#A533FF' ],
+                backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745', '#33FFEC','#A533FF' , '#FFDA45','#B7FF33', '#33FFA5','#FF3397'],
               }],
             },
           });
@@ -1646,18 +1643,16 @@ function convertirNumeroAMes(numeroMes) {
     'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
     'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
   ];
-  
-  // Restar 1 al número del mes, ya que los índices del array comienzan en 0
-  const indiceMes = numeroMes - 1;
-  
-  // Verificar si el número del mes es válido
-  if (indiceMes >= 0 && indiceMes < nombresMeses.length) {
+  const indiceMes = numeroMes - 1;if (indiceMes >= 0 && indiceMes < nombresMeses.length) {
     return nombresMeses[indiceMes];
   } else {
     return 'Mes inválido';
   }
 }
-reporteVentas();
+if (document.getElementById('VentasPorMes')){
+  reporteVentas();
+}
+
 function reporteVentas(){
   const url = base_url + "Administracion/reporteVentas";
   const http = new XMLHttpRequest();
@@ -1670,61 +1665,134 @@ function reporteVentas(){
           let cantidad = [];
          for(let i = 0; i< res.length; i++){
            mes.push(convertirNumeroAMes(res[i]['mes']));
-           cantidad.push(res[i]['cantidad_ventas']) ;
+           cantidad.push(res[i]['monto_vendido']) ;
          }
          var ctx = document.getElementById("VentasPorMes");
-          var myLineChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels: mes,
-              datasets: [{
-                label: "Ventas",
-                lineTension: 0.3,
-                backgroundColor: "rgba(2,117,216,0.2)",
-                borderColor: "rgba(2,117,216,1)",
-                pointRadius: 5,
-                pointBackgroundColor: "rgba(2,117,216,1)",
-                pointBorderColor: "rgba(255,255,255,0.8)",
-                pointHoverRadius: 5,
-                pointHoverBackgroundColor: "rgba(2,117,216,1)",
-                pointHitRadius: 50,
-                pointBorderWidth: 2,
-                data: cantidad,
+         var myLineChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: mes,
+            datasets: [{
+              label: "Total en Bs.",
+              lineTension: 0.3,
+              backgroundColor: "rgba(2,117,216,0.2)",
+              borderColor: "rgba(2,117,216,1)",
+              pointRadius: 5,
+              pointBackgroundColor: "rgba(2,117,216,1)",
+              pointBorderColor: "rgba(255,255,255,0.8)",
+              pointHoverRadius: 5,
+              pointHoverBackgroundColor: "rgba(2,117,216,1)",
+              pointHitRadius: 50,
+              pointBorderWidth: 2,
+              data: cantidad,
+            }],
+          },
+          options: {
+            scales: {
+              xAxes: [{
+                time: {
+                  unit: 'date'
+                },
+                gridLines: {
+                  display: false
+                },
+                ticks: {
+                  maxTicksLimit: 7
+                }
+              }],
+              yAxes: [{
+                ticks: {
+                  min: 0,
+                  max: 40000,
+                  maxTicksLimit: 5
+                },
+                gridLines: {
+                  color: "rgba(0, 0, 0, .125)",
+                }
               }],
             },
-            options: {
-              scales: {
-                xAxes: [{
-                  time: {
-                    unit: 'date'
-                  },
-                  gridLines: {
-                    display: false
-                  },
-                  ticks: {
-                    maxTicksLimit: 7
-                  }
-                }],
-                yAxes: [{
-                  ticks: {
-                    min: 0,
-                    max: 40000,
-                    maxTicksLimit: 5
-                  },
-                  gridLines: {
-                    color: "rgba(0, 0, 0, .125)",
-                  }
-                }],
-              },
-              legend: {
-                display: false
-              }
+            legend: {
+              display: false
             }
-          });
+          }
+        });
       }
   }
 }
 
+if (document.getElementById('VentasPorSemana')){
+  reporteVendidosSemana();
+}
 
-// Bar Chart Example
+function reporteVendidosSemana(){
+  const url = base_url + "Administracion/reporteVentasSemana";
+  const http = new XMLHttpRequest();
+  http.open("POST", url, true);
+  http.send();
+  http.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+         const res = JSON.parse(this.responseText);
+          let dia = [];
+          let cantidad = [];
+         for(let i = 0; i< res.length; i++){
+          dia.push(res[i]['dia']);
+           cantidad.push(res[i]['monto_vendido']) ;
+         }
+         var ctx = document.getElementById("VentasPorSemana");
+         var myLineChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: dia,
+            datasets: [{
+              label: "Total en Bs.",
+              backgroundColor: "rgba(2,117,216,1)",
+              borderColor: "rgba(2,117,216,1)",
+              data: cantidad,
+            }],
+          },
+          options: {
+            scales: {
+              xAxes: [{
+                time: {
+                  unit: 'month'
+                },
+                gridLines: {
+                  display: false
+                },
+                ticks: {
+                  maxTicksLimit: 6
+                }
+              }],
+              yAxes: [{
+                ticks: {
+                  min: 0,
+                  max: 15000,
+                  maxTicksLimit: 5
+                },
+                gridLines: {
+                  display: true
+                }
+              }],
+            },
+            legend: {
+              display: false
+            }
+          }
+        });
+        
+      }
+  }
+}
+// Validar hora
+function validarHora() {
+  var inputHora = document.getElementById("hora_inicio");
+  var horaIngresada = inputHora.value;
 
+  var options = { hour12: false, hour: '2-digit', minute: '2-digit', timeZone: 'America/La_Paz' };
+  var horaActual = new Date().toLocaleTimeString('es-BO', options);
+
+  if (horaIngresada < horaActual) {
+    alert("La hora ingresada no puede ser menor a la hora actual.");
+    inputHora.value = horaActual;
+  }
+}

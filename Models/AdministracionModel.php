@@ -73,9 +73,19 @@ public function getVendido()
 }
 public function getVentas()
 {
-    $sql = "SELECT MONTH(fecha_compra) AS mes, COUNT(*) AS cantidad_ventas
+    $sql = "SELECT MONTH(fecha_compra) AS mes, YEAR(fecha_compra) AS anio, SUM(total) AS monto_vendido
     FROM Reserva
-    GROUP BY mes";
+    GROUP BY YEAR(fecha_compra), MONTH(fecha_compra)
+    ORDER BY YEAR(fecha_compra), MONTH(fecha_compra)";
+    $data = $this->selectAll($sql);
+    return $data;
+}
+public function getVentasSemana()
+{
+    $sql = "SELECT fecha_compra AS dia, SUM(total) AS monto_vendido
+    FROM Reserva
+    WHERE fecha_compra >= CURDATE() - INTERVAL 9 DAY
+    GROUP BY dia;";
     $data = $this->selectAll($sql);
     return $data;
 }
