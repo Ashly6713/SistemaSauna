@@ -1,8 +1,8 @@
-CREATE DATABASE sistema_reservas;
+CREATE DATABASE sistema_pasteleria;
 
-USE sistema_reservas;
+USE sistema_pasteleria;
 
-CREATE TABLE Usuario (
+CREATE TABLE usuario (
   id INT PRIMARY KEY AUTO_INCREMENT,
   nom_usuario VARCHAR(50) NOT NULL,
   nombres VARCHAR(50) NOT NULL,
@@ -15,71 +15,71 @@ CREATE TABLE Usuario (
 -- Rol 1 = Administrador
 -- Rol 0 = Empleado
 
-CREATE TABLE Categoria_cuarto (
+CREATE TABLE categoria (
   id INT NOT NULL AUTO_INCREMENT,
-  nombre VARCHAR(50) NOT NULL,
-  capacidad INT NOT NULL,
-  precio_hora DECIMAL(10, 2) NOT NULL,
+  nombre VARCHAR(255) NOT NULL,
+  descripcion VARCHAR(255) NOT NULL,
   estado BOOLEAN NOT NULL,
   PRIMARY KEY (id)
 );
 
-CREATE TABLE Cuarto (
+CREATE TABLE producto(
   id INT PRIMARY KEY AUTO_INCREMENT,
-  numero INT NOT NULL,
+  nombre VARCHAR(255) NOT NULL,
+  descripcion VARCHAR(255) NOT NULL,
+  precio DECIMAL(10, 2) NOT NULL,
   disponibilidad BOOLEAN NOT NULL,
   estado BOOLEAN NOT NULL,
   categoria_id INT NOT NULL,
-  FOREIGN KEY (categoria_id) REFERENCES Categoria_cuarto(id)
+  FOREIGN KEY (categoria_id) REFERENCES categoria(id)
 );
 
-CREATE TABLE Cliente (
+CREATE TABLE cliente (
   id INT NOT NULL AUTO_INCREMENT,
   ci INT NOT NULL,
   nombre VARCHAR(50) NOT NULL,
   apellido VARCHAR(50) NOT NULL,
   telefono VARCHAR(20) NOT NULL,
-   estado BOOLEAN NOT NULL,
+  estado BOOLEAN NOT NULL,
   PRIMARY KEY (id)
 );
 
-CREATE TABLE Reserva (
+CREATE TABLE venta (
   id INT NOT NULL AUTO_INCREMENT,
   fecha_compra DATE NOT NULL,
   total DECIMAL(10, 2) NOT NULL,
   cliente_id INT NOT NULL,
   usuario_id INT NOT NULL,
+  tipo INT NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (cliente_id) REFERENCES Cliente(id),
-  FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
+  FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 );
-CREATE TABLE detalle_reserva (
+-- tipo 1 = Venta en el lugar
+-- tipo 0 = Venta por pedido
+CREATE TABLE detalle_venta (
   id INT NOT NULL AUTO_INCREMENT,
   precio DECIMAL(10, 2) NOT NULL,
-  hora_inicio TIME NOT NULL,
-  hora_fin TIME NOT NULL,
   cantidad INT NOT NULL,
   sub_total DECIMAL(10, 2) NOT NULL,
-  cuarto_id INT NOT NULL,
+  producto_id INT NOT NULL,
   reserva_id INT NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (reserva_id) REFERENCES Reserva(id),
-  FOREIGN KEY (cuarto_id) REFERENCES Cuarto(id)
+  FOREIGN KEY (reserva_id) REFERENCES venta(id),
+  FOREIGN KEY (producto_id) REFERENCES producto(id)
 );
 CREATE TABLE detalle (
   id INT NOT NULL AUTO_INCREMENT,
   precio DECIMAL(10, 2) NOT NULL,
-  hora_inicio TIME NOT NULL,
-  hora_fin TIME NOT NULL,
   cantidad INT NOT NULL,
   sub_total DECIMAL(10, 2) NOT NULL,
   cliente_id INT NOT NULL,
-  cuarto_id INT NOT NULL,
+  producto_id INT NOT NULL,
   usuario_id INT NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (cliente_id) REFERENCES Cliente(id),
-  FOREIGN KEY (cuarto_id) REFERENCES Cuarto(id),
-  FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
+  FOREIGN KEY (cliente_id) REFERENCES cliente(id),
+  FOREIGN KEY (producto_id) REFERENCES producto(id),
+  FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 );
 
 
@@ -91,20 +91,3 @@ CREATE TABLE configuracion (
   direccion VARCHAR(200),
   mensaje VARCHAR(255)
 );
-
--- INSERTAR USUARIOS
-
--- INSERT INTO Usuario (nom_usuario,nombres, apellido, correo, contrasena, Rol)
--- VALUES ('Admin','Juan', 'Pérez', 'juan.perez@gmail.com', '123', 1);
--- INSERT INTO Usuario (nom_usuario,nombres, apellido, correo, contrasena, Rol)
--- VALUES ('Emp','Mario', 'Lopez', 'mario.lopez@gmail.com', '456', 0);
- 
-/* INSERT INTO configuracion (id, ruc, nombre, telefono, direccion, mensaje)
-VALUES (
-  DEFAULT,
-  '12345678901',
-  'Sauna y Duchas Minerva',
-  '555-123456',
-  'Calle Principal, Ciudad Ejemplo',
-  'Gracias por su preferencia.'
-); */
